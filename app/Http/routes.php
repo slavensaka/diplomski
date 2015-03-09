@@ -19,3 +19,9 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
+
+Route::resource('user', 'UserController');
+Route::resource('test', 'TestController');
+Route::resource('question', 'QuestionController');
+Route::resource('answer', 'AnswerController');

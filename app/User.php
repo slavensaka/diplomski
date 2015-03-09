@@ -17,6 +17,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 */
 	protected $table = 'users';
 
+
+	public $timestamps = true;
+	
 	/**
 	 * The attributes that are mass assignable.
 	 *
@@ -30,5 +33,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 * @var array
 	 */
 	protected $hidden = ['password', 'remember_token'];
+
+	public function tests()
+	{
+		return $this->hasMany('Dipl\Test');
+	}
 
 }
