@@ -1,0 +1,13 @@
+/vendor
+/node_modules
+.env
+.env.php
+
+# Configuration
+/app/config/local
+/app/config/staging
+/app/config/production
+
+# Composer
+composer.phar
+composer.lock
