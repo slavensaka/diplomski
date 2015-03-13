@@ -99,4 +99,12 @@ class UserController extends Controller {
 		//
 	}
 
+	// public function showProfile($name){
+	// 	return view('users.index', ['user' => User::findOrFail(1)]);
+	// }
+
+	public function getUser($name){
+		return view('home')->with('name',$name);
+
+	}
 }

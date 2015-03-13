@@ -1,6 +1,7 @@
 <?php namespace Dipl\Http\Controllers;
 
 use Auth;
+use Redirect;
 class HomeController extends Controller {
 
 	/*
@@ -32,7 +33,10 @@ class HomeController extends Controller {
 	public function index()
 	{
 		// return view('home');
-		return redirect('users/index')->with('id', Auth::id());;
+		return redirect()->route('users', ['user' => Auth::id()]);
+		// return view('users/')->with('name',Auth::name());
+		// return Redirect::route('users');
+		// return redirect('users/index')->with('id', Auth::id());;
 	}
 
 }

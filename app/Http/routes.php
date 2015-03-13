@@ -25,6 +25,14 @@ Route::get('/', 'WelcomeController@index');
 **/
 Route::get('home', 'HomeController@index');
 
+Route::get('users/{name}', array('as' => 'users','uses' => 'UserController@getUser'));
+
+
+// Route::get('users/{name}', array('as' => 'users', function($nick) 
+// { 
+// 		return View::make('home.user')->with('target', $nick); 
+// })); 
+
 /**
 *
 * Controllers to auth the user
@@ -73,10 +81,7 @@ Route::get('userresults', function() {
 *
 **/
 
-Route::get('/form', function()
-{
-	return view('/form');
-});
+// Route::get('users/{name}', 'UserController@showProfile');
 
 /**
 *
@@ -114,3 +119,9 @@ Route::post('fileform', function()
 
 
 // Route::resource('users', 'UserController');
+
+
+// Route::get('lorem/{nick}', array('as' => 'user', function($nick) 
+// { 
+// 		return View::make('home')->with('target', $nick); 
+// })); 

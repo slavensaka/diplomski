@@ -12,7 +12,7 @@ class CreateQuestionsTable extends Migration {
 			$table->text('question');
 			$table->integer('points');
 			$table->boolean('shuffle_question');
-			$table->enum('type', array('true_false', 'mulitple_choice', 'multiple_response', 'fill_in'));
+			$table->enum('type', array('true_false', 'multiple_choice', 'multiple_response', 'fill_in'));
 			$table->unsignedInteger('test_id');
 		});
 	}
