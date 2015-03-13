@@ -27,12 +27,14 @@
 <td>{{ $test->intro }}</td>
 <td>{{ $test->conclusion }}</td>
 <td>{{ $test->user_id }}</td>
-<td>{!! link_to_route('users.edit', 'Edit', array($test->id), array('class' => 'btn btn-info')) !!}
+<td>{!! link_to_route('tests.edit', 'Edit', array($test->id), array('class' => 'btn btn-info')) !!}
 </td>
 <td>
-{!! Form::open(array('method'=> 'DELETE', 'route' => array('users.destroy', $test->id))) !!}
+{!! Form::open(array('method'=> 'DELETE', 'route' => array('tests.destroy', $test->id))) !!}
 {!! Form::submit('Delete', array('class' => 'btn btn-danger')) !!}
 {!! Form::close() !!}
+</td>
+<td>{!! link_to_route('tests.create', 'PUBLISH', array($test->id), array('class' => 'btn btn-info')) !!}
 </td>
 </tr>
 @endforeach

@@ -6,6 +6,7 @@ use Dipl\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
 use Dipl\User;
+use Collection;
 
 class UserController extends Controller {
 
@@ -23,7 +24,9 @@ class UserController extends Controller {
 
 		// $users = User::all();
 		if(User::find(Auth::id())) {
+			
 		$tests = User::find(Auth::id())->tests;
+
 		return view('users.index', compact('tests'));
 		} else {
 			return 'Not logged in';

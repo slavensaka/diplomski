@@ -5,7 +5,10 @@ use Dipl\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Auth;
+use Input;
 use Dipl\User;
+use Dipl\Test;
+use Redirect;
 
 class TestController extends Controller {
 
@@ -37,7 +40,28 @@ class TestController extends Controller {
 	 */
 	public function store()
 	{
-		//
+		$test = new Test;
+		$test->test_name = Input::get('test_name');
+		$test->intro = Input::get('intro');
+		$test->conclusion = Input::get('conclusion');
+		$test->passcode = Input::get('passcode');
+		$test->shuffle = Input::get('shuffle');
+		$user = User::find(Auth::user()->id);
+		$user=(string)$user->id;
+		$test->user_id = $user;
+		$test->save();
+		
+		
+
+
+
+		// $validation = Validator::make($input,User::rules);
+		// if($validation->passes()){
+		// Test::create($input);
+		return Redirect::route('users.index');
+		// }
+		// return Redirect::route('users.create')->withInput()->withErrors($validation)
+		// ->with('message','There were validation errors.');
 	}
 
 	/**
@@ -59,7 +83,11 @@ class TestController extends Controller {
 	 */
 	public function edit($id)
 	{
-		//
+		$test = Test::find($id);
+		if(is_null($test)) {
+			return Redirect::route('tests.index');
+		}
+		return view('tests.edit',compact('test'));	
 	}
 
 	/**
@@ -70,7 +98,10 @@ class TestController extends Controller {
 	 */
 	public function update($id)
 	{
-		//
+		$input = Input::all();
+		$test = Test::find($id);
+		$test->update($input);
+		return Redirect::route('users.show', $id);
 	}
 
 	/**
@@ -81,7 +112,8 @@ class TestController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		//
+		Test::find($id)->delete();
+		return Redirect::route('users.index');
 	}
 
 }

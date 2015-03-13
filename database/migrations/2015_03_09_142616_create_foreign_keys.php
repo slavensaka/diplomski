@@ -10,18 +10,18 @@ class CreateForeignKeys extends Migration {
 	{
 		Schema::table('tests', function(Blueprint $table) {
 			$table->foreign('user_id')->references('id')->on('users')
-						->onDelete('restrict')
-						->onUpdate('restrict');
+						->onDelete('cascade')
+						->onUpdate('cascade');
 		});
 		Schema::table('questions', function(Blueprint $table) {
 			$table->foreign('test_id')->references('id')->on('tests')
-						->onDelete('restrict')
-						->onUpdate('restrict');
+						->onDelete('cascade')
+						->onUpdate('cascade');
 		});
 		Schema::table('anwsers', function(Blueprint $table) {
 			$table->foreign('question_id')->references('id')->on('questions')
-						->onDelete('restrict')
-						->onUpdate('restrict');
+						->onDelete('cascade')
+						->onUpdate('cascade');
 		});
 	}
 
