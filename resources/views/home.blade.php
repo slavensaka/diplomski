@@ -9,6 +9,17 @@
 
 				<div class="panel-body">
 					You are logged in!
+
+		
+		{!!  Form::open(array('url'=>'/','method'=>'post')) !!}
+		{!!Form::text('link',Input::old('link'), array('placeholder'=>'Insert your URL')) !!}
+		{!! Form::close() !!}
+
+
+
+
+
+
 				</div>
 			</div>
 		</div>

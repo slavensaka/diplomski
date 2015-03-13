@@ -27,13 +27,17 @@ class Registrar implements RegistrarContract {
 	 * @param  array  $data
 	 * @return User
 	 */
+
 	public function create(array $data)
 	{
+		
 		return User::create([
 			'name' => $data['name'],
 			'email' => $data['email'],
 			'password' => bcrypt($data['password']),
+			'is_admin' => $data['is_admin'] ? 1 : 0 ,
 		]);
+
 	}
 
 }

@@ -11,17 +11,106 @@
 |
 */
 
+/**
+*
+* Default index Route
+*
+**/
 Route::get('/', 'WelcomeController@index');
 
+/**
+*
+* User logged in and is at home
+*
+**/
 Route::get('home', 'HomeController@index');
 
+/**
+*
+* Controllers to auth the user
+*
+**/
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
 
+/**
+*
+* Experimental userform
+*
+**/
 
-Route::resource('user', 'UserController');
-Route::resource('test', 'TestController');
-Route::resource('question', 'QuestionController');
-Route::resource('answer', 'AnswerController');
+Route::get('userform', array('before' => 'auth', function()
+{
+	// NOT WORKING AUTH
+}));
+
+Route::post('userform', function() {
+	// return Redirect::to('userresults')->withInput(Input::only('username','color'));
+	$rules = array(
+		'email' => 'required|email|different:username',
+		'username' => 'required|min:6',
+		'password' => 'required|same:password_confirm'
+	);
+	$validation = Validator::make(Input::all(), $rules);
+	if ($validation->fails())
+	{
+		return Redirect::to('userform')->withErrors($validation)->withInput();
+	}
+	return Redirect::to('userresults')->withInput();
+});
+
+Route::get('userresults', function() {
+	// return 'Your username is: ' . Input::old('username'). '<br>Your favorite color is: ' .
+	// Input::old('color');
+	return dd(Input::old());
+});
+
+/**
+*
+* Experimental form
+*
+**/
+
+Route::get('/form', function()
+{
+	return view('/form');
+});
+
+/**
+*
+* Experimental file uploader
+*
+**/
+
+Route::get('fileform', function()
+{
+	return view('fileform');
+});
+
+Route::post('fileform', function()
+{
+	$file = Input::file('myfile');
+    $ext = $file->guessExtension();
+    if ($file->move('files', 'newfilename.' . $ext))
+	{
+		return 'Success';
+ 	}
+ 	else
+ 		{
+		return 'Error';
+		}
+});
+
+/**
+*
+* Experimental UserController crud resource
+*
+**/
+    Route::resource('users', 'UserController');
+    Route::resource('tests', 'TestController');
+    // Route::controller('users', 'UserController@getIndex');
+
+
+// Route::resource('users', 'UserController');
