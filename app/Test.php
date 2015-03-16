@@ -19,4 +19,9 @@ class Test extends Model {
 		return $this->hasMany('Dipl\Question');
 	}
 
+	public function answers()
+    {
+        return $this->hasManyThrough('Dipl\Answer', 'Dipl\Question','test_id', 'question_id');
+    }
+
 }

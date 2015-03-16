@@ -1,14 +1,16 @@
 <?php namespace Dipl\Http\Controllers;
 
-// use Dipl\Http\Requests;
+use Dipl\Http\Requests;
 use Dipl\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Auth;
+use Input;
+use Dipl\Question;
+use Dipl\Test;
 use Dipl\User;
-use Collection;
-
-class UserController extends Controller {
+use Dipl\Answer;
+class QuestionController extends Controller {
 
 	/**
 	 * Display a listing of the resource.
@@ -17,14 +19,15 @@ class UserController extends Controller {
 	 */
 	public function index()
 	{
-		if(User::find(Auth::id())) 
+		if(!Auth::check())
 		{
-			$tests = User::find(Auth::id())->tests;
- 			return view('tests.index', compact('tests'));
-		} else 
-		  {
-			return 'User is not logged in';
-		  } 
+			return redirect()->guest('auth/login');
+		}
+			
+
+		// dd($test->id);
+
+
 	}
 
 	/**
@@ -34,7 +37,7 @@ class UserController extends Controller {
 	 */
 	public function create()
 	{
-		return view('users.create');
+		//
 	}
 
 	/**
@@ -55,7 +58,16 @@ class UserController extends Controller {
 	 */
 	public function show($id)
 	{
-		//
+		// $users_question=User::find($id)->questions;
+		$questions = Test::find($id)->questions;
+		// $tests_answers=Test::find($id)->answers;
+		$answers = Test::find($id)->answers;
+		// $posts = Test::has('comments')->get();
+
+		// $answers = Test::find(7)->answers->has('question_id')->get();
+		 // dd($answers);
+		return view('questions.show', compact('questions','answers'));
+		
 	}
 
 	/**
@@ -66,12 +78,7 @@ class UserController extends Controller {
 	 */
 	public function edit($id)
 	{
-		$user = User::find($id);
-		if(is_null($user))
-		{
-			return Redirect::route('users.index');
-		}
-		return View::make('users.edit', compact('user'));
+		
 	}
 
 	/**
@@ -96,13 +103,4 @@ class UserController extends Controller {
 		//
 	}
 
-	/**
-	*
-	* Getting the user
-	*
-	**/
-	
-	public function getUser($name){
-		return view('tests');
-	}
 }

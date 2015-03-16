@@ -25,13 +25,13 @@ Route::get('/', 'WelcomeController@index');
 **/
 Route::get('home', 'HomeController@index');
 
-Route::get('users/{name}', array('as' => 'users','uses' => 'UserController@getUser'));
+/**
+*
+* Tests
+*
+**/
 
-
-// Route::get('users/{name}', array('as' => 'users', function($nick) 
-// { 
-// 		return View::make('home.user')->with('target', $nick); 
-// })); 
+Route::get('tests', array('as' => 'tests','uses' => 'TestController'));
 
 /**
 *
@@ -45,14 +45,39 @@ Route::controllers([
 
 /**
 *
-* Experimental userform
+* Experimental UserController crud resource
 *
 **/
 
-Route::get('userform', array('before' => 'auth', function()
-{
-	// NOT WORKING AUTH
-}));
+Route::resource('users', 'UserController');
+Route::resource('tests', 'TestController');
+
+
+/**
+*
+* Creating questions
+*
+**/
+Route::resource('questions','QuestionController');
+
+
+/**
+*
+* Po imenu route, Pogledaj u HomeController
+*
+**/
+
+
+Route::get('tests/{name}', function(){
+	return 'Hello';
+});
+
+
+/**
+*
+* Experimental userform
+*
+**/
 
 Route::post('userform', function() {
 	// return Redirect::to('userresults')->withInput(Input::only('username','color'));
@@ -108,20 +133,5 @@ Route::post('fileform', function()
 		}
 });
 
-/**
-*
-* Experimental UserController crud resource
-*
-**/
-    Route::resource('users', 'UserController');
-    Route::resource('tests', 'TestController');
-    // Route::controller('users', 'UserController@getIndex');
 
 
-// Route::resource('users', 'UserController');
-
-
-// Route::get('lorem/{nick}', array('as' => 'user', function($nick) 
-// { 
-// 		return View::make('home')->with('target', $nick); 
-// })); 

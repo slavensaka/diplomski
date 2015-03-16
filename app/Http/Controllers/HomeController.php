@@ -32,11 +32,7 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
-		// return view('home');
-		return redirect()->route('users', ['user' => Auth::id()]);
-		// return view('users/')->with('name',Auth::name());
-		// return Redirect::route('users');
-		// return redirect('users/index')->with('id', Auth::id());;
+		 return redirect()->route('tests', Auth::user()->name);
 	}
 
 }

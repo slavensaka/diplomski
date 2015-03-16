@@ -19,6 +19,11 @@ class TestController extends Controller {
 	 */
 	public function index()
 	{
+		if(!Auth::check())
+		{
+			return redirect()->guest('auth/login');
+		}
+
 		$tests = User::find(Auth::id())->tests;
 		return view('users.index', compact('tests'));
 	}

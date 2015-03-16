@@ -51,173 +51,197 @@ class AnswerTableSeeder extends Seeder {
 			));
 		// Answer7
 		Answer::create(array(
-				'answer' => 'DA',
-				'correct' => 1,
-				'question_id' => 4
+				'answer' => 'NE',
+				'correct' => 0,
+				'question_id' => 3
 			));
 		// Answer8
 		Answer::create(array(
 				'answer' => 'DA',
 				'correct' => 1,
-				'question_id' => 5
+				'question_id' => 4
 			));
 		// Answer9
 		Answer::create(array(
-				'answer' => 'DA',
-				'correct' => 1,
-				'question_id' => 5
+				'answer' => 'NE',
+				'correct' => 0,
+				'question_id' => 4
 			));
 		// Answer10
 		Answer::create(array(
 				'answer' => 'DA',
 				'correct' => 1,
-				'question_id' => 6
+				'question_id' => 5
 			));
 		// Answer11
+		Answer::create(array(
+				'answer' => 'NE',
+				'correct' => 0,
+				'question_id' => 5
+			));
+		// Answer12
+		Answer::create(array(
+				'answer' => 'DA',
+				'correct' => 1,
+				'question_id' => 6
+			));
+		// Answer13
+		Answer::create(array(
+				'answer' => 'NE',
+				'correct' => 0,
+				'question_id' => 6
+			));
+		// Answer14
 		Answer::create(array(
 				'answer' => 'NE',
 				'correct' => 1,
 				'question_id' => 7
 			));
-		// Answer12
+		// Answer15
+		Answer::create(array(
+				'answer' => 'DA',
+				'correct' => 0,
+				'question_id' => 7
+			));
+		// Answer16
 		Answer::create(array(
 				'answer' => 'a library catalogue',
 				'correct' => 1,
 				'question_id' => 8
 			));
-		// Answer13
+		// Answer17
 		Answer::create(array(
 				'answer' => 'an article index',
 				'correct' => 1,
 				'question_id' => 8
 			));
-		// Answer14
+		// Answer18
 		Answer::create(array(
 				'answer' => 'a computerized warehouse inventory',
 				'correct' => 1,
 				'question_id' => 8
 			));
-		// Answer15
+		// Answer19
 		Answer::create(array(
 				'answer' => 'the Internet',
 				'correct' => 0,
 				'question_id' => 8
 			));
-		// Answer16
+		// Answer20
 		Answer::create(array(
 				'answer' => 'records',
 				'correct' => 1,
 				'question_id' => 9
 			));
-		// Answer17
+		// Answer21
 		Answer::create(array(
 				'answer' => 'fields',
 				'correct' => 0,
 				'question_id' => 9
 			));
-		// Answer18
+		// Answer22
 		Answer::create(array(
 				'answer' => 'fields',
 				'correct' => 0,
 				'question_id' => 9
 			));
-		// Answer19
+		// Answer23
 		Answer::create(array(
 				'answer' => 'fields',
 				'correct' => 0,
 				'question_id' => 9
 			));
-		// Answer20
+		// Answer24
 		Answer::create(array(
 				'answer' => 'false',
 				'correct' => 1,
 				'question_id' => 10
 			));
-		// Answer21
+		// Answer25
 		Answer::create(array(
 				'answer' => 'true',
 				'correct' => 0,
 				'question_id' => 10
 			));
-		// Answer22
+		// Answer26
 		Answer::create(array(
 				'answer' => 'facebook',
 				'correct' => 1,
 				'question_id' => 11
 			));
-		// Answer23
+		// Answer27
 		Answer::create(array(
 				'answer' => 'twitter',
 				'correct' => 1,
 				'question_id' => 11
 			));
-		// Answer24
+		// Answer28
 		Answer::create(array(
 				'answer' => 'linkedin',
 				'correct' => 1,
 				'question_id' => 11
 			));
-		// Answer25
+		// Answer29
 		Answer::create(array(
 				'answer' => 'flickr',
 				'correct' => 0,
 				'question_id' => 11
 			));
-		// Answer26
+		// Answer30
 		Answer::create(array(
 				'answer' => 'true',
 				'correct' => 1,
 				'question_id' => 12
 			));
-		// Answer27
+		// Answer31
 		Answer::create(array(
 				'answer' => 'false',
 				'correct' => 0,
 				'question_id' => 12
 			));
-		// Answer28
+		// Answer32
 		Answer::create(array(
 				'answer' => 'Fury',
 				'correct' => 1,
 				'question_id' => 13
 			));
-		// Answer29
+		// Answer33
 		Answer::create(array(
 				'answer' => 'Apocalypse Now',
 				'correct' => 0,
 				'question_id' => 13
 			));
-		// Answer30
+		// Answer34
 		Answer::create(array(
 				'answer' => 'Black Hawk Down',
 				'correct' => 0,
 				'question_id' => 13
 			));
-		// Answer31
+		// Answer35
 		Answer::create(array(
 				'answer' => 'Platoon',
 				'correct' => 0,
 				'question_id' => 13
 			));
-		// Answer32
+		// Answer36
 		Answer::create(array(
 				'answer' => 'Terminator',
 				'correct' => 1,
 				'question_id' => 14
 			));
-		// Answer33
+		// Answer37
 		Answer::create(array(
 				'answer' => 'Gigli',
 				'correct' => 0,
 				'question_id' => 14
 			));
-		// Answer34
+		// Answer38
 		Answer::create(array(
 				'answer' => 'Birdman',
 				'correct' => 1,
 				'question_id' => 14
 			));
-		// Answer35
+		// Answer39
 		Answer::create(array(
 				'answer' => 'Interstellar',
 				'correct' => 1,

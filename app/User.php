@@ -47,7 +47,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     
 	public function questions()
     {
-        return $this->hasManyThrough('Dipl\Question', 'Dipl\Test','id', 'test_id');
+        return $this->hasManyThrough('Dipl\Question', 'Dipl\Test','id', 'user_id');
     }
 
 }
