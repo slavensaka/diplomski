@@ -32,6 +32,7 @@ Route::get('home', 'HomeController@index');
 **/
 
 Route::get('tests', array('as' => 'tests','uses' => 'TestController'));
+Route::get('answers', array('as' => 'answer','uses' => 'AnswerController'));
 
 /**
 *
@@ -51,7 +52,7 @@ Route::controllers([
 
 Route::resource('users', 'UserController');
 Route::resource('tests', 'TestController');
-
+Route::resource('answers', 'AnswerController');
 
 /**
 *

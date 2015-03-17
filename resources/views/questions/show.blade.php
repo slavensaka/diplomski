@@ -1,3 +1,6 @@
+s
+
+
 @extends('app')
 @section('content')
 
@@ -31,7 +34,6 @@
 <td>{!! link_to_route('questions.edit', 'Edit Question', array($question->id), array('class' => 'btn btn-danger')) !!}</td>
 
 
-
 @foreach ($answers as $tests_answer)
 @if($question->id === $tests_answer->question_id)
 <tr class="warning">
@@ -57,7 +59,17 @@ There are no tests
 
 
 
+
+
+
+
+
+
 @stop
 
 @endif
+
+
+
+
 @endsection

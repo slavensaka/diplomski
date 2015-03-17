@@ -4,13 +4,8 @@ use Dipl\Http\Requests;
 use Dipl\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
-use Auth;
-use Input;
-use Dipl\Question;
-use Dipl\Test;
-use Dipl\User;
-use Dipl\Answer;
-class QuestionController extends Controller {
+
+class AnswerController extends Controller {
 
 	/**
 	 * Display a listing of the resource.
@@ -19,15 +14,7 @@ class QuestionController extends Controller {
 	 */
 	public function index()
 	{
-		if(!Auth::check())
-		{
-			return redirect()->guest('auth/login');
-		}
- 			
-		return view('questions.index');
-		// dd($test->id);
-
-
+		//
 	}
 
 	/**
@@ -58,16 +45,7 @@ class QuestionController extends Controller {
 	 */
 	public function show($id)
 	{
-		// $users_question=User::find($id)->questions;
-		$questions = Test::find($id)->questions;
-		// $tests_answers=Test::find($id)->answers;
-		$answers = Test::find($id)->answers;
-		// $posts = Test::has('comments')->get();
-
-		// $answers = Test::find(7)->answers->has('question_id')->get();
-		 // dd($answers);
-		return view('questions.show', compact('questions','answers'));
-		
+		//
 	}
 
 	/**
@@ -78,13 +56,7 @@ class QuestionController extends Controller {
 	 */
 	public function edit($id)
 	{
-		
-		$question = Question::find($id);
-		
-		$answers = Question::find($id)->answers;
-		
-		return view('questions.edit',compact('question','answers'));	
-
+		//
 	}
 
 	/**
