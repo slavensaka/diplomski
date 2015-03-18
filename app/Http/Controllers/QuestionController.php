@@ -38,7 +38,14 @@ class QuestionController extends Controller {
 	 */
 	public function create()
 	{
-		//
+		$question = Input::all();
+		
+		 
+		 foreach($question as $key => $value){
+	  			$question_test_id = $key;
+		}
+		
+		return view('questions/create')->with('question_test_id', $question_test_id);
 	}
 
 	/**
@@ -48,7 +55,25 @@ class QuestionController extends Controller {
 	 */
 	public function store()
 	{
-		//
+		// dd(Input::all());
+		// Question::create($input);
+		// return Redirect::route('users.index');
+		$question = new Question;
+		$question->question = Input::get('question');
+		$question->points = Input::get('points');
+		$question->shuffle_question = Input::get('shuffle_question');
+		$question->type = Input::get('type');
+		// $user = User::find(Auth::user()->id);
+		// $user=(string)$user->id;
+		// $question->user_id = $user;
+		$question->test_id = Input::get('test_id');
+		$question->save();
+
+		return redirect()->route('questions');
+
+
+
+
 	}
 
 	/**
@@ -66,6 +91,7 @@ class QuestionController extends Controller {
 			- Probaj unazad naci usera koji je ulogiran i onda
  				njegove testove prikazi
  			- Umjesto view upotrijebi Redirect::route
+ 			-- Mislim Da ovo valja return redirect()->back();
 		
 		**/
 		// $users_question=User::find($id)->questions;
@@ -122,7 +148,8 @@ class QuestionController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		//
+		Question::find($id)->delete();
+		return redirect()->back();
 	}
 
 }

@@ -107,7 +107,7 @@ class AnswerController extends Controller {
 	public function destroy($id)
 	{
 		Answer::find($id)->delete();
-		return Redirect::route('questions.edit', $id);
+		return redirect()->back();
 	}
 
 }

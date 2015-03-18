@@ -59,6 +59,14 @@ Route::resource('answers', 'AnswerController');
 * Creating questions
 *
 **/
+/**
+
+	TODO:
+	- Ovdje može array('as' => 'questions','uses' => 'QuestionController')
+	- isprobaj
+
+**/
+
 Route::resource('questions','QuestionController');
 
 

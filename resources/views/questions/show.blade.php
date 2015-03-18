@@ -31,7 +31,12 @@ s
 <td>{{ $question->shuffle_question }}</td>
 <td>{{ $question->type }}</td>
 <td>{{ $question->test_id }}</td>
-<td>{!! link_to_route('questions.edit', 'Edit Question', array($question->id), array('class' => 'btn btn-danger')) !!}</td>
+<td>{!! link_to_route('questions.edit', 'Edit Question', array($question->id), array('class' => 'btn btn-info')) !!}</td>
+<td>
+	{!! Form::open(array('method'=> 'DELETE', 'route' => array('questions.destroy', $question->id))) !!}
+	{!! Form::submit('Delete', array('class' => 'btn btn-danger')) !!}
+	{!! Form::close() !!}
+</td>
 
 
 @foreach ($answers as $tests_answer)
@@ -41,11 +46,23 @@ s
 <td>{{ $tests_answer->answer }}</td>
 <td>{{ $tests_answer->correct }}</td>
 <td>{{ $tests_answer->question_id }}</td>
+<td>{!! link_to_route('questions.edit', 'Edit Question', array($question->id), array('class' => 'btn btn-info')) !!}</td>
+<td>
+	{!! Form::open(array('method'=> 'DELETE', 'route' => array('answers.destroy', $tests_answer->id))) !!}
+	{!! Form::submit('Delete', array('class' => 'btn btn-danger')) !!}
+	{!! Form::close() !!}
+</td>
+
+
+
 @endif
 @endforeach
 
 </tr>
 @endforeach
+
+<p>{!! link_to_route('questions.create', 'Add new question', array($question->test_id) , array('class' => 'btn btn-primary')) !!}</p>
+
 
 
 
@@ -53,7 +70,7 @@ s
 </tbody>
 </table>
 @else
-There are no tests
+There are no questions for this test
 @endif
 
 
