@@ -8,6 +8,7 @@ class Question extends Model {
 
 	protected $table = 'questions';
 	public $timestamps = false;
+	protected $fillable = array('question','points','shuffle_question','type');
 
 	public function answers()
 	{

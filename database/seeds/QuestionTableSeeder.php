@@ -29,7 +29,7 @@ class QuestionTableSeeder extends Seeder {
 				'question' => 'Koliko zajedno znamenaka ima prvih 100 prirodnih brojeva?',
 				'points' => 5,
 				'shuffle_question' => 1,
-				'type' => 'fill_in',
+				'type' => 'multiple_choice',
 				'test_id' => 1
 			));
 

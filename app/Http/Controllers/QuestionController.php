@@ -10,6 +10,7 @@ use Dipl\Question;
 use Dipl\Test;
 use Dipl\User;
 use Dipl\Answer;
+use Redirect;
 class QuestionController extends Controller {
 
 	/**
@@ -58,6 +59,15 @@ class QuestionController extends Controller {
 	 */
 	public function show($id)
 	{
+		/**
+		
+			TODO:
+			- ako je answer $id = 33 on trazi test od 33
+			- Probaj unazad naci usera koji je ulogiran i onda
+ 				njegove testove prikazi
+ 			- Umjesto view upotrijebi Redirect::route
+		
+		**/
 		// $users_question=User::find($id)->questions;
 		$questions = Test::find($id)->questions;
 		// $tests_answers=Test::find($id)->answers;
@@ -79,10 +89,12 @@ class QuestionController extends Controller {
 	public function edit($id)
 	{
 		
+		
 		$question = Question::find($id);
 		
 		$answers = Question::find($id)->answers;
 		
+
 		return view('questions.edit',compact('question','answers'));	
 
 	}
@@ -95,7 +107,11 @@ class QuestionController extends Controller {
 	 */
 	public function update($id)
 	{
-		//
+		$input = Input::all();
+		$question = Question::find($id);
+		$question->update($input);
+		// return Redirect::route('users.show', $id);
+		return Redirect::back();
 	}
 
 	/**

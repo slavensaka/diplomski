@@ -5,6 +5,11 @@ use Dipl\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
+use Input;
+use Dipl\Answer;
+use Redirect;
+use Dipl\Test;
+use Illuminate\Support\Collection;
 class AnswerController extends Controller {
 
 	/**
@@ -67,7 +72,30 @@ class AnswerController extends Controller {
 	 */
 	public function update($id)
 	{
-		//
+		$collection = Input::all();
+		$real_answer = Answer::find($id);
+
+		$second = array_slice($collection, 3, 1);
+		$correct = $second[0][0];
+
+		$answer = Input::get('answer');
+		$correct = $correct;
+		$real_answer->update(['answer' => $answer, 'correct' => $correct ]);
+		return Redirect::route('questions.show', $id);
+
+// $test = new Test;
+// 		$test->test_name = Input::get('test_name');
+// 		$test->intro = Input::get('intro');
+// 		$test->conclusion = Input::get('conclusion');
+// 		$test->passcode = Input::get('passcode');
+// 		$test->shuffle = Input::get('shuffle');
+// 		$user = User::find(Auth::user()->id);
+// 		$user=(string)$user->id;
+// 		$test->user_id = $user;
+// 		$test->save();
+
+		// $answer->update($input);
+		// $question = Test::find(1)->questions;
 	}
 
 	/**
@@ -78,7 +106,8 @@ class AnswerController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		//
+		Answer::find($id)->delete();
+		return Redirect::route('questions.edit', $id);
 	}
 
 }
