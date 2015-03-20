@@ -55,10 +55,13 @@
 							<input type="text" class="form-control" name="is_admin">
 							</div>
 						</div> --}}
+						{{-- Ne treba mi is admin, BRIŠI --}}
 						<div class="form-group">
+
 							<label class="col-md-4 control-label">Is admin</label>
 							<div class="col-md-6">
-							<input type="checkbox" name="is_admin" value=""> 				
+							<input checked="checked" name="is_admin" type="checkbox" value="1">
+							{{-- <input type="checkbox" name="is_admin" value=""> 				 --}}
 							</div>
 						</div>
 

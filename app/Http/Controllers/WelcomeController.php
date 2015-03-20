@@ -1,5 +1,8 @@
 <?php namespace Dipl\Http\Controllers;
 
+use DB;
+use Dipl\Tests;
+use Dipl\User;
 class WelcomeController extends Controller {
 
 	/*
@@ -30,7 +33,27 @@ class WelcomeController extends Controller {
 	 */
 	public function index()
 	{
-		return view('welcome');
+		// $published_tests = DB::table('tests')->select('is_published','id')->get();
+		// $array_flattened = array_pluck($published_tests, 'is_published');
+			// $user = DB::
+			// $published_tests = DB::table('tests')->where('is_published','=', 1)->get();
+			$users_published_tests =DB::table('users')
+            	->join('tests', 'users.id', '=', 'tests.user_id')
+            	->where('is_published','=', 1)
+            	->select('users.name', 'tests.id', 'tests.test_name',
+            	       'tests.intro', 'tests.conclusion', 'tests.shuffle',
+            	       'tests.user_id', 'tests.is_published')->get();
+
+
+			// foreach ($array_flattened as $published) {
+			// 	if($published === 1) {
+					
+			// 	} else echo  'Dolem';
+			// }
+
+
+
+		return view('welcome')->with('users_published_tests', $users_published_tests);
 	}
 
 }

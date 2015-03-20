@@ -16,6 +16,7 @@ class TestTableSeeder extends Seeder {
 				'conclusion' => 'Završili ste test o matematici',
 				'passcode' => Hash::make('1234'),
 				'shuffle' => 1,
+				'is_published' => 1,
 				'user_id' => 1
 			));
 
@@ -26,6 +27,7 @@ class TestTableSeeder extends Seeder {
 				'conclusion' => 'Završen je kviz o životu studenata',
 				'passcode' => Hash::make('1234'),
 				'shuffle' => 1,
+				'is_published' => 1,
 				'user_id' => 1
 			));
 
@@ -36,6 +38,7 @@ class TestTableSeeder extends Seeder {
 				'conclusion' => 'Riješili ste test o tome koliko znate baze podataka',
 				'passcode' => Hash::make('1234'),
 				'shuffle' => 0,
+				'is_published' => 1,
 				'user_id' => 2
 			));
 
@@ -46,6 +49,7 @@ class TestTableSeeder extends Seeder {
 				'conclusion' => 'Završili ste test o društvenim mrežama',
 				'passcode' => Hash::make('1234'),
 				'shuffle' => 1,
+				'is_published' => 1,
 				'user_id' => 3
 			));
 		// Test5
@@ -55,6 +59,7 @@ class TestTableSeeder extends Seeder {
 				'conclusion' => 'Gotov test o laravelu',
 				'passcode' => Hash::make('1234'),
 				'shuffle' => 1,
+				'is_published' => 0,
 				'user_id' => 3
 			));
 		// Test6
@@ -64,6 +69,7 @@ class TestTableSeeder extends Seeder {
 				'conclusion' => 'Riješen kviz o popularnim filmovima',
 				'passcode' => Hash::make('1234'),
 				'shuffle' => 1,
+				'is_published' => 1,
 				'user_id' => 3
 			));
 	}

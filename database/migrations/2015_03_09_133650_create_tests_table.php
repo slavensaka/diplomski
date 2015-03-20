@@ -15,6 +15,7 @@ class CreateTestsTable extends Migration {
 			$table->text('conclusion');
 			$table->string('passcode', 60);
 			$table->boolean('shuffle');
+			$table->boolean('is_published');
 			$table->unsignedInteger('user_id');
 		});
 	}
