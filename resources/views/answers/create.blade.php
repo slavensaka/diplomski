@@ -1,3 +1,4 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 @extends('app')
 
 @section('content')
@@ -6,25 +7,62 @@
 @if (Auth::guest())
 	<h1>Your not logged in</h1>
 @else
-	<h1>Create a New Test</h1>
+	<h1>Create a New Answer for Question</h1>
+
+
+
+@if($type === 'multiple_choice') 
+    	
+
+
+<table class="table table-striped table-bordered">
+<thead>
+
+<tr>
+<td>Question ID:{!! $quest->id !!}</td>
+<td>Question: {!! $quest->question !!}</td>
+</tr>
+
+<tr>
+<td>Points: {!! $quest->points !!}</td>
+<td>Shuffle_question: {!! $quest->shuffle_question !!}</td>
+</tr>
+
+<tr>
+<td>Type: {!! $quest->type !!}</td>
+<td>Test_id: {!! $quest->test_id !!}</td>
+</tr>
+
+</thead>
+<tbody>
+
+
+</tbody>
+</table>
 
 	{!! Form::open(array('route' => 'answers.store')) !!}
- 	{!! Form::label('test_name', 'Test_name') !!}
-	{!! Form::text('test_name', Input::old('test_name')) !!}
+
 	<br>
-	{!! Form::label('intro', 'intro') !!}
-	{!! Form::text('intro', Input::old('intro')) !!}
+	{!! Form::label('answer', 'Answer') !!}
+	{!! Form::text('answer',Input::old('answer')) !!}
 	<br>
-	{!! Form::label('conclusion', 'conclusion') !!}
-	{!! Form::text('conclusion', Input::old('conclusion')) !!}
+	{!! Form::label('correct', 'correct') !!}
+	{!! Form::text('correct', Input::old('correct')) !!}
 	<br>
-	{!! Form::label('passcode', 'Passcode') !!}
-	{!! Form::password('passcode') !!}
-	<br>
-	{!! Form::label('shuffle', 'shuffle') !!}
-	{!! Form::text('shuffle', Input::old('shuffle')) !!}
+	{!! Form::hidden('quest_id', $quest->id, array('id' => 'quest_id')) !!}
+
 	<br>
 	{!! Form::submit('Send it!') !!}
 	{!! Form::close() !!}
+
+
+
+	@endif
 	@endif
 	@endsection
+
+
+
+<script type="text/javascript">
+	
+</script>

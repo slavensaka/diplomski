@@ -31,7 +31,9 @@ s
 <td>{{ $question->shuffle_question }}</td>
 <td>{{ $question->type }}</td>
 <td>{{ $question->test_id }}</td>
-<td>{!! link_to_route('answers.create', 'Add new Answer', array($question,$answers) , array('class' => 'btn btn-info')) !!}</td>
+<td>{!! link_to_route('answers.create', 'Add new Answer', 
+       array('type' => $question->type, 'quest_id' => $question), 
+       array('class' => 'btn btn-info')) !!}</td>
 
 <td>{!! link_to_route('questions.edit', 'Edit Question', array($question->id), array('class' => 'btn btn-info')) !!}</td>
 <td>

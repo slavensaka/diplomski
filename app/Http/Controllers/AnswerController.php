@@ -10,7 +10,9 @@ use Dipl\Answer;
 use Redirect;
 use Test;
 use Dipl\Question;
+use DB;
 use Illuminate\Support\Collection;
+
 class AnswerController extends Controller {
 
 	/**
@@ -31,7 +33,11 @@ class AnswerController extends Controller {
 	public function create()
 	{
 		
-		return view('answers/create');
+		$type = Input::get('type');
+		$quest_id = Input::get('quest_id');
+		$quest = DB::table('questions')->where('id', $quest_id)->first();
+
+		return view('answers/create')->with(['type' => $type, 'quest' => $quest]);
 	}
 
 	/**
@@ -41,7 +47,14 @@ class AnswerController extends Controller {
 	 */
 	public function store()
 	{
-		//
+		// dd(Input::all());
+
+		$answer = new Answer;
+		$answer->answer = Input::get('answer');
+		$answer->correct = Input::get('correct');
+		$answer->question_id = Input::get('quest_id');
+		$answer->save();
+		return Redirect::back();
 	}
 
 	/**

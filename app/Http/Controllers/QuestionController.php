@@ -12,6 +12,7 @@ use Dipl\User;
 use Dipl\Answer;
 use Redirect;
 use DB;
+
 class QuestionController extends Controller {
 
 	/**
@@ -56,8 +57,10 @@ class QuestionController extends Controller {
 			$user_id = Auth::user()->id;
 			// $users_question= User::find(3)->questions;
 			$tests = User::find($user_id)->tests;
-			$test_id=  DB::table('questions')->orderBy('created_at', 'desc')->first();
-			return view('questions/create')->with('question_test_id', $test_id->id);
+			$question_id=  DB::table('questions')->orderBy('created_at', 'desc')->first();
+			
+			
+			return view('questions/create')->with('question_test_id', $question_id->test_id);
 		}
 	}
 
@@ -73,7 +76,9 @@ class QuestionController extends Controller {
 		// return Redirect::route('users.index');
 		// $lorem=Input::all();
 		// dd($lorem);
+		// dd(Input::all());
 		$question = new Question;
+		$question->test_id = Input::get('test_id');
 		$question->question = Input::get('question');
 		$question->points = Input::get('points');
 		$question->shuffle_question = Input::get('shuffle_question');
@@ -81,7 +86,7 @@ class QuestionController extends Controller {
 		// $user = User::find(Auth::user()->id);
 		// $user=(string)$user->id;
 		// $question->user_id = $user;
-		$question->test_id = Input::get('test_id');
+		
 		$question->save();
 		// return Redirect::action('QuestionController@show', array($test->id));
 
