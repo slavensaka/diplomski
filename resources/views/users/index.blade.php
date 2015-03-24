@@ -7,7 +7,7 @@
 	<h1>Your not logged in</h1>
 @else
 	<h1>Users Tests</h1>
-	<p>{!! link_to_route('tests.create', 'Add new test', array() , array('class' => 'btn btn-primary')) !!}</p>
+	<p>{!! link_to_route('tests.create', 'Create new test', array() , array('class' => 'btn btn-primary')) !!}</p>
 @if ($tests->count())
 		<table class="table table-striped table-bordered">
 		<thead>

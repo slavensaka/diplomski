@@ -14,7 +14,7 @@
 @if($type === 'multiple_choice') 
     	
 
-
+{{-- {!! dd($quest) !!} --}}
 <table class="table table-striped table-bordered">
 <thead>
 

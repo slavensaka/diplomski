@@ -52,9 +52,13 @@ class AnswerController extends Controller {
 		$answer = new Answer;
 		$answer->answer = Input::get('answer');
 		$answer->correct = Input::get('correct');
-		$answer->question_id = Input::get('quest_id');
+		$question_id = Input::get('quest_id');
+		$answer->question_id = $question_id;
 		$answer->save();
-		return Redirect::back();
+
+		$test_id = Question::find($question_id)->test;
+
+		return Redirect::action('QuestionController@show', array($test_id));
 	}
 
 	/**
@@ -66,7 +70,14 @@ class AnswerController extends Controller {
 	public function show($id)
 	{
 		$quest = Question::find($id)->test;
-
+		/**
+		
+			TODO:
+			- Ovo je kada u edit answers clickne se na cancel 
+			- mora slati nazad na Users Tests Questions
+		
+		**/
+		
 		dd($id); // question id
 		
 		return Redirect::action('QuestionController@show', array($test->id));
@@ -89,16 +100,30 @@ class AnswerController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update($id) // id od answer
 	{
 		$collection = Input::all();
-		$real_answer = Answer::find($id);
+		// dd($collection);
+		// array:4 [▼
+		  // "_method" => "PATCH"
+		  // "_token" => "sXnZYd5VO6jbp8UF4GJyhYn3xJ1J9mIavbhnx2BV"
+		  // "answer" => "Fury"
+		  // 32 => "1"]
 
+		$answer_id = array_keys($collection);
+		
+
+		$real_answer = Answer::find($answer_id[3]);
+		
+
+ 		// ZA key correct(0 ili 1)
 		$second = array_slice($collection, 3, 1);
 		$correct = $second[0][0];
 
 		$answer = Input::get('answer');
+
 		$correct = $correct;
+
 		$real_answer->update(['answer' => $answer, 'correct' => $correct ]);
 
 		$question = Answer::find($id)->question;

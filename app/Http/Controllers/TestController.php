@@ -9,7 +9,7 @@ use Input;
 use Dipl\User;
 use Dipl\Test;
 use Redirect;
-
+use Hash;
 class TestController extends Controller {
 
 	/**
@@ -49,7 +49,7 @@ class TestController extends Controller {
 		$test->test_name = Input::get('test_name');
 		$test->intro = Input::get('intro');
 		$test->conclusion = Input::get('conclusion');
-		$test->passcode = Input::get('passcode');
+		$test->passcode = Hash::make(Input::get('passcode'));
 		$test->shuffle = Input::get('shuffle');
 		$user = User::find(Auth::user()->id);
 		$user=(string)$user->id;
@@ -105,8 +105,17 @@ class TestController extends Controller {
 	{
 		$input = Input::all();
 		$test = Test::find($id);
+		 /**
+		 
+		 	TODO:
+		 	- Password is not secured when you edit
+		 	- 
+		 
+		 **/
+		 
+		// $test->passcode = Hash::make(Input::get('passcode'));
 		$test->update($input);
-		return Redirect::route('users.show', $id);
+		return Redirect::route('tests.index', $id);
 	}
 
 	/**
@@ -118,7 +127,7 @@ class TestController extends Controller {
 	public function destroy($id)
 	{
 		Test::find($id)->delete();
-		return Redirect::route('users.index');
+		return Redirect::route('tests.index');
 	}
 
 }

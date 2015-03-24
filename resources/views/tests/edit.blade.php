@@ -26,7 +26,7 @@
 	</li>
 	<li>
 		{!! Form::label('passcode', 'passcode:') !!}
-		{!! Form::text('passcode') !!}
+		{!! Form::password('passcode') !!}
 	</li>
 	<li>
 		{!! Form::label('shuffle', 'shuffle:') !!}
