@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 use Input;
 use Dipl\Answer;
 use Redirect;
-use Dipl\Test;
+use Test;
+use Dipl\Question;
 use Illuminate\Support\Collection;
 class AnswerController extends Controller {
 
@@ -29,7 +30,8 @@ class AnswerController extends Controller {
 	 */
 	public function create()
 	{
-		//
+		
+		return view('answers/create');
 	}
 
 	/**
@@ -50,7 +52,11 @@ class AnswerController extends Controller {
 	 */
 	public function show($id)
 	{
-		//
+		$quest = Question::find($id)->test;
+
+		dd($id); // question id
+		
+		return Redirect::action('QuestionController@show', array($test->id));
 	}
 
 	/**
@@ -81,8 +87,12 @@ class AnswerController extends Controller {
 		$answer = Input::get('answer');
 		$correct = $correct;
 		$real_answer->update(['answer' => $answer, 'correct' => $correct ]);
-		return Redirect::route('questions.show', $id);
 
+		$question = Answer::find($id)->question;
+		$test = Question::find($question->test_id)->test;
+		// dd($test);
+		return Redirect::back();
+// 
 // $test = new Test;
 // 		$test->test_name = Input::get('test_name');
 // 		$test->intro = Input::get('intro');

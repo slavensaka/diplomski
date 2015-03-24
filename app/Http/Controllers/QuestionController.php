@@ -11,6 +11,7 @@ use Dipl\Test;
 use Dipl\User;
 use Dipl\Answer;
 use Redirect;
+use DB;
 class QuestionController extends Controller {
 
 	/**
@@ -25,10 +26,15 @@ class QuestionController extends Controller {
 			return redirect()->guest('auth/login');
 		}
  			
-		return view('questions.index');
-		// dd($test->id);
+			
+		// $questions = Test::find($id)->questions;
+		// // $tests_answers=Test::find($id)->answers;
+		// $answers = Test::find($id)->answers;
+		// // $posts = Test::has('comments')->get();
 
-
+		// // $answers = Test::find(7)->answers->has('question_id')->get();
+		//  // dd($answers);
+		// return view('questions.show', compact('questions','answers'));
 	}
 
 	/**
@@ -39,13 +45,20 @@ class QuestionController extends Controller {
 	public function create()
 	{
 		$question = Input::all();
-		
-		 
+		// dd($question);
+		if(count($question)){
 		 foreach($question as $key => $value){
 	  			$question_test_id = $key;
 		}
 		
 		return view('questions/create')->with('question_test_id', $question_test_id);
+		} else {
+			$user_id = Auth::user()->id;
+			// $users_question= User::find(3)->questions;
+			$tests = User::find($user_id)->tests;
+			$test_id=  DB::table('questions')->orderBy('created_at', 'desc')->first();
+			return view('questions/create')->with('question_test_id', $test_id->id);
+		}
 	}
 
 	/**
@@ -58,6 +71,8 @@ class QuestionController extends Controller {
 		// dd(Input::all());
 		// Question::create($input);
 		// return Redirect::route('users.index');
+		// $lorem=Input::all();
+		// dd($lorem);
 		$question = new Question;
 		$question->question = Input::get('question');
 		$question->points = Input::get('points');
@@ -68,8 +83,12 @@ class QuestionController extends Controller {
 		// $question->user_id = $user;
 		$question->test_id = Input::get('test_id');
 		$question->save();
+		// return Redirect::action('QuestionController@show', array($test->id));
 
-		return redirect()->route('questions');
+		$last_question_id = DB::getPdo()->lastInsertId();
+		$test_id = Question::find($last_question_id)->test;
+		return Redirect::action('QuestionController@show', array($test_id));
+		// return redirect()->route('answers.show')->with('id',);
 
 
 
@@ -95,6 +114,8 @@ class QuestionController extends Controller {
 		
 		**/
 		// $users_question=User::find($id)->questions;
+		
+		// dd($id); Daje test id
 		$questions = Test::find($id)->questions;
 		// $tests_answers=Test::find($id)->answers;
 		$answers = Test::find($id)->answers;

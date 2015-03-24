@@ -21,9 +21,9 @@
 			    <p>
 			    	{!! link_to('auth/login', 'Admin login', array('class' => 'btn btn-primary')) !!}
 			    </p>
-			    <p>
+			    {{-- <p>
 			    	{!! link_to('auth/test_taker', 'Take a test!', array('class' => 'btn btn-primary')) !!}
-			    </p>
+			    </p> --}}
 			    	
 <h2> Take a tests that other users already made: </h2>	
 				

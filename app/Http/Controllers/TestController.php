@@ -63,7 +63,7 @@ class TestController extends Controller {
 		// $validation = Validator::make($input,User::rules);
 		// if($validation->passes()){
 		// Test::create($input);
-		return Redirect::route('users.index');
+		return Redirect::route('tests');
 		// }
 		// return Redirect::route('users.create')->withInput()->withErrors($validation)
 		// ->with('message','There were validation errors.');
@@ -90,7 +90,7 @@ class TestController extends Controller {
 	{
 		$test = Test::find($id);
 		if(is_null($test)) {
-			return Redirect::route('tests.index');
+			return Redirect::route('tests');
 		}
 		return view('tests.edit',compact('test'));	
 	}

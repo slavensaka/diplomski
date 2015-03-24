@@ -6,9 +6,9 @@
 @if (Auth::guest())
 	<h1>Your not logged in</h1>
 @else
-	<h1>Create a  Test</h1>
+	<h1>Create a New Test</h1>
 
-	{!! Form::open(array('route' => 'tests.store')) !!}
+	{!! Form::open(array('route' => 'answers.store')) !!}
  	{!! Form::label('test_name', 'Test_name') !!}
 	{!! Form::text('test_name', Input::old('test_name')) !!}
 	<br>
@@ -26,5 +26,5 @@
 	<br>
 	{!! Form::submit('Send it!') !!}
 	{!! Form::close() !!}
-@endif
-@endsection
+	@endif
+	@endsection

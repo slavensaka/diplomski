@@ -14,6 +14,7 @@ class CreateQuestionsTable extends Migration {
 			$table->boolean('shuffle_question');
 			$table->enum('type', array('true_false', 'multiple_choice', 'multiple_response', 'fill_in'));
 			$table->unsignedInteger('test_id');
+			$table->timestamps();
 		});
 	}
 

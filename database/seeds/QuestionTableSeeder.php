@@ -30,7 +30,8 @@ class QuestionTableSeeder extends Seeder {
 				'points' => 5,
 				'shuffle_question' => 1,
 				'type' => 'multiple_choice',
-				'test_id' => 1
+				'test_id' => 1,
+				'created_at' => date('Y-m-d H:i:s',strtotime("2010-03-21"))
 			));
 
 		// Question2
@@ -39,7 +40,8 @@ class QuestionTableSeeder extends Seeder {
 				'points' => 4,
 				'shuffle_question' => 0,
 				'type' => 'multiple_choice',
-				'test_id' => 1
+				'test_id' => 1,
+				'created_at' => date('Y-m-d H:i:s',strtotime("2010-03-21"))
 			));
 
 		// Question3
@@ -48,7 +50,8 @@ class QuestionTableSeeder extends Seeder {
 				'points' => 5,
 				'shuffle_question' => 1,
 				'type' => 'fill_in',
-				'test_id' => 2
+				'test_id' => 2,
+				'created_at' => date('Y-m-d H:i:s',strtotime("2010-03-21"))
 			));
 
 		// Question4
@@ -57,7 +60,8 @@ class QuestionTableSeeder extends Seeder {
 				'points' => 2,
 				'shuffle_question' => 1,
 				'type' => 'fill_in',
-				'test_id' => 2
+				'test_id' => 2,
+				'created_at' => date('Y-m-d H:i:s',strtotime("2010-03-21"))
 			));
 		// Question5
 		Question::create(array(
@@ -65,7 +69,8 @@ class QuestionTableSeeder extends Seeder {
 				'points' => 1,
 				'shuffle_question' => 1,
 				'type' => 'fill_in',
-				'test_id' => 2
+				'test_id' => 2,
+				'created_at' => date('Y-m-d H:i:s',strtotime("2010-04-21"))
 			));
 		// Question6
 		Question::create(array(
@@ -73,7 +78,8 @@ class QuestionTableSeeder extends Seeder {
 				'points' => 5,
 				'shuffle_question' => 0,
 				'type' => 'fill_in',
-				'test_id' => 2
+				'test_id' => 2,
+				'created_at' => date('Y-m-d H:i:s',strtotime("2010-04-21"))
 			));
 		// Question7
 		Question::create(array(
@@ -81,7 +87,8 @@ class QuestionTableSeeder extends Seeder {
 				'points' => 2,
 				'shuffle_question' => 1,
 				'type' => 'fill_in',
-				'test_id' => 2
+				'test_id' => 2,
+				'created_at' => date('Y-m-d H:i:s',strtotime("2010-06-21"))
 			));
 		// Question8
 		Question::create(array(
@@ -89,7 +96,8 @@ class QuestionTableSeeder extends Seeder {
 				'points' => 3,
 				'shuffle_question' => 0,
 				'type' => 'multiple_response',
-				'test_id' => 3
+				'test_id' => 3,
+				'created_at' => date('Y-m-d H:i:s',strtotime("2010-10-21"))
 			));
 		// Question9
 		Question::create(array(
@@ -97,7 +105,8 @@ class QuestionTableSeeder extends Seeder {
 				'points' => 4,
 				'shuffle_question' => 1,
 				'type' => 'multiple_choice',
-				'test_id' => 3
+				'test_id' => 3,
+				'created_at' => date('Y-m-d H:i:s',strtotime("2010-03-21"))
 			));
 		// Question10
 		Question::create(array(
@@ -105,7 +114,8 @@ class QuestionTableSeeder extends Seeder {
 				'points' => 2,
 				'shuffle_question' => 1,
 				'type' => 'true_false',
-				'test_id' => 3
+				'test_id' => 3,
+				'created_at' => date('Y-m-d H:i:s',strtotime("2010-12-21"))
 			));
 		// Question11
 		Question::create(array(
@@ -113,7 +123,8 @@ class QuestionTableSeeder extends Seeder {
 				'points' => 2,
 				'shuffle_question' => 0,
 				'type' => 'multiple_response',
-				'test_id' => 4
+				'test_id' => 4,
+				'created_at' => date('Y-m-d H:i:s',strtotime("2010-11-01"))
 			));
 		// Question12
 		Question::create(array(
@@ -121,7 +132,8 @@ class QuestionTableSeeder extends Seeder {
 				'points' => 5,
 				'shuffle_question' => 1,
 				'type' => 'true_false',
-				'test_id' => 5
+				'test_id' => 5,
+				'created_at' => date('Y-m-d H:i:s',strtotime("2010-03-20"))
 			));
 		// Question13
 		Question::create(array(
@@ -129,7 +141,8 @@ class QuestionTableSeeder extends Seeder {
 				'points' => 2,
 				'shuffle_question' => 1,
 				'type' => 'multiple_choice',
-				'test_id' => 6
+				'test_id' => 6,
+				'created_at' => date('Y-m-d H:i:s',strtotime("2010-11-17"))
 			));
 		// Question14
 		Question::create(array(
@@ -137,7 +150,8 @@ class QuestionTableSeeder extends Seeder {
 				'points' => 1,
 				'shuffle_question' => 0,
 				'type' => 'multiple_response',
-				'test_id' => 6
+				'test_id' => 6,
+				'created_at' => date('Y-m-d H:i:s',strtotime("2010-12-25"))
 			));
 	}
 }

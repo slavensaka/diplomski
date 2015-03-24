@@ -31,7 +31,7 @@
 	</li>
 	<li>
 		{!! Form::submit('Update Question', array('class' => 'btn btn-info')) !!}
-		{!! link_to_route('questions.show', 'Cancel', $question->id, array('class' => 'btn btn-danger')) !!}
+		{!! link_to_route('answers.show', 'Cancel', $question->id, array('class' => 'btn btn-danger')) !!}
 	</li>
 	</ul>
 		{!! Form::close() !!}
@@ -42,11 +42,11 @@
 
 @foreach ($answers as $answer)
 
-	{!! Form::model($answers, array('method' => 'PATCH', 'route' =>array('answers.update',$answer->id)), function(){       }) !!}
+	{!! Form::model($answers, array('method' => 'PATCH', 'route' =>array('answers.update',$question->id)), function(){       }) !!}
 	
 <ul>
 	
-    {!! $answer->id !!}
+    {{-- {!! $answer->id !!} --}}
    
   
 
@@ -73,16 +73,17 @@
 	
 	</li>
 
+
 	<li>
 		{!! Form::submit('Update Answers', array('class' => 'btn btn-info updated_answers')) !!}
 
-		{!! link_to_route('answers.show', 'Cancel',  array('class' => 'btn btn-danger')) !!}
+		{!! link_to_route('answers.show', 'Cancel', $question->id , array('class' => 'btn btn-danger')) !!}
 	</li>
 
 
-	</ul>
+	
 		{!! Form::close() !!}
-
+	</ul>
 @endforeach	
 	
 <script type="text/javascript">
@@ -262,7 +263,7 @@ return function() {
 
 
 
-	{!! Form::model($question, array('method' => 'PATCH', 'route' =>array('questions.update', $question->id)), function(){       }) !!}
+	{!! Form::model($question, array('method' => 'PATCH', 'route' =>array('questions.edit', $question->id)), function(){       }) !!}
 <ul>
 	<li>
 		{!! Form::label('question', 'Question:') !!}
