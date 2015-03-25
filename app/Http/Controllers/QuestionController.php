@@ -3,7 +3,7 @@
 use Dipl\Http\Requests;
 use Dipl\Http\Controllers\Controller;
 
-use Illuminate\Http\Request;
+
 use Auth;
 use Input;
 use Dipl\Question;
@@ -12,7 +12,10 @@ use Dipl\User;
 use Dipl\Answer;
 use Redirect;
 use DB;
+use Request;
 
+use Carbon\Carbon;
+use Route;
 class QuestionController extends Controller {
 
 	/**
@@ -48,6 +51,7 @@ class QuestionController extends Controller {
 		$question = Input::all();
 		// dd($question);
 		if(count($question)){
+
 		 foreach($question as $key => $value){
 	  			$question_test_id = $key;
 		}
@@ -57,10 +61,15 @@ class QuestionController extends Controller {
 			$user_id = Auth::user()->id;
 			// $users_question= User::find(3)->questions;
 			$tests = User::find($user_id)->tests;
-			$question_id=  DB::table('questions')->orderBy('created_at', 'desc')->first();
+			$question_test_id = $tests->last()->id;
+			// $question_id=  DB::table('questions')->orderBy('created_at', 'desc')->first();
 			
+			// $question_id->test_id = $question_id->test_id+1;
+			// dd($question_id->test_id);
+			return view('questions/create')->with('question_test_id', $question_test_id);
+			// $user_id = Auth::user();
+			// dd($user_id);
 			
-			return view('questions/create')->with('question_test_id', $question_id->test_id);
 		}
 	}
 
@@ -83,13 +92,15 @@ class QuestionController extends Controller {
 		$question->points = Input::get('points');
 		$question->shuffle_question = Input::get('shuffle_question');
 		$question->type = Input::get('type');
+		$question->created_at = Carbon::now();
+		$question->updated_at = Carbon::now()->addMinutes(2);
 		// $user = User::find(Auth::user()->id);
 		// $user=(string)$user->id;
 		// $question->user_id = $user;
 		
 		$question->save();
 		// return Redirect::action('QuestionController@show', array($test->id));
-
+		// dd(DB::getQueryLog());
 		$last_question_id = DB::getPdo()->lastInsertId();
 		$test_id = Question::find($last_question_id)->test;
 		return Redirect::action('QuestionController@show', array($test_id));

@@ -1,5 +1,3 @@
-s
-
 
 @extends('app')
 @section('content')
@@ -23,6 +21,7 @@ s
 </tr>
 </thead>
 <tbody>
+
 @foreach ($questions as $question)
 <tr>
 <td>{{ $question->id }}</td>
@@ -81,6 +80,7 @@ s
 </tbody>
 </table>
 @else
+
 There are no questions for this test. Create
 
 
