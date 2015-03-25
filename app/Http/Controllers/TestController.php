@@ -11,6 +11,7 @@ use Dipl\Test;
 use Redirect;
 use Hash;
 use DB;
+use Carbon\Carbon;
 class TestController extends Controller {
 
 	/**
@@ -108,10 +109,11 @@ class TestController extends Controller {
 	{
 		
 		$passcode = Hash::make(Input::get('passcode'));
+		$updated_at = Carbon::now();
 		DB::table('tests')->where('id', $id)->update(array(
 			'test_name' => Input::get('test_name'), 'intro' => Input::get('intro'),
 			'conclusion' => Input::get('conclusion'), 'shuffle' => Input::get('shuffle'),
-			'passcode' => $passcode
+			'passcode' => $passcode, 'updated_at' => $updated_at
 			));
 		return Redirect::route('tests.index', $id);
 	}

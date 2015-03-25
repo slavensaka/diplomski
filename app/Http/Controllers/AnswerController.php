@@ -8,11 +8,12 @@ use Illuminate\Http\Request;
 use Input;
 use Dipl\Answer;
 use Redirect;
+use Response;
 use Test;
 use Dipl\Question;
 use DB;
 use Illuminate\Support\Collection;
-
+use App;
 class AnswerController extends Controller {
 
 	/**
@@ -54,8 +55,14 @@ class AnswerController extends Controller {
 		$answer->correct = Input::get('correct');
 		$question_id = Input::get('quest_id');
 		$answer->question_id = $question_id;
-		$answer->save();
 
+		// $answers = DB::table('anwsers')->where('correct','=', 1)
+		// ->where('question_id','=', $answer->question_id)->get();
+   		
+   		
+		// dd($answers);
+		$answer->save();
+		// return Response::json($answers, 500);
 		$test_id = Question::find($question_id)->test;
 
 		return Redirect::action('QuestionController@show', array($test_id));
@@ -70,17 +77,7 @@ class AnswerController extends Controller {
 	public function show($id)
 	{
 		$quest = Question::find($id)->test;
-		/**
-		
-			TODO:
-			- Ovo je kada u edit answers clickne se na cancel 
-			- mora slati nazad na Users Tests Questions
-		
-		**/
-		
-		dd($id); // question id
-		
-		return Redirect::action('QuestionController@show', array($test->id));
+		return Redirect::action('QuestionController@show', array($quest));
 	}
 
 	/**
