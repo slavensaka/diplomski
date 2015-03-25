@@ -14,6 +14,7 @@ use Dipl\Question;
 use DB;
 use Illuminate\Support\Collection;
 use App;
+use Route;
 class AnswerController extends Controller {
 
 	/**
@@ -38,7 +39,11 @@ class AnswerController extends Controller {
 		$quest_id = Input::get('quest_id');
 		$quest = DB::table('questions')->where('id', $quest_id)->first();
 
+		// return view('questions/edit')->with(['type' => $type, 'quest' => $quest]);
 		return view('answers/create')->with(['type' => $type, 'quest' => $quest]);
+		// return Redirect::to('answers.single');
+		// return Redirect::action('AnswerController@single', array(['type' => $type, 'quest' => $quest]));
+		// return redirect('answers/single');
 	}
 
 	/**
@@ -59,13 +64,26 @@ class AnswerController extends Controller {
 		// $answers = DB::table('anwsers')->where('correct','=', 1)
 		// ->where('question_id','=', $answer->question_id)->get();
    		
-   		
+
 		// dd($answers);
 		$answer->save();
 		// return Response::json($answers, 500);
-		$test_id = Question::find($question_id)->test;
 
+		$answers = DB::table('anwsers')->where('correct','=', 1)
+		->where('question_id','=', $answer->question_id)->get();
+   		if (count($answers) === 1) {
+   			return 'Ima jedan';
+   		} else {
+   			return 'Ima više';
+   		}
+
+		$test_id = Question::find($question_id)->test;
+		// return redirect('answers/single')->with(['question_id' => $answer->question_id ]);
+		// return redirect()->action('AnswerController@single');
+		// return redirect('answers/single')->with(['question_id' => $answer->question_id, 'quest' => $quest]);
 		return Redirect::action('QuestionController@show', array($test_id));
+		// return redirect('single',compact('test_id'));
+		// 	// )->with(['test_id' => $test_id]);
 	}
 
 	/**
@@ -154,5 +172,7 @@ class AnswerController extends Controller {
 		Answer::find($id)->delete();
 		return redirect()->back();
 	}
+
+	
 
 }

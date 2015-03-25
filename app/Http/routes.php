@@ -24,7 +24,22 @@ Route::get('/', 'WelcomeController@index');
 *
 **/
 Route::get('home', 'HomeController@index');
+// Route::get('answers/single', 'AnswerController@single');
+ // Route::get('answers/single', array(
+ // 	'as' => 'answers.single', 'uses' => 'AnswerController@single'))
+ // 	->with($question_id);
 
+// Route::get('single/{test_id?}', function(){
+// 	dd(Input::all());
+// });
+
+
+// public function single()
+// 	{
+
+// 		$answers = DB::table('anwsers')->where('correct','=', 1)
+// 		->where('question_id','=', $question_id)->get();
+// 	}
 /**
 *
 * Tests

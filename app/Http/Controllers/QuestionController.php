@@ -156,9 +156,19 @@ class QuestionController extends Controller {
 		$question = Question::find($id);
 		
 		$answers = Question::find($id)->answers;
-		
+		if($question->type === 'multiple_choice') {
+			return view('questions.edit',compact('question','answers'));	
+		} else if ($question->type === 'true_false'){
+			return view('questions.true_false',compact('question','answers'));
+		} else if($question->type === 'multiple_response') {
+			return 'Lorem';
+		} else { // 'fill_in'
+			return 'Lorem';
+		}
 
-		return view('questions.edit',compact('question','answers'));	
+
+		
+		
 
 	}
 

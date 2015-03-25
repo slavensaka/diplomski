@@ -9,8 +9,26 @@
 @else
 	<h1>Edit a Question</h1>
 @endif	
+{{-- 
+@if( "answers/create" === Route::current()->getUri() )
+<h1>Add new Answer</h1>
+	{!! Form::open(array('route' => 'answers.store')) !!}
 
-@if($question->type === 'multiple_choice') 
+	<br>
+	{!! Form::label('answer', 'Answer') !!}
+	{!! Form::text('answer',Input::old('answer')) !!}
+	<br>
+	{!! Form::label('correct', 'correct') !!}
+	{!! Form::text('correct', Input::old('correct')) !!}
+	<br>
+	{!! Form::hidden('quest_id', $quest->id, array('id' => 'quest_id')) !!}
+
+	<br>
+	{!! Form::submit('Send it!') !!}
+	{!! Form::close() !!}
+@else
+ --}}
+
 
 
 {!! Form::model($question, array('method' => 'PATCH', 'route' =>array('questions.update', $question->id)), function(){       }) !!}
@@ -37,7 +55,7 @@
 		{!! Form::close() !!}
 	
 <h1>Edit answers</h1>
-
+	
 <h2 id="divCheckbox" style="display: none; color: red;"></h2>
 
 @foreach ($answers as $answer)
@@ -85,7 +103,7 @@
 		{!! Form::close() !!}
 	</ul>
 @endforeach	
-	
+
 <script type="text/javascript">
 $( document ).ready(function() {
 
@@ -253,72 +271,4 @@ return function() {
  </script>
 
 
-
-
-
-
-
-@else 
-
-
-
-
-	{!! Form::model($question, array('method' => 'PATCH', 'route' =>array('questions.edit', $question->id)), function(){       }) !!}
-<ul>
-	<li>
-		{!! Form::label('question', 'Question:') !!}
-		{!! Form::text('question') !!}		            	            
-
-	</li>
-	<li>
-		{!! Form::label('points', 'Points:') !!}
-		{!! Form::text('points') !!}
-	
-	</li>
-	<li>
-		{!! Form::label('shuffle_question', 'shuffle_question:') !!}
-		{!! Form::text('shuffle_question') !!}
-	</li>
-	<li>
-		{!! Form::submit('Update Question', array('class' => 'btn btn-info')) !!}
-		{!! link_to_route('questions.show', 'Cancel', $question->id, array('class' => 'btn btn-danger')) !!}
-	</li>
-	</ul>
-		{!! Form::close() !!}
-
-
-	<h1>Edit answers</h1>
-
-	{!! Form::model($answers, array('method' => 'PATCH', 'route' =>array('answers.update')), function(){       }) !!}
-<ul>
-	@foreach ($answers as $answer)
-    {!! $answer->id !!}
-   
-    <?php $answers = Answer::find($answer->id)  ?>
-
-  		
-	<li>
-		{!! Form::label('answer', 'Answer:') !!}
-		{!! Form::text('answer', $answers->answer) !!}		            	            
-
-	</li>
-	<li>
-		{!! Form::label('correct', 'Correct:') !!}
-		{!! Form::text( 'correct',$answers->correct) !!}
-	
-	</li>
-@endforeach	
-	<li>
-		{!! Form::submit('Update Answers', array('class' => 'btn btn-info')) !!}
-
-		{!! link_to_route('answers.show', 'Cancel', $answers->id, array('class' => 'btn btn-danger')) !!}
-	</li>
-	
-
-	</ul>
-		{!! Form::close() !!}
-
-
-
-@endif
 @endsection		
