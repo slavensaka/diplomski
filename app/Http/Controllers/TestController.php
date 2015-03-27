@@ -25,7 +25,6 @@ class TestController extends Controller {
 		{
 			return redirect()->guest('auth/login');
 		}
-
 		$tests = User::find(Auth::id())->tests;
 		return view('users.index', compact('tests'));
 	}
@@ -51,26 +50,13 @@ class TestController extends Controller {
 		$test->test_name = Input::get('test_name');
 		$test->intro = Input::get('intro');
 		$test->conclusion = Input::get('conclusion');
-
 		$test->passcode = Hash::make(Input::get('passcode'));
-
 		$test->shuffle = Input::get('shuffle');
 		$user = User::find(Auth::user()->id);
 		$user=(string)$user->id;
 		$test->user_id = $user;
 		$test->save();
-		
-		
-
-
-
-		// $validation = Validator::make($input,User::rules);
-		// if($validation->passes()){
-		// Test::create($input);
 		return Redirect::route('tests');
-		// }
-		// return Redirect::route('users.create')->withInput()->withErrors($validation)
-		// ->with('message','There were validation errors.');
 	}
 
 	/**
@@ -106,8 +92,7 @@ class TestController extends Controller {
 	 * @return Response
 	 */
 	public function update($id)
-	{
-		
+	{	
 		$passcode = Hash::make(Input::get('passcode'));
 		$updated_at = Carbon::now();
 		DB::table('tests')->where('id', $id)->update(array(

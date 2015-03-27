@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Test extends Model {
 	protected $table = 'tests';
-	public $timestamps = true;
+	protected $hidden = ['passcode'];
 	protected $fillable = ['test_name', 'intro', 'conclusion', 'passcode', 'shuffle', 
 						   'test_id', 'is_published'];
-
+	public $timestamps = true;
+	
 	public function user()
 	{
 		return $this->belongsTo('Dipl\User');

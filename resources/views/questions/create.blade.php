@@ -1,7 +1,5 @@
 @extends('app')
-
 @section('content')
-
 
 @if (Auth::guest())
 	<h1>Your not logged in</h1>
@@ -20,20 +18,16 @@
 	{!! Form::text('shuffle_question', Input::old('shuffle_question')) !!}
 	<br>
 	{!! Form::label('type', 'type') !!}
-	{{-- {!! Form::text('type', Input::old('type')) !!} --}}
 	{!! Form::select('type', [
    					'multiple_choice' => 'multiple_choice',
 		   			'true_false' => 'true_false',
 			    	'multiple_response' => 'multiple_response',
 				    'fill_in' => 'fill_in'], null, ['class' => 'type_select']) !!}
 	<br>
-	{{-- {!! Form::label('test_id', 'test_id') !!} --}}
 	{!! Form::hidden('test_id', $question_test_id, array('id' => 'question')) !!}
-	{{-- {{ Form::hidden('test_id', ) }} --}}
-	{{-- <br> --}}
-	
 	<br>
 	{!! Form::submit('Send it!') !!}
 	{!! Form::close() !!}
-	@endif
-	@endsection
+
+@endif
+@endsection

@@ -9,14 +9,14 @@ class CreateTestsTable extends Migration {
 	{
 		Schema::create('tests', function(Blueprint $table) {
 			$table->increments('id');
-			$table->timestamps();
 			$table->string('test_name');
 			$table->string('intro');
 			$table->text('conclusion');
 			$table->string('passcode', 60);
-			$table->boolean('shuffle');
-			$table->boolean('is_published');
+			$table->boolean('shuffle')->default('0');
+			$table->boolean('is_published')->default('0');
 			$table->unsignedInteger('user_id');
+			$table->timestamps();
 		});
 	}
 

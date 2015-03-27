@@ -1,7 +1,5 @@
 @extends('app')
-
 @section('content')
-
 
 @if (Auth::guest())
 	<h1>Your not logged in</h1>
@@ -26,5 +24,6 @@
 	<br>
 	{!! Form::submit('Send it!') !!}
 	{!! Form::close() !!}
-	@endif
-	@endsection
+
+@endif
+@endsection

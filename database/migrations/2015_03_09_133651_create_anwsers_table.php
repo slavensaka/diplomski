@@ -10,7 +10,7 @@ class CreateAnwsersTable extends Migration {
 		Schema::create('anwsers', function(Blueprint $table) {
 			$table->increments('id');
 			$table->text('answer');
-			$table->boolean('correct');
+			$table->boolean('correct')->default('0');
 			$table->unsignedInteger('question_id');
 		});
 	}
