@@ -4,5 +4,5 @@ $(document).ready(function() {
 
 function removeThePublish(myArray) {
 		
-		console.log("lorem");
+		// console.log("lorem");
 	}

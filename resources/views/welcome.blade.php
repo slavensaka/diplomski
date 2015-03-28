@@ -31,12 +31,15 @@
                         <th>Conclusion</th>
                         <th>Test is Shuffled</th>
                         <th>Is_published</th>
-                        <th>Has Passcode</th>
+                        <th>Is_public</th>
                         <th>user_id</th>
                     </tr>
                 </thead>
                 <tbody>
+
+                   
                     @foreach ($users_published_tests as $published_test)
+                    @if($published_test->is_published && $published_test->is_public)
                     <tr>
                         <td>{{ $published_test->name }}</td>
                         <td>{{ $published_test->id }}</td>
@@ -45,13 +48,14 @@
                         <td>{{ $published_test->conclusion }}</td>
                         <td>{{ $published_test->shuffle }}</td>
                         <td>{{ $published_test->is_published }}</td>
-                        <td>NULL</td> {{-- Something to be done --}}
+                        <td>{{ $published_test->is_public }}</td>
                         <td>{{ $published_test->user_id }}</td>
                         <td>{!! link_to_route('questions.show', 'Take This Test', 
                         		array($published_test->id), 
                         		array('class' => 'btn btn-danger')) !!}
                         </td>
                     </tr>
+                    @endif
                     @endforeach
                 </tbody>
             </table>

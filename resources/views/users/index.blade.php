@@ -27,6 +27,7 @@
 					<th>Intro</th>
 					<th>Conclusion</th>
 					<th>user_id</th>
+					<th>Is_Public</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -37,6 +38,7 @@
 					<td>{{ $test->intro }}</td>
 					<td>{{ $test->conclusion }}</td>
 					<td>{{ $test->user_id }}</td>
+					<td>{{ $test->is_public }}</td>
 					<td>
 						{!! link_to_route('questions.show', 'Add Questions', 
 						array($test->id), array('class' => 'btn btn-danger')) !!}

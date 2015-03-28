@@ -7,6 +7,13 @@ $(document).ready(function() {
     });
 
     $('input.btn.btn-info.updated_answers').click(createCallback(myArray));
+
+    $('input#shuffle').click(function(){
+        // var lr =$('input[type=checkbox]:checked');
+    var lr = $('#is_public:checked').length;
+        console.log(lr);
+    
+});
 });
 
 function createCallback(myArray) {

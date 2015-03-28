@@ -17,6 +17,7 @@ class TestTableSeeder extends Seeder {
 				'passcode' => Hash::make('1234'),
 				'shuffle' => 1,
 				'is_published' => 1,
+				'is_public' => 1,
 				'user_id' => 1
 			));
 
@@ -28,6 +29,7 @@ class TestTableSeeder extends Seeder {
 				'passcode' => Hash::make('1234'),
 				'shuffle' => 1,
 				'is_published' => 1,
+				'is_public' => 1,
 				'user_id' => 1
 			));
 
@@ -39,6 +41,7 @@ class TestTableSeeder extends Seeder {
 				'passcode' => Hash::make('1234'),
 				'shuffle' => 0,
 				'is_published' => 1,
+				'is_public' => 1,
 				'user_id' => 2
 			));
 
@@ -50,6 +53,7 @@ class TestTableSeeder extends Seeder {
 				'passcode' => Hash::make('1234'),
 				'shuffle' => 1,
 				'is_published' => 1,
+				'is_public' => 0,
 				'user_id' => 3
 			));
 		// Test5
@@ -60,6 +64,7 @@ class TestTableSeeder extends Seeder {
 				'passcode' => Hash::make('1234'),
 				'shuffle' => 1,
 				'is_published' => 0,
+				'is_public' => 1,
 				'user_id' => 3
 			));
 		// Test6
@@ -70,6 +75,7 @@ class TestTableSeeder extends Seeder {
 				'passcode' => Hash::make('1234'),
 				'shuffle' => 1,
 				'is_published' => 1,
+				'is_public' => 1,
 				'user_id' => 3
 			));
 	}
