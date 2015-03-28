@@ -19,7 +19,10 @@
 		],
 		"psr-4": {
 			"Dipl\\": "app/"
-		}
+		},
+		"files": [
+			"App/Support/HelperFunctions.php"
+		]
 	},
 	"autoload-dev": {
 		"classmap": [

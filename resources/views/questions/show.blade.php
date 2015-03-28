@@ -103,6 +103,11 @@
 		array($question->test_id), 
 		array('class' => 'btn btn-primary')) !!}
 </p>
+
+@if(Session::has('success'))
+{!! Session::get('success'); !!}
+@endif
+
 		</tbody>
 		</table>
 @else
@@ -112,6 +117,11 @@
 		array(), 
 		array('class' => 'btn btn-primary')) !!}
 </p>
+
+@if(Session::has('success'))
+{!! Session::get('success'); !!}
+@endif
+
 
 @endif
 @stop

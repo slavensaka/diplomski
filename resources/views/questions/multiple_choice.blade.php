@@ -12,7 +12,9 @@
 
 {!! link_to_route('answers.show', 'Go Back', $question->id , 
 	array('class' => 'btn btn-warning')) !!}
-
+@if(Session::has('message'))
+{!! Session::get('message'); !!}
+@endif
  <?php 
  $answer =  $answers->toArray() ;
  ?>
@@ -34,6 +36,7 @@
 		{!! Form::hidden("correct_form[$i][correct]", 0, false) !!}
 	    {!! Form::checkbox("correct_form[$i][correct]", 1, $answer[$i-1]['correct']) !!}
 	    {!! Form::hidden( 'route' , Route::getCurrentRoute()->getPath(), false ) !!}
+	    {!! Form::hidden( 'question_test_id' , $question->test_id, false ) !!}
 	 </li>
 
 
