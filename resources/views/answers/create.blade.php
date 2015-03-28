@@ -1,6 +1,6 @@
 @extends('app')
 @section('content')
-
+{{-- {!! dd($quest) !!} --}}
 @if (Auth::guest())
 	<h1>Your not logged in</h1>
 @else
@@ -28,15 +28,23 @@
     <tbody>
     </tbody>
 </table>
-
+<p>
+    @if(Session::has('message'))
+{!! Session::get('message'); !!}
+@endif
+</p>
 	{!! Form::open(array('route' => 'answers.store')) !!}
 	<br>
 	{!! Form::label('answer', 'Answer') !!}
 	{!! Form::text('answer',Input::old('answer')) !!}
 	<br>
-	{!! Form::label('correct', 'correct') !!}
-	{!! Form::text('correct', Input::old('correct')) !!}
-	<br>
+	
+        {!! Form::label('correct', 'Correct:') !!}
+        {!! Form::hidden("correct", 0, false) !!}
+        {!! Form::checkbox("correct", 1, Input::old('correct')) !!}
+        {{-- {!! Form::hidden( 'route' , Route::getCurrentRoute()->getPath(), false ) !!} --}}
+        {{-- {!! Form::hidden( 'question_test_id' , $question->test_id, false ) !!} --}}
+    <br>
 	{!! Form::hidden('quest_id', $quest->id, array('id' => 'quest_id')) !!}
 	<br>
 	{!! Form::submit('Send it!') !!}

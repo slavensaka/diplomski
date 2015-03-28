@@ -20,6 +20,15 @@
  ?>
 
 @for ($i=1; $i <= count($answers); $i++)
+
+{{-- {!! dd($answer[$i-1]['id']); !!} --}}{{-- 
+					{!! Form::open(array('method'=> 'DELETE', 
+						'route' => array('answers.destroy', $answer[$i-1]['id']))) !!}
+					{!! Form::hidden( 'route' , Route::getCurrentRoute()->getPath(), false ) !!}
+					{!! Form::submit('Delete', array('class' => 'btn btn-danger')) !!}
+					{!! Form::close() !!}
+ --}}
+
 	{!! Form::model($answers, array('method' => 'PATCH', 'route' =>array('answers.update',$question->id)), function(){ }) !!}
 <ul>
 	<li>
@@ -49,7 +58,7 @@
 			array('class' => 'btn btn-danger')) !!}
 	</li>	
 		{!! Form::close() !!}
-
+				
 
 
 @endsection		

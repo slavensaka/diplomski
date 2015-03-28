@@ -46,21 +46,53 @@ class AnswerController extends Controller {
      */
     public function store()
     {
-        $answer = new Answer;
-        $answer->answer = Input::get('answer');
-        $answer->correct = Input::get('correct');
-        $question_id = Input::get('quest_id');
-        $answer->question_id = $question_id;
-        $answer->save();
-        $answers = DB::table('anwsers')->where('correct','=', 1)
-        ->where('question_id','=', $answer->question_id)->get();
-           if (count($answers) === 1) {
-               return 'Ima jedan';
-           } else {
-               return 'Ima više';
-           }
-        $test_id = Question::find($question_id)->test;
+       
+
+
+     $answers = DB::table('anwsers')->where('question_id', '=', Input::get('quest_id'))
+     ->where('correct', '=', 1)->sum('correct');
+        $new_answer = Input::get("correct");
+        $answers += (int)$new_answer;
+        if($answers > 1) {
+            
+            $question_id = Input::get('quest_id');
+            $test_id = Question::find($question_id)->test;
+            return Redirect::back()->with('message','Nije Spremljeno, 
+                imate više od jedan kao točan. ISPRAVITE');
+        }
+        
+            $answer = new Answer;
+            $answer->answer = Input::get('answer');
+            $answer->correct = Input::get('correct');
+            $question_id = Input::get('quest_id');
+            $answer->question_id = $question_id;
+            $answer->save();
+            $answers = DB::table('anwsers')->where('correct','=', 1)
+            ->where('question_id','=', $answer->question_id)->get();
+
+             $test_id = Question::find($question_id)->test;
         return Redirect::action('QuestionController@show', array($test_id));
+       
+
+        
+          
+
+
+            // DB::table('anwsers')->where('id', Input::get("answer_id_form.$i"))
+            //     ->update(array('answer' => current(Input::get("answer_form")[$i]) ,
+            //     'correct' => current(Input::get("correct_form")[$i]) ));
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     /**
@@ -98,8 +130,8 @@ class AnswerController extends Controller {
  
 
         if(Input::get('route') === "questions/{questions}/edit") {
-
-            $count = count(Input::get('answer_id_form'));
+              
+            
             $question_test_id = Input::get('question_test_id');
 
             $items = array_flatten(Input::get("correct_form"));
@@ -108,23 +140,26 @@ class AnswerController extends Controller {
 
             if(!('Spremljeno' === $selected)){
             	return Redirect::back()->with('message',$selected);
-           return Redirect::action('QuestionController@show', 
-                    array($question_test_id))->with('message',$selected);
+           // return Redirect::action('QuestionController@show', 
+           //          array($question_test_id))->with('message',$selected);
 
            	} else {
 
-
+            $count = count(Input::get('answer_id_form'));
             for($i=1; $i <= $count; $i++)
             {
+
                 DB::table('anwsers')->where('id', Input::get("answer_id_form.$i"))
-                ->update(array('answer' => current(Input::get("answer_form")[$i]) ,
+                ->update(array('answer' => current(Input::get("answer_form")[$i]),
                 'correct' => current(Input::get("correct_form")[$i]) ));
 
-                return Redirect::action('QuestionController@show', 
-                    array($question_test_id))->with('success',$selected);
+
+                
             } 
+            return Redirect::action('QuestionController@show', 
+            array($question_test_id))->with('success','UPDATED ANSWERS');
                } 
-        } else {
+        } else { // Is_correct UPDATE SA questions.show
        		 $question = Answer::find($id)->question;
        		 $answers_count = DB::table('anwsers')->where('question_id','=', $question->id)
         	->where('correct','=', 1)->get();
@@ -165,8 +200,18 @@ class AnswerController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy($id) // id answera
     {
+        // dd(Input::all());
+        // if(Input::get('route') === "questions/{questions}/edit") {
+        //     $id =Input::get("answer_id_form");
+        //     dd($id);
+
+        //     Answer::find($id)->delete();;
+                
+        //     return redirect()->back();
+        // }
+        
         Answer::find($id)->delete();
         return redirect()->back();
     }

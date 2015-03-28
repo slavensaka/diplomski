@@ -56,7 +56,8 @@ class TestController extends Controller {
 		$user=(string)$user->id;
 		$test->user_id = $user;
 		$test->save();
-		return Redirect::route('tests');
+		return Redirect::route('tests')
+		->with('message','CREATED NEW TEST');
 	}
 
 	/**
@@ -100,7 +101,8 @@ class TestController extends Controller {
 			'conclusion' => Input::get('conclusion'), 'shuffle' => Input::get('shuffle'),
 			'passcode' => $passcode, 'updated_at' => $updated_at
 			));
-		return Redirect::route('tests.index', $id);
+		return Redirect::route('tests.index', $id)
+		->with('message', 'TEST UPDATED');
 	}
 
 	/**

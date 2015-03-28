@@ -14,19 +14,19 @@
 		</li>
 		<li>
 			{!! Form::label('intro', 'intro:') !!}
-			{!! Form::text('intro') !!}
+			{!! Form::text('intro', Input::old('intro')) !!}
 		</li>
 		<li>
 			{!! Form::label('conclusion', 'conclusion:') !!}
-			{!! Form::text('conclusion') !!}
+			{!! Form::text('conclusion',Input::old('conclusion')) !!}
 		</li>
 		<li>
 			{!! Form::label('passcode', 'passcode:') !!}
-			{!! Form::password('passcode') !!}
+			{!! Form::password('passcode', Input::old('passcode')) !!}
 		</li>
 		<li>
 			{!! Form::label('shuffle', 'shuffle:') !!}
-			{!! Form::text('shuffle') !!}
+			{!! Form::text('shuffle', Input::old('shuffle(array)')) !!}
 		</li>
 		<li>
 			{!! Form::submit('Update', array('class' => 'btn btn-info')) !!}

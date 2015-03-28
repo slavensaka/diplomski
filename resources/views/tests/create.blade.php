@@ -17,7 +17,7 @@
 	{!! Form::text('conclusion', Input::old('conclusion')) !!}
 	<br>
 	{!! Form::label('passcode', 'Passcode') !!}
-	{!! Form::password('passcode') !!}
+	{!! Form::password('passcode', Input::old('passcode')) !!}
 	<br>
 	{!! Form::label('shuffle', 'shuffle') !!}
 	{!! Form::text('shuffle', Input::old('shuffle')) !!}

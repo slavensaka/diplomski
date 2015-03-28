@@ -26,11 +26,15 @@ Route::resource('tests', 'TestController');
 Route::resource('answers', 'AnswerController');
 Route::resource('questions','QuestionController');
 
+Route::get('publish', ['as' => 'publish', 'uses' => 'PublishController@publish']);
+Route::get('unpublish', ['as' => 'unpublish', 'uses' => 'PublishController@unpublish']);
 /**
 *
 * Experimental file uploader
 *
 **/
+
+
 
 Route::get('fileform', function()
 {

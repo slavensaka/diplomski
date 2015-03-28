@@ -9,6 +9,11 @@
 @else
 	<h1>Users Tests Questions</h1>
 {{-- {!! dd($answers) !!} --}}
+
+@if(Session::has('message'))
+{!! Session::get('message'); !!}
+@endif
+
 @if($questions->count())
 	<table class="table table-striped table-bordered">
 		<thead>
@@ -75,9 +80,7 @@
 					{!! Form::submit('Update', 
 						array('class' => 'btn btn-danger')) !!}
 					{!! Form::close() !!}
-					@if(Session::has('message'))
-						{!! Session::get('message'); !!}
-	    			@endif
+					
 	    		</td>
 	    		
 				<td>{{ $tests_answer->question_id }}</td>
@@ -121,6 +124,7 @@
 @if(Session::has('success'))
 {!! Session::get('success'); !!}
 @endif
+
 
 
 @endif
