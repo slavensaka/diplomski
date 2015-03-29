@@ -46,12 +46,14 @@ class TestController extends Controller {
 	 */
 	public function store()
 	{
+		
 		$test = new Test;
 		$test->test_name = Input::get('test_name');
 		$test->intro = Input::get('intro');
 		$test->conclusion = Input::get('conclusion');
 		$test->passcode = Hash::make(Input::get('passcode'));
 		$test->shuffle = Input::get('shuffle');
+		$test->is_public = Input::get('is_public');
 		$user = User::find(Auth::user()->id);
 		$user=(string)$user->id;
 		$test->user_id = $user;

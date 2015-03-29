@@ -47,8 +47,6 @@ class AnswerController extends Controller {
     public function store()
     {
        
-
-
      $answers = DB::table('anwsers')->where('question_id', '=', Input::get('quest_id'))
      ->where('correct', '=', 1)->sum('correct');
         $new_answer = Input::get("correct");
@@ -73,25 +71,9 @@ class AnswerController extends Controller {
              $test_id = Question::find($question_id)->test;
         return Redirect::action('QuestionController@show', array($test_id));
        
-
-        
-          
-
-
             // DB::table('anwsers')->where('id', Input::get("answer_id_form.$i"))
             //     ->update(array('answer' => current(Input::get("answer_form")[$i]) ,
             //     'correct' => current(Input::get("correct_form")[$i]) ));
-
-
-
-
-
-
-
-
-
-
-
 
     }
 

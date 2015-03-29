@@ -41,7 +41,7 @@
 					<td>{{ $test->is_public }}</td>
 					<td>
 						{!! link_to_route('questions.show', 'Add Questions', 
-						array($test->id), array('class' => 'btn btn-danger')) !!}
+						array($test->id), array('class' => 'btn btn-primary')) !!}
 					</td>
 					<td>
 						{!! link_to_route('tests.edit', 'Edit Test', 
@@ -54,18 +54,32 @@
 						array('class' => 'btn btn-danger')) !!}
 						{!! Form::close() !!}
 					</td>
-
+					{{-- For public --}}
+					@if(!$test->is_public)
+					<td class="is_public">
+						{!! link_to_route('is_private', 'PRIVATE', 
+						array('test_id'=>$test->id), 
+						array('class' => 'btn btn-info is_public')) !!}
+					</td>
+					@else
+					<td class="publish">
+						{!! link_to_route('is_public', 'PUBLIC', 
+						array('test_id'=>$test->id), 
+						array('class' => 'btn btn-success is_private')) !!}
+					</td> 
+					@endif
+					{{-- For Published --}}
 					@if(!$test->is_published)
 					<td class="publish">
 						{!! link_to_route('publish', 'PUBLISH', 
 						array('test_id'=>$test->id), 
-						array('class' => 'btn btn-info publish')) !!}
+						array('class' => 'btn btn-danger publish')) !!}
 					</td>
 					@else
 					<td class="publish">
-						{!! link_to_route('unpublish', 'PUBLISHED', 
+						{!! link_to_route('unpublish', 'UNPUBLISH', 
 						array('test_id'=>$test->id), 
-						array('class' => 'btn btn-success published')) !!}
+						array('class' => 'btn btn-success unpublished')) !!}
 					</td> 
 					@endif
 

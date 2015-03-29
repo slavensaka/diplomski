@@ -15,7 +15,8 @@
 	{!! Form::text('points', Input::old('points')) !!}
 	<br>
 	{!! Form::label('shuffle_question', 'shuffle_question') !!}
-	{!! Form::text('shuffle_question', Input::old('shuffle_question')) !!}
+	{!! Form::hidden("shuffle_question", 0, false) !!}
+	{!! Form::checkbox("shuffle_question", 1, Input::old('shuffle_question')) !!}
 	<br>
 	{!! Form::label('type', 'type') !!}
 	{!! Form::select('type', [

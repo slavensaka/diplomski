@@ -28,6 +28,13 @@ Route::resource('questions','QuestionController');
 
 Route::get('publish', ['as' => 'publish', 'uses' => 'PublishController@publish']);
 Route::get('unpublish', ['as' => 'unpublish', 'uses' => 'PublishController@unpublish']);
+
+Route::get('is_public', ['as' => 'is_public', 'uses' => 'PublishController@is_public']);
+Route::get('is_private', ['as' => 'is_private', 'uses' => 'PublishController@is_private']);
+
+
+Route::get('take/{test}', ['as' => 'take_test', 'uses' => 'PublishController@take_test']);
+
 /**
 *
 * Experimental file uploader

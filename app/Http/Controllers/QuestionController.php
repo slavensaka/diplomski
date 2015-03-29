@@ -113,10 +113,17 @@ class QuestionController extends Controller {
 	 */
 	public function update($id)
 	{
+		// dd(Input::all());
 		$input = Input::all();
 		$question = Question::find($id);
 		$question->update($input);
-		return Redirect::back();
+		return Redirect::back()
+		->with('message', 'QUESTION UPDATED');
+
+		//OVA FUNKCIONALNOST; ZA UI
+		// $last_question_id = Input::get('last_question_id');
+		// $test_id = Question::find($last_question_id)->test;
+		// return Redirect::action('QuestionController@show', array($test_id));
 	}
 
 	/**

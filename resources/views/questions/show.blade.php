@@ -55,7 +55,7 @@
 				<th>Answer</th>
 				<th>Edit Answer</th>
 				<th>Correct</th>
-				<th>Is_Correct</th>
+				{{-- <th>Is_Correct</th> --}}
 				
 				<th>Question_id</th>
 			</tr>
@@ -64,24 +64,25 @@
 			<tr class="warning">
 				<td>{{ $tests_answer->id }}</td>
 				<td>{{ $tests_answer->answer }}</td>
-				<td>{!! link_to_route('questions.edit', 'Edit Answer', 
+				<td>{!! link_to_route('questions.edit', 'Edit Answers', 
 						array($question->id), 
 						array('class' => 'btn btn-info')) !!}
 						</td>
 				<td>{{ $tests_answer->correct }}</td>
-				<td>
-					{!! Form::open(array('method'=> 'PATCH', 
-						'route' => array('answers.update', $tests_answer->id))) !!} 
-					{!! Form::hidden('correct', 0, false) !!}
-	    			{!! Form::checkbox('correct', 1, $tests_answer->correct) !!} 
+				{{-- <td> --}}
 					{{-- {!! Form::hidden('answers',$answers) !!} --}}
 
 					{{-- {!! Form::hidden('questions',$questions) !!} --}}
+
+				{{-- 	{!! Form::open(array('method'=> 'PATCH', 
+						'route' => array('answers.update', $tests_answer->id))) !!} 
+					{!! Form::hidden('correct', 0, false) !!}
+	    			{!! Form::checkbox('correct', 1, $tests_answer->correct) !!} 
 					{!! Form::submit('Update', 
 						array('class' => 'btn btn-danger')) !!}
-					{!! Form::close() !!}
+					{!! Form::close() !!} --}}
 					
-	    		</td>
+	    		{{-- </td> --}}
 	    		
 				<td>{{ $tests_answer->question_id }}</td>
 

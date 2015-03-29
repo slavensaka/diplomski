@@ -19,7 +19,7 @@
             <p>
                 {!! link_to('auth/login', 'Admin login', array('class' => 'btn btn-primary')) !!}
             </p>
-            <h1> Take a test that users already created: </h1>
+            <h1> Take tests that were made public: </h1>
 
             <table class="table table-striped table-bordered">
                 <thead>
@@ -50,7 +50,7 @@
                         <td>{{ $published_test->is_published }}</td>
                         <td>{{ $published_test->is_public }}</td>
                         <td>{{ $published_test->user_id }}</td>
-                        <td>{!! link_to_route('questions.show', 'Take This Test', 
+                        <td>{!! link_to_route('take_test', 'Take This Test', 
                         		array($published_test->id), 
                         		array('class' => 'btn btn-danger')) !!}
                         </td>
