@@ -47,8 +47,11 @@
     <br>
 	{!! Form::hidden('quest_id', $quest->id, array('id' => 'quest_id')) !!}
 	<br>
-	{!! Form::submit('Send it!') !!}
+	{!! Form::submit('Send it!', array('class' => 'btn btn-success')) !!}
 	{!! Form::close() !!}
+    <br>
+   {!! link_to_route('answers.show', 'Go Back', 
+                $quest->id, array('class' => 'btn btn-danger')) !!}
 
 @endif
 @endif

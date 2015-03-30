@@ -16,71 +16,47 @@
 
  	
 !!} --}}	
-
-
-
 @foreach($questions as $question) 
 <?php  
-// echo $question->question;
-// 	echo $answers = Question::find($question->id)->answers;
-	
-	
+		$answers = Question::find($question->id)->answers;
+		// dd($answers);
 		echo "<h2>$question->question</h2>";
 		echo '<br>';
 		$answers = Question::find($question->id)->answers;
-		// echo $question->type;
 		if($question->type ==='multiple_choice') {
-
-		
+	    $answer =  $answers->toArray();
+	    $counting = count($answers);
+	   // dd($answer);   
 ?>
-@foreach($answers as $answer) 
+	{!!  Form::open(array('route' => array('finished', $question->id), 
+		'method' => 'post')) !!}
+ <ul>
+	 <li>	
+	 </li>
+		@for ($i=1,$j=1; $i <= $counting; $i++,$j++)
+		{{-- @for ($i=1; $i <= 4; $i++) --}}
+		{!! Form::label('answer', $answer[$i-1]["answer"] ) !!}
+		{{-- {!! Form::hidden("answer_form[$i]", $answer[$i-1]["answer"] ) !!} --}}
+		{!! Form::hidden("correct_form[$i][correct]", 0, false) !!}
+	    {!! Form::radio("correct_form[$i][correct]", 1) !!}
+	    @endfor
+ </ul>
 
-{{-- 
-	// echo $answer->answer;
-	// echo '<br>'; --}}
-	{!!  Form::open(array('route' => array('finished', $answer->id))) !!}
-<ul>
-	<li>
-		{!! Form::label('answer', 'Answer:') !!}
-		{!! Form::text('answer', $answer->answer) !!}
-	</li>
-	<li>
-		{!! Form::hidden('correct', 0, false) !!}
-	    {!! Form::checkbox($answer->id, 1, $answer->correct) !!}
-	</li>
-	{{-- <li>
-		{!! Form::label('correct', 'TRUE:') !!}		    
-		{!! Form::radio($answer->id, '1', $answer->correct ) !!}
-	</li>
-	<li>
-		{!! Form::label('correct', 'FALSE:') !!}		    
-		{!! Form::radio( $answer->id, '0') !!}
-	</li> --}}
-	<li>
-		{!! Form::submit('Update This Answer', 
+<?php  } else if($question->type ==='multiple_response'){
+
+	} else 'Lorem'; ?>	
+	{!!  Form::open(array('route' => array('finished', $question->id), 
+		'method' => 'post')) !!}
+		{!! Form::label('answer', 'TESTING') !!}
+@endforeach
+		{!! Form::submit('Finish Test', 
 			array('class' => 'btn btn-info updated_answers')) !!}
-		{!! link_to_route('answers.show', 'Go Back', $question->id, 
+		{!! link_to_route('/', 'Go Back', 
+			array($question->id) , 
 			array('class' => 'btn btn-danger')) !!}
-	</li>	
 		{!! Form::close() !!}
-</ul>
-
-
-
-
-@endforeach
-
-<?php 
-} else echo 'Nije multiple_choice';
-?>	
-	
-		
-	
-
-@endforeach
-
-
-
-
-
 @endsection		
+
+	
+
+

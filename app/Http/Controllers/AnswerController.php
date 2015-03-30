@@ -55,8 +55,10 @@ class AnswerController extends Controller {
             
             $question_id = Input::get('quest_id');
             $test_id = Question::find($question_id)->test;
-            return Redirect::back()->with('message','Nije Spremljeno, 
-                imate više od jedan kao točan. ISPRAVITE');
+            return Redirect::back()
+            ->with('message','Error, more than one is correct.')
+            ->with('answer',$new_answer);
+
         }
         
             $answer = new Answer;
@@ -120,7 +122,7 @@ class AnswerController extends Controller {
                         
             $selected = HelperFunctions::CheckOnlyOneSelected($items);
 
-            if(!('Spremljeno' === $selected)){
+            if(!('Success' === $selected)){
             	return Redirect::back()->with('message',$selected);
            // return Redirect::action('QuestionController@show', 
            //          array($question_test_id))->with('message',$selected);
@@ -166,6 +168,7 @@ class AnswerController extends Controller {
             } else 
             {
                 $input = Input::all();
+                
                 $question = Answer::find($id)->question;
                 $answer = Answer::find($id);
                 $answer->update($input);

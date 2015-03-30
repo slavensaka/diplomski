@@ -48,7 +48,7 @@ class PublishController extends Controller {
 			$test->is_public = 1;
 			$test->save();
 			return Redirect::route('tests.index')
-			->with('message', 'TEST JE SADA PUBLIC')
+			->with('message', 'TEST IS NOW PUBLIC')
 			->with('public', 1)
 			->with('new_test_id', $new_test_id);
 		}
@@ -62,7 +62,7 @@ class PublishController extends Controller {
 			$test->is_public = 0;
 			$test->save();
 			return Redirect::route('tests.index')
-			->with('message', 'TEST JE SADA PRIVATE')
+			->with('message', 'TEST IS NOW PRIVATE')
 			->with('public', 0)
 			->with('new_test_id', $new_test_id);
 		}
@@ -126,8 +126,9 @@ class PublishController extends Controller {
 
 	}
 
-	public function evaluate_test(){
-		return 'Lorem';
+	public function finished($id){
+		dd(Input::all());
+		return $id;
 	}
 
 }

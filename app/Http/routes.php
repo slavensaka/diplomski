@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
+Route::get('/', array('as' => '/','uses' => 'WelcomeController@index'));
 
 Route::get('home', 'HomeController@index');
 
@@ -34,7 +34,7 @@ Route::get('is_private', ['as' => 'is_private', 'uses' => 'PublishController@is_
 
 Route::get('take/{test}', ['as' => 'take_test', 'uses' => 'PublishController@take_test']);
 
-Route::get('finished', ['as' => 'finished', 'uses' => 'PublishController@evaluate_test']);
+Route::post('finished/{id}', ['as' => 'finished', 'uses' => 'PublishController@finished']);
 
 /**
 *
