@@ -126,4 +126,8 @@ class PublishController extends Controller {
 
 	}
 
+	public function evaluate_test(){
+		return 'Lorem';
+	}
+
 }
