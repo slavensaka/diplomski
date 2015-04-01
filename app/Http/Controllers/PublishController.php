@@ -3,10 +3,12 @@
 use Dipl\Http\Requests;
 use Dipl\Http\Controllers\Controller;
 use Dipl\Test;
+use Dipl\Answer;
 use Dipl\Question;
 use Illuminate\Http\Request;
 use Input;
 use Redirect;
+use DB;
 
 class PublishController extends Controller {
 
@@ -82,22 +84,22 @@ class PublishController extends Controller {
 				
 			// }
 
-			// $questions->each(function($question)
-   // 			 {
-   //     		 $answers = Question::find($question->id)->answers;
-		 //       		 $answers->each(function($answer)
-		 //       		 {
-		 //       		 		$answers_in_array= $answer->toArray();
-   //     		 				dd($answers_in_array);
-		 //        // 	 echo "<h3>$answer->answer</h3>";
-		 //        });
+			
+       		        $answers = Question::find($questions[0]["id"])->answers;
+		    
+		    
+		    
+       		 			
+		    
 
-		 //    });
+		    
 
 
 
-			return view('take_test.take_public_test', 
-				compact('the_test','questions'));
+			return view('take_test.take_public_test')
+			->with('test', $the_test)
+			->with('questions', $questions)
+			->with('answers',$answers);
 
 			// for($i=1; $i <= $count; $i++)
    //          {
@@ -128,7 +130,68 @@ class PublishController extends Controller {
 
 	public function finished($id){
 		dd(Input::all());
-		return $id;
+		(int)$correct_answer = [];
+		$question_id = [];
+		$new_answer = [];
+		$correct_key = Input::all();
+		$correct_key = array_except($correct_key, ['_token']);
+		$keys = array_keys($correct_key);
+		$end_value = array_merge(array($correct_key),array_map('intval', array_slice($correct_key, 0)));       
+		$end_value = array_except($end_value, [0]);	
+
+		foreach ($correct_key as $input_key => $correct) {
+		 	$correct_answer[] =$correct;		 	
+		}
+
+		for ($key = 0, $size = count($keys); $key < $size; $key++) {  
+			$question_id[] = (int)$keys[$key];
+			}
+
+		for ($k = 0, $size = count($end_value); $key < $size; $key++) {  
+
+			$arr_answer[] = (int)$end_value[$key];
+			}
+
+
+				var_dump($question_id);
+				var_dump($end_value);
+				$counting = count($end_value);
+				foreach ($question_id as $key => $value) {
+$answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct');
+					array_unshift($answer, null);
+					unset($answer[0]);
+
+					$new_answer[] = $answer;
+
+
+					}
+					array_unshift($new_answer, null);
+					unset($new_answer[0]);
+					var_dump($new_answer);
+					
+
+					// for($i=1; $i <= $counting; $i++)
+						foreach ($end_value as $key => $value) {
+				
+						
+					}
+					// for($i=1; $i <= count($question_id); $i++){
+            			// var_dump($end_value);
+            			// var_dump($answer);
+            			// $answer_array_keys =array_keys($answer);
+            			// var_dump($answer_array_keys);
+					// if($end_value === $answer_array_keys ) {
+					// }			    }
+					
+					
+				
+// 	foreach( $answer as $index => $code ) {
+//    print_r ( $end_value[$index]);
+// }
+
+				
+				
+		
 	}
 
 }

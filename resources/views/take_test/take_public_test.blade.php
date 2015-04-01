@@ -1,60 +1,57 @@
 <?php use Dipl\Question; ?> 
 {{-- {{ dd($the_test) }}  --}}
 {{-- {{ dd($questions) }} --}}
+{{-- {{ var_dump($answers[5]["answer"]) }} --}}
 @extends('app')
 @section('content')
-{{-- 
-{!! 
-	$answers;
-	$questions->each(function($question)
-	{	
-		echo "<h2>$question->question</h2>";
-		echo '<br>';
-		$answers = Question::find($question->id)->answers;
-		
-	});	
 
- 	
-!!} --}}	
 @foreach($questions as $question) 
-<?php  
-		$answers = Question::find($question->id)->answers;
-		// dd($answers);
-		echo "<h2>$question->question</h2>";
-		echo '<br>';
-		$answers = Question::find($question->id)->answers;
-		if($question->type ==='multiple_choice') {
-	    $answer =  $answers->toArray();
-	    $counting = count($answers);
-	   // dd($answer);   
+
+
+<?php
+$answers = Question::find($question->id)->answers;
+$answer_array =  $answers->toArray();
+
+echo $question->question. '<br/><br/><br/>';
+
+$counting = count($answers);
+
 ?>
-	{!!  Form::open(array('route' => array('finished', $question->id), 
-		'method' => 'post')) !!}
- <ul>
-	 <li>	
+@for ($i=0; $i <= $counting+1; $i++)
+<?php if(isset($answer_array[$i]["answer"])) { 
+	$j = 1;
+	?>
+
+{!! Form::open(array('route' => array('finished', $question->id),'method' => 'post')) !!}
+<ul>
+	<li>
+		{{-- {!! Form::label('answer',$i) !!} --}}
+		{{-- {!! Form::text("answer_form[$i][answer]") !!} --}}
+		{!! Form::label($i+1) !!}
+
+		{!! Form::label("answer",$answer_array[$i]["answer"]) !!}
+		
+		
+		{!! Form::radio($answer_array[$i]["answer"][$j]) !!}
+	</li>
+	<li>
+	 {{-- 	{!! Form::label('correct', 'Correct:') !!}
+	 	{!! Form::hidden("answer_id_form[$i][answer]") !!}
+	   --}}  
 	 </li>
-		@for ($i=1,$j=1; $i <= $counting; $i++,$j++)
-		{{-- @for ($i=1; $i <= 4; $i++) --}}
-		{!! Form::label('answer', $answer[$i-1]["answer"] ) !!}
-		{{-- {!! Form::hidden("answer_form[$i]", $answer[$i-1]["answer"] ) !!} --}}
-		{!! Form::hidden("correct_form[$i][correct]", 0, false) !!}
-	    {!! Form::radio("correct_form[$i][correct]", 1) !!}
-	    @endfor
- </ul>
+</ul>
 
-<?php  } else if($question->type ==='multiple_response'){
 
-	} else 'Lorem'; ?>	
-	{!!  Form::open(array('route' => array('finished', $question->id), 
-		'method' => 'post')) !!}
-		{!! Form::label('answer', 'TESTING') !!}
+<?php $j++; } ?>
+
+@endfor
+{{-- {!! Form::text("$question->id"  ) !!}	 --}}
+{!! Form::label('correct', 'Correct(0 za neodgovor):') !!}
+{!!  Form::selectRange("$question->id", 0, $counting); !!}
 @endforeach
-		{!! Form::submit('Finish Test', 
-			array('class' => 'btn btn-info updated_answers')) !!}
-		{!! link_to_route('/', 'Go Back', 
-			array($question->id) , 
-			array('class' => 'btn btn-danger')) !!}
-		{!! Form::close() !!}
+<br>
+{!! Form::submit('Send', array('class' => 'btn btn-info updated_answers')) !!}
+{!! Form::close() !!}
 @endsection		
 
 	
