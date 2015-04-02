@@ -73,7 +73,7 @@ class PublishController extends Controller {
 	public function take_test($test) {
 		$the_test = Test::find($test); // Sav info o testu
 		$questions = Test::find($test)->questions; // Sav info pitanja za dani test
-		
+		$answers = [];
 		if($the_test->is_published && $the_test->is_public) // Ako je published i public
 		{
 			   // dd($the_test);
@@ -84,22 +84,36 @@ class PublishController extends Controller {
 				
 			// }
 
-			
-       		        $answers = Question::find($questions[0]["id"])->answers;
-		    
-		    
-		    
+			$questions->each(function($question) use ($answers){
+				
+				$answers["answer"] = Question::find($question->id)->answers;
+				
+			});
+
+			//OVO $questions = $questions->all();
+       		        // $answers = Question::find($questions[0]["id"])->answers;
+
+		    foreach ($questions as $input_key => $correct) {
+		    	$answers = Question::find($correct->id)->answers;
+		 		
+			}
+		    // dd($answers);
+		    $answers = $answers->all();
        		 			
 		    
 
 		    
-
-
-
-			return view('take_test.take_public_test')
+			return view('take_test.testing1')
 			->with('test', $the_test)
 			->with('questions', $questions)
 			->with('answers',$answers);
+
+
+
+			//OVO return view('take_test.take_public_test')
+			// ->with('test', $the_test)
+			// ->with('questions', $questions)
+			// ->with('answers',$answers);
 
 			// for($i=1; $i <= $count; $i++)
    //          {
@@ -192,6 +206,10 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 				
 				
 		
+	}
+
+	public function testing($id){
+		dd(Input::all());
 	}
 
 }
