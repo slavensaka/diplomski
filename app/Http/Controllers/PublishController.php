@@ -103,7 +103,7 @@ class PublishController extends Controller {
 		    
 
 		    
-			return view('take_test.testing1')
+			return view('take_test.testing1') // TU MIJENJA
 			->with('test', $the_test)
 			->with('questions', $questions)
 			->with('answers',$answers);
@@ -208,7 +208,8 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 		
 	}
 
-	public function testing($id){
+	public function testing1($id){
+		
 		dd(Input::all());
 	}
 

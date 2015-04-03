@@ -1,5 +1,7 @@
 <?php use Dipl\Question; ?> 
-{{-- {{ dd($the_test) }}  --}}
+{!! Html::script('js/jquery-1.11.2.min.js') !!}
+{!! Html::script('js/functions.js') !!}
+{{-- {{ dd($test) }}  --}}
 {{-- {{ dd($questions) }} --}}
 {{-- {{ print_r($answers) }} --}}
 
@@ -7,37 +9,42 @@
 @section('content')
 <?php 
 $answer = $questions->each(function($question){
-		echo ($question["question"]).'<br>';
-		 $answers = (Question::find($question->id)->answers);
+		  echo '<p><b>'.($question["question"]).'</b></p>'.'<br>';
+		  $answers = (Question::find($question->id)->answers);
 
-		 // $answers->collapse();
-		 // dd($answers);
+		$answers->each(function($answer) use ($question,$answers){
+		// echo $answer->question_id;
+		// echo $question->id;
 
-	$answers->each(function($answer) use ($question){
-		echo $answer->question_id;
-		echo $question->id;
-echo Form::open(array('route' => array('finished'),'method' => 'post')) ;	
-echo "<br>";	
-// echo Form::label($answer,$answer) ;
-echo Form::label($answer["answer"],$answer["answer"]);
+echo Form::open(array('route' => array('testing1'),'method' => 'post')) ;	 
+if($question->type === 'multiple_choice' || $question->type === 'true_false') {
+?>
+<ul>
+	<li>
+<?php echo Form::label($answer["answer"],$answer["answer"]); ?>
+<?php echo Form::radio($answer->question_id, $answer["answer"]); ?>
+	</li>
 
+</ul>
+<?php 
 echo "<br>";
-echo Form::radio($answer->question_id, $answer["answer"]);
+ } elseif($question->type === 'multiple_response') {
+ echo Form::label($answer["answer"], $answer["answer"]);
+ // echo Form::hidden($answer["answer"], "multiple_response");
 
-// echo Form::select($answer["answer"],pull($answer)); 	
-// Form::selectRange("$question->id", 0, $counting) 
-// echo Form::checkbox($answer["answer"], );
-// echo Form::text($answer["answer"]);
+ echo Form::checkbox($answer["id"],$answer["answer"]); 
+// echo Form::selectRange($answer->question_id, 1, count($answers) );
 
-echo "<br>";
+	} else {
+		echo Form::text($answer->question_id);
+	}
+
 	});
 });
 echo Form::submit('Send', array('class' => 'btn btn-info updated_answers'));
 echo Form::close() ;
+
 ?>
-
-
-
 
 @endsection		
 

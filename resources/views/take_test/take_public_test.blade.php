@@ -32,7 +32,7 @@ $counting = count($answers);
 		{!! Form::label("answer",$answer_array[$i]["answer"]) !!}
 		
 		
-		{!! Form::radio($answer_array[$i]["correct"]) !!}
+		{!! Form::radio($answer_array[$i]["question_id"]) !!}
 	</li>
 	<li>
 	 {{-- 	{!! Form::label('correct', 'Correct:') !!}
