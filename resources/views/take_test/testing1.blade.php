@@ -8,15 +8,15 @@
 @extends('app')
 @section('content')
 <?php 
-$answer = $questions->each(function($question){
+$answer = $questions->each(function($question) use($test){
 		  echo '<p><b>'.($question["question"]).'</b></p>'.'<br>';
 		  $answers = (Question::find($question->id)->answers);
 
-		$answers->each(function($answer) use ($question,$answers){
+		$answers->each(function($answer) use ($question,$answers,$test){
 		// echo $answer->question_id;
 		// echo $question->id;
 
-echo Form::open(array('route' => array('testing1'),'method' => 'post')) ;	 
+echo Form::open(array('route' => array('testing1',$test->id),'method' => 'post')) ;	 
 if($question->type === 'multiple_choice' || $question->type === 'true_false') {
 ?>
 <ul>
@@ -32,7 +32,8 @@ echo "<br>";
  echo Form::label($answer["answer"], $answer["answer"]);
  // echo Form::hidden($answer["answer"], "multiple_response");
 
- echo Form::checkbox($answer["id"],$answer["answer"]); 
+// echo Form::hidden($answer["id"], 0, false);
+echo Form::checkbox($answer["id"],$answer["answer"]); 
 // echo Form::selectRange($answer->question_id, 1, count($answers) );
 
 	} else {

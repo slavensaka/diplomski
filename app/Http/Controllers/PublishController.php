@@ -209,8 +209,119 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 	}
 
 	public function testing1($id){
-		
-		dd(Input::all());
-	}
+		$points = [];
+		$c=0;
+		// dd(Input::all());
+		// echo $id; // id test->id
 
+// $multiple_response=DB::table('questions')
+// ->where('type', '=', 'multiple_response')
+// ->where('test_id', "=", $id)->get();
+// print_r($multiple_response); echo '<br><br>';
+
+		$test =Test::find($id);
+		$input = Input::all();
+		$questions = Test::find($id)->questions;
+
+$multiple_response = Question::
+where('type', '=', 'multiple_response')
+->where('test_id', "=", $id)->get();
+// ->where('correct','=','1')
+
+$input = array_except($input, ['_token']);
+// print_r($input); echo '<br><br>';
+
+$flip = array_flip($input);
+$flip = array_except($flip, ['_token']);
+// print_r($flip); echo '<br><br>';
+
+$keys = array_keys($input);
+// print_r($keys);
+
+$answers = $multiple_response->map(function($question) use($flip) {
+	   // $answers= Question::find($question->id)->answers;
+	return $answers = DB::table('anwsers')
+	->where('question_id', '=', $question->id)
+	->where("correct","=","1")->get();
+
+});
+
+
+$answers =$answers->toArray();
+$answers = array_flatten($answers);
+// print_r($answers);
+$counting =count($answers);
+foreach($answers as $answer) {
+	
+if(in_array($answer->answer,$input)) {
+	// echo( $answer->id.'<br>');
+	// $correct_answers = $answer->answer;
+	$quest = Answer::find($answer->id)->question;
+	$points[] = $quest;
+	// $point=0;
+	// $point += $quest; 
+	// echo $point.'<br>';
+	// DB::table('anwsers')
+	// ->where('answer', '=', $answer->answer)
+	// ->sum('votes');
+}
+}
+
+for($i=0;$i<count($points);$i++){
+	$c += $points[$i]["points"];
+	
+}
+
+echo $c;
+
+
+// for($i=0;$i<$counting;$i++) {
+// 	echo $answers[$i][$i]["answer"];
+
+// if(in_array($answers[$i][$i]["answer"],$input)){
+// 	echo "Lorem";
+// }}
+
+$multiple_response=DB::table('anwsers')
+->where('answer', '=', $input)->get();
+// ->where('test_id', "=", $id)->get();
+
+
+// $new = $answers->map(function($answer) use($counting,$input,$keys) {
+// 	echo '<br><br>';print_r($keys);
+// 	for($i=0;$i<$counting;$i++){
+// 	if($answer[$i]["id"] === $keys){
+//        echo "Lorem";
+// 	}
+// 	}
+// });
+
+// foreach($multiple_response as $question) {
+// 	$answers = Question::find($question->id)->answers->all();
+// // dd($answers->id);
+// 	// Question::findOrfail($question->id)->answers;
+// }
+
+
+// $multiple_response=Question::find($test->question_id);
+
+// $multiple_response = $questions->each(function($question) use($test,$input){
+// return $multiple_response=DB::table('questions')
+// ->where('type', '=', 'multiple_response')
+// ->where('id', "=", $question->id)
+// ->get();
+
+
+// // $multiple_response=Question::find($test->id)->questions
+// // ->where("type", "=","multiple_response");
+// // $multiple_response=Test::where("type", "=","multiple_response");
+
+
+// // 	if($question->type === 'multiple_response') {
+
+// // return $multiple_response = Question::findOrfail($question->id)->answers;
+// // 		}
+// 	});
+
+}
 }
