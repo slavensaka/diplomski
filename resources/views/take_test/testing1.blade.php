@@ -4,14 +4,14 @@
 {{-- {{ dd($test) }}  --}}
 {{-- {{ dd($questions) }} --}}
 {{-- {{ print_r($answers) }} --}}
-
+ 
 @extends('app')
 @section('content')
 <?php 
 $answer = $questions->each(function($question) use($test){
 		  echo '<p><b>'.($question["question"]).'</b></p>'.'<br>';
-		  $answers = (Question::find($question->id)->answers);
-
+		  $answers = Question::find($question->id)->answers;
+		  $answers->shuffle(); //OVAJ SHUFFLE VALJA JE ZA ANSWERS
 		$answers->each(function($answer) use ($question,$answers,$test){
 		// echo $answer->question_id;
 		// echo $question->id;

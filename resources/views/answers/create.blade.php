@@ -1,14 +1,14 @@
 @extends('app')
 @section('content')
 {{-- {!! dd($quest) !!} --}}
-{{ dd($type) }}
+{{-- {{ dd($type) }} --}}
+{{-- {{ dd($answers) }} --}}
 @if (Auth::guest())
 	<h1>Your not logged in</h1>
 @else
 	<h1>Create a New Answer for Question</h1>
 
-@if($type === 'multiple_choice') 
-
+{{-- @if($type === 'multiple_choice')  --}}
 <table class="table table-striped table-bordered">
     <thead>
         <tr>
@@ -29,11 +29,22 @@
     <tbody>
     </tbody>
 </table>
+
+@foreach($answers as $answer) 
+<?php
+echo "<h4>Answer $answer->id :</h4>";
+
+echo "Answer: $answer->answer"; echo '<br>';
+echo "Correct:$answer->correct"; echo '<br>';
+?>
+@endforeach
+
 <p>
 @if(Session::has('message'))
 {!! Session::get('message'); !!}
 @endif
 </p>
+
 	{!! Form::open(array('route' => 'answers.store')) !!}
 	<br>
 	{!! Form::label('answer', 'Answer') !!}
@@ -54,6 +65,6 @@
    {!! link_to_route('answers.show', 'Go Back', 
                 $quest->id, array('class' => 'btn btn-danger')) !!}
 
-@endif
+{{-- @endif --}}
 @endif
 @endsection

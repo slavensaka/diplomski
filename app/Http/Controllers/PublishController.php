@@ -74,27 +74,24 @@ class PublishController extends Controller {
 	public function take_test($test) {
 		$the_test = Test::find($test); // Sav info o testu
 		$questions = Test::find($test)->questions; // Sav info pitanja za dani test
+		 $questions =$questions->shuffle();//OVO JE SHUFFLE ZA QUESTIONS
 		$answers = [];
 		if($the_test->is_published && $the_test->is_public) // Ako je published i public
 		{
-			   // dd($the_test);
-			// dd($questions);
-			// foreach ($questions as $key => $question) {
-			// 	// dd($question->id);
-			// 	// $answers = Question::find($question->id)->answers;
-				
-			// }
+			
+
 
 			$questions->each(function($question) use ($answers){				
 				$answers["answer"] = Question::find($question->id)->answers;
 			});
 
 		    foreach ($questions as $input_key => $correct) {
-		    	$answers = Question::find($correct->id)->answers;
-		 		
+		    	$answers = Question::find($correct->id)->answers;		 		
+		    	  // dd($answers);
 			}
-		    // dd($answers);
+		  
 		    $answers = $answers->all();
+
        		 			
 		    
 

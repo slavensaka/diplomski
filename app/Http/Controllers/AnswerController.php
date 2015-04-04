@@ -33,10 +33,21 @@ class AnswerController extends Controller {
      */
     public function create()
     {
-        $type = Input::get('type');
+        /**
+        
+            TODO:
+            - If $type is true_false limit na 2 true ili false.
+            - IF $type is fill_in limit na 1, samo jedan answer text
+            - If $typs is multiple_response, omogoći da se može uzet vise correct 1
+        **/
+        
+        $type = Input::get('type'); 
         $quest_id = Input::get('quest_id');
         $quest = DB::table('questions')->where('id', $quest_id)->first();
-        return view('answers/create')->with(['type' => $type, 'quest' => $quest]);
+        $answers = Question::find($quest_id)->answers;
+        
+        return view('answers/create')
+        ->with(['type' => $type, 'quest' => $quest, 'answers' => $answers]);
     }
 
     /**
