@@ -1,6 +1,7 @@
 @extends('app')
 @section('content')
 {{-- {!! dd($quest) !!} --}}
+{{ dd($type) }}
 @if (Auth::guest())
 	<h1>Your not logged in</h1>
 @else
@@ -29,7 +30,7 @@
     </tbody>
 </table>
 <p>
-    @if(Session::has('message'))
+@if(Session::has('message'))
 {!! Session::get('message'); !!}
 @endif
 </p>

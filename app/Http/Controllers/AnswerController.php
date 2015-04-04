@@ -110,22 +110,23 @@ class AnswerController extends Controller {
      */
     public function update($id) // id questiona
     {    
-        // dd(Input::all());
+        dd(Input::all());
  
 
         if(Input::get('route') === "questions/{questions}/edit") {
               
-            
             $question_test_id = Input::get('question_test_id');
 
-            $items = array_flatten(Input::get("correct_form"));
-                        
-            $selected = HelperFunctions::CheckOnlyOneSelected($items);
+            if(!(Input::get("type") === "multiple_response")){
+
+                $items = array_flatten(Input::get("correct_form"));
+                $selected = HelperFunctions::CheckOnlyOneSelected($items);
 
             if(!('Success' === $selected)){
             	return Redirect::back()->with('message',$selected);
            // return Redirect::action('QuestionController@show', 
            //          array($question_test_id))->with('message',$selected);
+            
 
            	} else {
 
@@ -148,25 +149,25 @@ class AnswerController extends Controller {
        		 $answers_count = DB::table('anwsers')->where('question_id','=', $question->id)
         	->where('correct','=', 1)->get();
         
-            if (count($answers_count) === 0 ) 
-            {    
-                $input = Input::all();
-                $question = Answer::find($id)->question;
-                $answer = Answer::find($id);
-                $answer->update($input);
-                return Redirect::action('QuestionController@show', 
-                    array($question->test_id))->with('message','Jedan mora biti točan');
+            // if (count($answers_count) === 0 ) 
+            // {    
+            //     $input = Input::all();
+            //     $question = Answer::find($id)->question;
+            //     $answer = Answer::find($id);
+            //     $answer->update($input);
+            //     return Redirect::action('QuestionController@show', 
+            //         array($question->test_id))->with('message','Jedan mora biti točan');
 
-            } else if (count($answers_count) > 1) 
-            {
-                $input = Input::all();
-                $question = Answer::find($id)->question;
-                $answer = Answer::find($id);
-                $answer->update($input);
-                return Redirect::action('QuestionController@show', 
-                    array($question->test_id))->with('message','Nesmije više od jedan bit točan');
-            } else 
-            {
+            // } else if (count($answers_count) > 1) 
+            // {
+            //     $input = Input::all();
+            //     $question = Answer::find($id)->question;
+            //     $answer = Answer::find($id);
+            //     $answer->update($input);
+            //     return Redirect::action('QuestionController@show', 
+            //         array($question->test_id))->with('message','Nesmije više od jedan bit točan');
+            // } else 
+            // {
                 $input = Input::all();
                 
                 $question = Answer::find($id)->question;
@@ -174,9 +175,9 @@ class AnswerController extends Controller {
                 $answer->update($input);
                 return Redirect::action('QuestionController@show', 
                     array($question->test_id))->with('message','Sve Uredu, Jedan je točan');
-            }
+            // }
            }
-       
+       }
     }
 
     /**

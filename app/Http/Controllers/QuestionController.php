@@ -99,9 +99,9 @@ class QuestionController extends Controller {
 		} else if ($question->type === 'true_false'){
 			return view('questions.true_false',compact('question','answers'));
 		} else if($question->type === 'multiple_response') {
-			return 'Lorem';
+			return view('questions.multiple_response',compact('question','answers'));
 		} else { // 'fill_in'
-			return 'Lorem';
+			return view('questions.fill_in',compact('question','answers'));
 		}
 	}
 
