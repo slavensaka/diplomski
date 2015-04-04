@@ -9,5 +9,5 @@ $(document).ready(function() {
 	
 	// for(i=0;i<=23; i++){ // Take the question_id and loop in 23
 	// 	$("select[name=" + i + "]").not(':last').remove();
-	}
+	
 });

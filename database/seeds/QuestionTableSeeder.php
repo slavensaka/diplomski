@@ -51,7 +51,7 @@ class QuestionTableSeeder extends Seeder {
 				'question' => 'Studentski zbor RGN fakulteta osnovan je u akademskoj godini 2007./2008.',
 				'points' => 5,
 				'shuffle_question' => 1,
-				'type' => 'fill_in',
+				'type' => 'true_false',
 				'test_id' => 2,
 				'created_at' => date('Y-m-d H:i:s',strtotime("2015-01-16 16:34:23")),
 				'updated_at' => date('Y-m-d H:i:s',strtotime("2015-02-11 11:43:47"))
@@ -62,7 +62,7 @@ class QuestionTableSeeder extends Seeder {
 				'question' => 'Poskupljuje studentski život',
 				'points' => 2,
 				'shuffle_question' => 1,
-				'type' => 'fill_in',
+				'type' => 'true_false',
 				'test_id' => 2,
 				'created_at' => date('Y-m-d H:i:s',strtotime("2015-05-19 15:42:32")),
 				'updated_at' => date('Y-m-d H:i:s',strtotime("2015-05-23 02:54:27"))
@@ -72,7 +72,7 @@ class QuestionTableSeeder extends Seeder {
 				'question' => 'Služite se engleskim jezikom',
 				'points' => 1,
 				'shuffle_question' => 1,
-				'type' => 'fill_in',
+				'type' => 'true_false',
 				'test_id' => 2,
 				'created_at' => date('Y-m-d H:i:s',strtotime("2015-04-20 10:21:22")),
 				'updated_at' => date('Y-m-d H:i:s',strtotime("2015-05-23 19:43:57"))
@@ -82,7 +82,7 @@ class QuestionTableSeeder extends Seeder {
 				'question' => 'Živite bez barijera',
 				'points' => 5,
 				'shuffle_question' => 0,
-				'type' => 'fill_in',
+				'type' => 'true_false',
 				'test_id' => 2,
 				'created_at' => date('Y-m-d H:i:s',strtotime("2015-07-04 08:34:27")),
 				'updated_at' => date('Y-m-d H:i:s',strtotime("2015-07-05 03:32:57"))
@@ -92,7 +92,7 @@ class QuestionTableSeeder extends Seeder {
 				'question' => 'Idete na studentske roštiljade',
 				'points' => 2,
 				'shuffle_question' => 1,
-				'type' => 'fill_in',
+				'type' => 'true_false',
 				'test_id' => 2,
 				'created_at' => date('Y-m-d H:i:s',strtotime("2015-06-05 13:34:18")),
 				'updated_at' => date('Y-m-d H:i:s',strtotime("2015-07-13 11:24:27"))

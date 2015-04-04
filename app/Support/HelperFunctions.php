@@ -13,4 +13,17 @@ class HelperFunctions {
  		}
     }
 
+ public static function array_change_value_case($array, $case = CASE_LOWER){
+       	if ( ! is_array($array)) return false;
+       	foreach ($array as $key => &$value){
+        if (is_array($value))
+        call_user_func_array(__function__, array (&$value, $case ) ) ;
+        else
+        	$array[$key] = ($case == CASE_UPPER )
+        	? strtoupper($array[$key])
+            : strtolower($array[$key]);
+        }
+        return $array;
+    }
+
 }
