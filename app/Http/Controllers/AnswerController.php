@@ -33,7 +33,6 @@ class AnswerController extends Controller {
      */
     public function create()
     {
-    
         
         $type = Input::get('type'); 
         $quest_id = Input::get('quest_id');
@@ -120,7 +119,7 @@ class AnswerController extends Controller {
      */
     public function update($id) // id questiona
     {    
-        dd(Input::all());
+        // dd(Input::all());
  
 
         if(Input::get('route') === "questions/{questions}/edit") {

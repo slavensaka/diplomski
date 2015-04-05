@@ -168,6 +168,16 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 			
 		
 	}
+/**
+
+	TODO:
+	- Ako je test private, stavi na homepage sa naponemnom da se mora unijet passcode
+	-- Ako je passcode točan dopusti korisniku da rijesi test
+	- Omogučit slike, database se mora promijenit
+	- Omogucit samogeneriranje, gdje user kopira cijeli public test na svoj comand panel. 
+	- Loged in user needs to go home to see his public/private published test
+
+**/
 
 	public function testing1($id){ // test id
 		// dd(Input::all());
