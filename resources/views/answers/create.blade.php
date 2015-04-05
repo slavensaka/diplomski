@@ -1,4 +1,6 @@
+<?php use Dipl\Answer; ?>
 @extends('app')
+
 @section('content')
 {{-- {!! dd($quest) !!} --}}
 {{-- {{ dd($type) }} --}}
@@ -29,11 +31,10 @@
     <tbody>
     </tbody>
 </table>
-
+{{-- {{ dd(count($answers)) }} --}}
 @foreach($answers as $answer) 
 <?php
 echo "<h4>Answer $answer->id :</h4>";
-
 echo "Answer: $answer->answer"; echo '<br>';
 echo "Correct:$answer->correct"; echo '<br>';
 ?>
@@ -44,6 +45,9 @@ echo "Correct:$answer->correct"; echo '<br>';
 {!! Session::get('message'); !!}
 @endif
 </p>
+
+@if(!($quest->type === 'true_false' && count($answers) >= 2) )
+@if(!($quest->type === 'fill_in' && count($answers) >= 1)) 
 
 	{!! Form::open(array('route' => 'answers.store')) !!}
 	<br>
@@ -61,10 +65,21 @@ echo "Correct:$answer->correct"; echo '<br>';
 	<br>
 	{!! Form::submit('Send it!', array('class' => 'btn btn-success')) !!}
 	{!! Form::close() !!}
+
+                
     <br>
    {!! link_to_route('answers.show', 'Go Back', 
                 $quest->id, array('class' => 'btn btn-danger')) !!}
 
-{{-- @endif --}}
+@else {{ "Fill in can only have one answer" }}
+<br>
+  {!! link_to_route('answers.show', 'Go Back', 
+                $quest->id, array('class' => 'btn btn-danger')) !!}
+@endif
+@else {{ "This type 'true false' answers can only have two answers." }}
+<br>
+  {!! link_to_route('answers.show', 'Go Back', 
+                $quest->id, array('class' => 'btn btn-danger')) !!}
+@endif
 @endif
 @endsection

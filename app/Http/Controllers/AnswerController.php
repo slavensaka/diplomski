@@ -33,13 +33,7 @@ class AnswerController extends Controller {
      */
     public function create()
     {
-        /**
-        
-            TODO:
-            - If $type is true_false limit na 2 true ili false.
-            - IF $type is fill_in limit na 1, samo jedan answer text
-            - If $typs is multiple_response, omogoći da se može uzet vise correct 1
-        **/
+    
         
         $type = Input::get('type'); 
         $quest_id = Input::get('quest_id');
@@ -57,11 +51,15 @@ class AnswerController extends Controller {
      */
     public function store()
     {
-       
+        // dd(Input::all());
+        $question = DB::table('questions')
+        ->where('id','=',Input::get('quest_id'))->select('type')->first();
+        
      $answers = DB::table('anwsers')->where('question_id', '=', Input::get('quest_id'))
      ->where('correct', '=', 1)->sum('correct');
         $new_answer = Input::get("correct");
         $answers += (int)$new_answer;
+        if(!($question->type === 'multiple_response')){
         if($answers > 1) {
             
             $question_id = Input::get('quest_id');
@@ -70,7 +68,8 @@ class AnswerController extends Controller {
             ->with('message','Error, more than one is correct.')
             ->with('answer',$new_answer);
 
-        }
+         }
+    }
         
             $answer = new Answer;
             $answer->answer = Input::get('answer');

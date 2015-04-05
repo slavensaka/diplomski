@@ -194,6 +194,7 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 		
 		$multiple_choice_answers =$multiple_choice_answers->toArray();
 		$multiple_choice_answers = array_flatten($multiple_choice_answers);
+		$keys = array_keys($input);
 
 		foreach($multiple_choice_answers as $multiple_answer) {
 			if(in_array($multiple_answer->answer,$input)) {
@@ -210,7 +211,7 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 		where('type', '=', 'true_false')
 		->where('test_id', "=", $id)->get();	
 
-	$true_false_answers = $true_false->map(function($choice_question) {
+		$true_false_answers = $true_false->map(function($choice_question) {
 			return $true_false_answers = DB::table('anwsers')
 			->where('question_id', '=', $choice_question->id)
 			->where("correct","=","1")->get();
@@ -218,36 +219,16 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 		
 		$true_false_answers =$true_false_answers->toArray();
 		$true_false_answers = array_flatten($true_false_answers);
-		$keys = array_keys($input);
+		
 	
 		foreach($true_false_answers as $answer) {
-			
- 		$a = array_fill_keys($keys, $answer->answer); 
-		echo '$a:'; print_r($a);echo '<br><br>';
-				
-	if($answer->answer === $input[$answer->question_id] ) {
-		
-		
-
-		// echo '$keys: '; print_r($keys); echo '<br><br>';
-		echo '$input '; print_r($input); echo '<br><br>';
-     	// echo '$answer->question_id: '; print_r($answer->question_id); echo '<br><br>';
-		// echo '$answer->answer: '; print_r($answer->answer); echo '<br><br>';
-		 	
-		$bb=DB::table('questions')->where('id', '=', $answer->question_id)->get();    			
-// print_R($bb);echo '<br>';
-		
-
-	
-				
-
-				$quest = Answer::find($answer->id)->question;
-
-				$points[] = $quest;
-
-	
+ 			$a = array_fill_keys($keys, $answer->answer); 
+ 			if (isset($input[$answer->question_id])) {
+				if($answer->answer === $input[$answer->question_id] ) {
+					$quest = Answer::find($answer->id)->question;
+					$points[] = $quest;
     			}
-		
+			}
 		}
 
    		/**
