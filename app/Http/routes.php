@@ -37,6 +37,9 @@ Route::get('take/{test}', ['as' => 'take_test', 'uses' => 'PublishController@tak
 Route::post('finished/{id}', ['as' => 'finished', 'uses' => 'PublishController@finished']);
 
 Route::post('testing1/{id}', ['as' => 'testing1', 'uses' => 'PublishController@testing1']);
+
+Route::get('result/{test_id}', ['as' => 'result', 'uses' => 'PublishController@result']);
+
 /**
 *
 * Experimental file uploader

@@ -7,11 +7,20 @@
  
 @extends('app')
 @section('content')
+
+@if(Session::has('message'))
+{!! Session::get('message'); !!}
+@endif
+
 <?php 
 $answer = $questions->each(function($question) use($test){
 		  echo '<p><b>'.($question["question"]).'</b></p>'.'<br>';
 		  $answers = Question::find($question->id)->answers;
-		  $answers->shuffle(); //OVAJ SHUFFLE VALJA JE ZA ANSWERS
+		  
+		  //OVAJ SHUFFLE VALJA JE ZA ANSWERS (Question)
+		  if($question->shuffle_question){
+		  	$answers->shuffle(); 
+		  }
 		$answers->each(function($answer) use ($question,$answers,$test){
 		// echo $answer->question_id;
 		// echo $question->id;
@@ -42,6 +51,9 @@ echo Form::checkbox($answer["id"],$answer["answer"]);
 
 	});
 });
+?>
+
+<?php
 echo Form::submit('Send', array('class' => 'btn btn-info updated_answers'));
 echo Form::close() ;
 

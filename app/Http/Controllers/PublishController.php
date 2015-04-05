@@ -10,6 +10,7 @@ use Input;
 use Redirect;
 use DB;
 use Dipl\Support\HelperFunctions;
+use Illuminate\Http\Response;
 
 class PublishController extends Controller {
 
@@ -71,58 +72,40 @@ class PublishController extends Controller {
 		}
 	}
 
+	/* 
+	   TAKE_TEST: Check if Published and public, and return test, questions, answers
+	   ========================================================================== */
+
 	public function take_test($test) {
+
+		$answers = [];
 		$the_test = Test::find($test); // Sav info o testu
 		$questions = Test::find($test)->questions; // Sav info pitanja za dani test
-		 $questions =$questions->shuffle();//OVO JE SHUFFLE ZA QUESTIONS
-		$answers = [];
-		if($the_test->is_published && $the_test->is_public) // Ako je published i public
-		{
-			
 
+		//SHUFFLE QUESTIONS (Preko Test shufflea)
+		if($the_test->shuffle){  
+		 	$questions =$questions->shuffle();
+		}
 
+		if($the_test->is_published && $the_test->is_public){ // Ako je published i public
 			$questions->each(function($question) use ($answers){				
 				$answers["answer"] = Question::find($question->id)->answers;
 			});
-
-		    foreach ($questions as $input_key => $correct) {
+			foreach ($questions as $input_key => $correct) {
 		    	$answers = Question::find($correct->id)->answers;		 		
-		    	  // dd($answers);
 			}
-		  
+
 		    $answers = $answers->all();
 
-       		 			
-		    
-
-		    
 			return view('take_test.testing1') // TU MIJENJA
 			->with('test', $the_test)
 			->with('questions', $questions)
 			->with('answers',$answers);
 
-
-
 			//OVO return view('take_test.take_public_test')
 			// ->with('test', $the_test)
 			// ->with('questions', $questions)
 			// ->with('answers',$answers);
-
-			// for($i=1; $i <= $count; $i++)
-   //          {
-   //              DB::table('anwsers')->where('id', Input::get("answer_id_form.$i"))
-   //              ->update(array('answer' => current(Input::get("answer_form")[$i]),
-   //              'correct' => current(Input::get("correct_form")[$i]) ));
-			// } 
-
-			// $lorem = $questions->each(function($question)
-			// {
-  			// var_dump( $question->id,$question->question);
-
-			// });
-
-
-
 
 		} else if($the_test->is_published) // Ako je published, a nije public, nego private
 		{
@@ -190,10 +173,10 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 		// dd(Input::all());
 		$points = [];
 		$points_count=0;
-		// $test =Test::find($id);
+		$test =Test::find($id);
 		$input = Input::all();
 		// $questions = Test::find($id)->questions;
-/**
+		/**
 		 * Multiple_Choice
 		 */
 		
@@ -208,7 +191,7 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 			->where('question_id', '=', $other_question->id)
 			->where("correct","=","1")->get();
 		});
-
+		
 		$multiple_choice_answers =$multiple_choice_answers->toArray();
 		$multiple_choice_answers = array_flatten($multiple_choice_answers);
 
@@ -222,32 +205,49 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 		/**
 		 * True_False
 		 */
-		/**
-		
-			TODO:
-			- Napravit if koji provjerava gdje je isti question_id 
-			- input->question_id === answer->question_id
-		
-		**/
 		
 		$true_false = Question:: 
 		where('type', '=', 'true_false')
 		->where('test_id', "=", $id)->get();	
 
-$true_false_answers = $true_false->map(function($choice_question) {
+	$true_false_answers = $true_false->map(function($choice_question) {
 			return $true_false_answers = DB::table('anwsers')
 			->where('question_id', '=', $choice_question->id)
 			->where("correct","=","1")->get();
 		});
-
-$true_false_answers =$true_false_answers->toArray();
+		
+		$true_false_answers =$true_false_answers->toArray();
 		$true_false_answers = array_flatten($true_false_answers);
-
+		$keys = array_keys($input);
+	
 		foreach($true_false_answers as $answer) {
-			if(in_array($answer->answer,$input)) {
+			
+ 		$a = array_fill_keys($keys, $answer->answer); 
+		echo '$a:'; print_r($a);echo '<br><br>';
+				
+	if($answer->answer === $input[$answer->question_id] ) {
+		
+		
+
+		// echo '$keys: '; print_r($keys); echo '<br><br>';
+		echo '$input '; print_r($input); echo '<br><br>';
+     	// echo '$answer->question_id: '; print_r($answer->question_id); echo '<br><br>';
+		// echo '$answer->answer: '; print_r($answer->answer); echo '<br><br>';
+		 	
+		$bb=DB::table('questions')->where('id', '=', $answer->question_id)->get();    			
+// print_R($bb);echo '<br>';
+		
+
+	
+				
+
 				$quest = Answer::find($answer->id)->question;
+
 				$points[] = $quest;
-			}
+
+	
+    			}
+		
 		}
 
    		/**
@@ -292,8 +292,7 @@ $true_false_answers =$true_false_answers->toArray();
 			->where("correct","=","1")->get();
 		});
 
-		$input = HelperFunctions::
-		array_change_value_case($input, CASE_LOWER);
+		$input = HelperFunctions::array_change_value_case($input, CASE_LOWER);
 		
 		$fill_in_answers =$fill_in_answers->toArray();
 		$fill_in_answers = array_flatten($fill_in_answers);
@@ -307,15 +306,16 @@ $true_false_answers =$true_false_answers->toArray();
 			}
 		}
 
-		
-		
-/* 
-   Summming up the result and echoing
-   ======================================================================= */
+		/* Summming up the result and echoing */
 		for($i=0;$i<count($points);$i++){
 			$points_count += $points[$i]["points"];
 		}
-		echo $points_count;
+		return redirect()->route('result',
+			[$test->id, 'points_count' => $points_count]);
 	}
 
+	public function result($test_id){
+		// dd($test_id);
+		dd(Input::all());
+	}
 }

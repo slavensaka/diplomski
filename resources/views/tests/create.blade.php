@@ -25,7 +25,7 @@
 	{!! Form::label('passcode', 'Passcode') !!}
 	{!! Form::password('passcode') !!}
 	<br>
-	{!! Form::label('shuffle', 'shuffle') !!}
+	{!! Form::label('shuffle', 'Shuffle test questions') !!}
 	{!! Form::hidden("shuffle", 0, false) !!}
 	{!! Form::checkbox("shuffle", 1, Input::old('shuffle')) !!}
 	<br>
