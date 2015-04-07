@@ -15,6 +15,19 @@ Route::get('/', array('as' => '/','uses' => 'WelcomeController@index'));
 
 Route::get('home', 'HomeController@index');
 
+
+Route::get('homepage', function()
+{
+   $users_published_tests =DB::table('users')
+            	->join('tests', 'users.id', '=', 'tests.user_id')
+            	->where('is_published','=', 1)
+            	->select('users.name', 'tests.id', 'tests.test_name',
+            	       'tests.intro', 'tests.conclusion', 'tests.shuffle',
+            	       'tests.user_id', 'tests.is_published','tests.is_public')->get();
+
+		return view('welcome')->with('users_published_tests', $users_published_tests);
+});
+
 Route::get('tests', array('as' => 'tests','uses' => 'TestController'));
 Route::get('answers', array('as' => 'answer','uses' => 'AnswerController'));
 

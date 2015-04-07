@@ -1,24 +1,26 @@
-<!DOCTYPE html>
+@extends('app')
+@section('content')
+{{-- <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href="/css/app.css" rel="stylesheet">
-	<title>AutoGenerate</title>
+	<title>Auto Generate</title>
     <link rel="stylesheet" href="">
-</head>
+</head> --}}
 
-<body>
+{{-- <body> --}}
     <div class="container">
         <div class="content">
-            <div class="quote">Create automatically graded online tests for free!</div>
+            {{-- <div class="quote">Create automatically graded online tests for free!</div>
             <p>
-                {!! link_to('auth/register', 'Register to create tests for FREE', array('class' => 'btn btn-primary')) !!}
+                {!! link_to('auth/register', 'Register FREE', array('class' => 'btn btn-primary')) !!}
             </p>
             <p>
                 {!! link_to('auth/login', 'Admin login', array('class' => 'btn btn-primary')) !!}
-            </p>
+            </p> --}}
             <h1> Take tests that were made public: </h1>
 
             <table class="table table-striped table-bordered">
@@ -62,5 +64,6 @@
 
         </div>
     </div>
-</body>
-</html>
+    @endsection
+{{-- </body>
+</html> --}}

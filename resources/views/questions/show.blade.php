@@ -28,7 +28,7 @@
 		</thead>
 		<tbody>
 		@foreach ($questions as $question)
-			<tr>
+			<tr class="success">
 				<td>{{ $question->id }}</td>
 				<td>{{ $question->question }}</td>
 				<td>{{ $question->points }}</td>
@@ -39,14 +39,19 @@
 				       array('type' => $question->type, 'quest_id' => $question), 
 				       array('class' => 'btn btn-info')) !!}
 				</td>
-				<td>{!! link_to_route('questions.edit', 'Edit Question', 
+				<td>
+					{!! link_to_route('questions.edit', 'Edit Question and Answers', 
 						array($question->id), 
-						array('class' => 'btn btn-info')) !!}
+						array('class' => 'btn btn-warning')) !!}
+				</td>
+			{{-- 	<td>{!! link_to_route('questions.edit', 'Edit Question', 
+						array($question->id), 
+						array('class' => 'btn btn-info')) !!} --}}
 				</td>
 				<td>
 					{!! Form::open(array('method'=> 'DELETE', 
 						'route' => array('questions.destroy', $question->id))) !!}
-					{!! Form::submit('Delete', array('class' => 'btn btn-danger')) !!}
+					{!! Form::submit('Delete Question', array('class' => 'btn btn-danger')) !!}
 					{!! Form::close() !!}
 				</td>
 			</tr>
@@ -61,13 +66,10 @@
 			</tr>
 @foreach ($answers as $tests_answer)
 @if($question->id === $tests_answer->question_id)
-			<tr class="warning">
+			<tr class="danger">
 				<td>{{ $tests_answer->id }}</td>
 				<td>{{ $tests_answer->answer }}</td>
-				<td>{!! link_to_route('questions.edit', 'Edit Answers', 
-						array($question->id), 
-						array('class' => 'btn btn-info')) !!}
-						</td>
+				
 				<td>{{ $tests_answer->correct }}</td>
 				{{-- <td> --}}
 					{{-- {!! Form::hidden('answers',$answers) !!} --}}
@@ -89,7 +91,7 @@
 				<td>
 					{!! Form::open(array('method'=> 'DELETE', 
 						'route' => array('answers.destroy', $tests_answer->id))) !!}
-					{!! Form::submit('Delete', array('class' => 'btn btn-danger')) !!}
+					{!! Form::submit('Delete Answer', array('class' => 'btn btn-danger')) !!}
 					{!! Form::close() !!}
 				</td>
 @endif

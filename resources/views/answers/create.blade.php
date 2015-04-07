@@ -12,6 +12,17 @@
 
 {{-- @if($type === 'multiple_choice')  --}}
 <table class="table table-striped table-bordered">
+<thead>
+            <tr>
+                <th>Question_Id</th>
+                <th>Question</th>
+                <th>Points</th>
+                <th>Shuffle question</th>
+                <th>Type</th>
+                <th>Test_id</th>
+            </tr>
+        </thead>
+{{-- 
     <thead>
         <tr>
             <td>Question ID:{!! $quest->id !!}</td>
@@ -27,8 +38,18 @@
             <td>Type: {!! $quest->type !!}</td>
             <td>Test_id: {!! $quest->test_id !!}</td>
         </tr>
-    </thead>
+    </thead> --}}
+    {{-- <tbody> --}}
+    {{-- </tbody> --}}
     <tbody>
+    <tr class="success">
+        <td>{!! $quest->id !!}</td>
+        <td>{!! $quest->question !!}</td>
+        <td>{!! $quest->points !!}</td>
+        <td>{!! $quest->shuffle_question !!}</td>
+        <td>{!! $quest->type !!}</td>
+        <td>{!! $quest->test_id !!}</td>
+    </tr>
     </tbody>
 </table>
 {{-- {{ dd(count($answers)) }} --}}
@@ -46,8 +67,32 @@ echo "Correct:$answer->correct"; echo '<br>';
 @endif
 </p>
 
+@if(($quest->type === 'fill_in') && (count($answers) < 1))
+    {!! Form::open(array('route' => 'answers.store')) !!}
+    <br>
+    {!! Form::label('answer', 'Answer') !!}
+    {!! Form::text('answer',Input::old('answer')) !!}
+    <br>        
+    {!! Form::hidden("correct", 1, false) !!}
+    <br>
+    {!! Form::hidden('quest_id', $quest->id, array('id' => 'quest_id')) !!}
+    <br>
+    {!! Form::submit('Send it!', array('class' => 'btn btn-success')) !!}
+    {!! Form::close() !!}
+    <br>
+   {!! link_to_route('answers.show', 'Go Back', 
+                $quest->id, array('class' => 'btn btn-danger')) !!}
+@elseif($quest->type === 'fill_in' && count($answers) >= 1) {{ "This type 'fill in' answers can only have one answer." }}
+<br>
+{!! link_to_route('answers.show', 'Go Back', 
+                $quest->id, array('class' => 'btn btn-danger')) !!}
+@endif
+
+
+
+
 @if(!($quest->type === 'true_false' && count($answers) >= 2) )
-@if(!($quest->type === 'fill_in' && count($answers) >= 1)) 
+@if(!($quest->type === 'fill_in'))
 
 	{!! Form::open(array('route' => 'answers.store')) !!}
 	<br>
@@ -71,14 +116,12 @@ echo "Correct:$answer->correct"; echo '<br>';
    {!! link_to_route('answers.show', 'Go Back', 
                 $quest->id, array('class' => 'btn btn-danger')) !!}
 
-@else {{ "Fill in can only have one answer" }}
-<br>
-  {!! link_to_route('answers.show', 'Go Back', 
-                $quest->id, array('class' => 'btn btn-danger')) !!}
+
+
 @endif
-@else {{ "This type 'true false' answers can only have two answers." }}
+@elseif($quest->type === 'true_false' && count($answers) >= 2) {{ "This type 'true false' answers can only have one answer." }}
 <br>
-  {!! link_to_route('answers.show', 'Go Back', 
+{!! link_to_route('answers.show', 'Go Back', 
                 $quest->id, array('class' => 'btn btn-danger')) !!}
 @endif
 @endif

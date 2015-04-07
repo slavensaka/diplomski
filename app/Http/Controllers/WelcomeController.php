@@ -39,7 +39,10 @@ class WelcomeController extends Controller {
             	->select('users.name', 'tests.id', 'tests.test_name',
             	       'tests.intro', 'tests.conclusion', 'tests.shuffle',
             	       'tests.user_id', 'tests.is_published','tests.is_public')->get();
+
 		return view('welcome')->with('users_published_tests', $users_published_tests);
 	}
+
+	
 
 }

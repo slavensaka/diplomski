@@ -6,7 +6,7 @@
     <meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AutoGenerate</title>
+    <title>Auto Generate</title>
 
     <link href="/css/app.css" rel="stylesheet">
 
@@ -30,13 +30,20 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/">Laravel</a>
+                </button> 
+                @if (Auth::check())
+                <a class="navbar-brand" href="homepage">Auto Generate</a>
+                @else 
+                <a class="navbar-brand" href="/">Auto Generate</a>
+                @endif
+
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="/">Home</a></li>
+                @if (Auth::check())
+                    <li><a href="/">{{ Auth::user()->name }} Tests</a></li>
+                @endif
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">

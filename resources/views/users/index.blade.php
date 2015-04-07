@@ -28,6 +28,11 @@
 					<th>Conclusion</th>
 					<th>user_id</th>
 					<th>Is_Public</th>
+					<th>Add Questions</th>
+					<th>Edit Test</th>
+					<th>Delete</th>
+					<th>Public/Private</th>
+					<th>Publish/Unpublish</th>
 				</tr>
 			</thead>
 			<tbody>

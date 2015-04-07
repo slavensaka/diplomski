@@ -175,7 +175,8 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 	-- Ako je passcode točan dopusti korisniku da rijesi test
 	- Omogučit slike, database se mora promijenit
 	- Omogucit samogeneriranje, gdje user kopira cijeli public test na svoj comand panel. 
-	- Loged in user needs to go home to see his public/private published test
+	-When Adding new answer on true_false check that one is correct, or it will return
+	-- true 0 and false 0. Need to use DB
 
 **/
 
