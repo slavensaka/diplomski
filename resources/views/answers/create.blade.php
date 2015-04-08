@@ -71,7 +71,8 @@ echo "Correct:$answer->correct"; echo '<br>';
     {!! Form::open(array('route' => 'answers.store')) !!}
     <br>
     {!! Form::label('answer', 'Answer') !!}
-    {!! Form::text('answer',Input::old('answer')) !!}
+    {!! Form::text('answer',Input::old('answer'),
+        array('required' => "required",'placeholder'=>'Type the answer')) !!}
     <br>        
     {!! Form::hidden("correct", 1, false) !!}
     <br>
@@ -97,7 +98,8 @@ echo "Correct:$answer->correct"; echo '<br>';
 	{!! Form::open(array('route' => 'answers.store')) !!}
 	<br>
 	{!! Form::label('answer', 'Answer') !!}
-	{!! Form::text('answer',Input::old('answer')) !!}
+	{!! Form::text('answer',Input::old('answer'),
+        array('required' => "required",'placeholder'=>'Type the answer')) !!}
 	<br>
 	
         {!! Form::label('correct', 'Correct:') !!}

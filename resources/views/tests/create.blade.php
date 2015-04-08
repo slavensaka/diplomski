@@ -10,25 +10,28 @@
 
 	{!! Form::open(array('route' => 'tests.store')) !!}
  	{!! Form::label('test_name', 'Test_name') !!}
-	{!! Form::text('test_name', Input::old('test_name')) !!}
+	{!! Form::text('test_name', Input::old('test_name'),
+		array('required' => "required",'placeholder'=>'Type the test name')) !!}
 	<br>
 	{!! Form::label('intro', 'intro') !!}
-	{!! Form::text('intro', Input::old('intro')) !!}
+	{!! Form::text('intro', Input::old('intro'),
+		array('placeholder'=>'Type the intro')) !!}
 	<br>
 	{!! Form::label('conclusion', 'conclusion') !!}
-	{!! Form::text('conclusion', Input::old('conclusion')) !!}
+	{!! Form::text('conclusion', Input::old('conclusion'),
+		array('placeholder'=>'Type the conclusion')) !!}
+	<br>
+	{!! Form::label('passcode', 'Passcode') !!}
+	{!! Form::text('passcode', NULL ,array('placeholder' => 'Enter passcode')) !!}
 	<br>
 	{!! Form::label('is_public', 'Is test public') !!}
 	{!! Form::hidden("is_public", 0, false) !!}
 	{!! Form::checkbox("is_public", 1, Input::old('is_public')) !!}
 	<br>
-	{!! Form::label('passcode', 'Passcode') !!}
-	{!! Form::password('passcode') !!}
-	<br>
 	{!! Form::label('shuffle', 'Shuffle test questions') !!}
 	{!! Form::hidden("shuffle", 0, false) !!}
 	{!! Form::checkbox("shuffle", 1, Input::old('shuffle')) !!}
-	<br>
+	<br>	
 	{!! Form::submit('Send it!') !!}
 	{!! Form::close() !!}
 

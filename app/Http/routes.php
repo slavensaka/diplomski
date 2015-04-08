@@ -19,13 +19,12 @@ Route::get('home', 'HomeController@index');
 Route::get('homepage', function()
 {
    $users_published_tests =DB::table('users')
-            	->join('tests', 'users.id', '=', 'tests.user_id')
-            	->where('is_published','=', 1)
-            	->select('users.name', 'tests.id', 'tests.test_name',
-            	       'tests.intro', 'tests.conclusion', 'tests.shuffle',
-            	       'tests.user_id', 'tests.is_published','tests.is_public')->get();
-
-		return view('welcome')->with('users_published_tests', $users_published_tests);
+    ->join('tests', 'users.id', '=', 'tests.user_id')
+    ->where('is_published','=', 1)
+    ->select('users.name', 'tests.id', 'tests.test_name',
+        'tests.intro', 'tests.conclusion', 'tests.shuffle',
+        'tests.user_id', 'tests.is_published','tests.is_public')->get();
+    return view('welcome')->with('users_published_tests', $users_published_tests);
 });
 
 Route::get('tests', array('as' => 'tests','uses' => 'TestController'));
@@ -46,6 +45,8 @@ Route::get('is_public', ['as' => 'is_public', 'uses' => 'PublishController@is_pu
 Route::get('is_private', ['as' => 'is_private', 'uses' => 'PublishController@is_private']);
 
 Route::get('take/{test}', ['as' => 'take_test', 'uses' => 'PublishController@take_test']);
+Route::get('private/{test}', ['as' => 'private', 'uses' => 'PublishController@private']);
+Route::post('take_private_test/{test}', ['as' => 'take_private_test', 'uses' => 'PublishController@take_private_test']);
 
 Route::post('finished/{id}', ['as' => 'finished', 'uses' => 'PublishController@finished']);
 

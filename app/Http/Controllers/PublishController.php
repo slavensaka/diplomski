@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Input;
 use Redirect;
 use DB;
+use Hash;
 use Dipl\Support\HelperFunctions;
 use Illuminate\Http\Response;
 
@@ -79,6 +80,7 @@ class PublishController extends Controller {
 	public function take_test($test) {
 
 		$answers = [];
+		
 		$the_test = Test::find($test); // Sav info o testu
 		$questions = Test::find($test)->questions; // Sav info pitanja za dani test
 
@@ -107,16 +109,83 @@ class PublishController extends Controller {
 			// ->with('questions', $questions)
 			// ->with('answers',$answers);
 
-		} else if($the_test->is_published) // Ako je published, a nije public, nego private
-		{
-			return 'Enter Password';
+		} else if($the_test->is_published && $the_test->is_public === 0) // Ako je published, a nije public, nego private
+		{	
+			
+			$questions->each(function($question) use ($answers){				
+				$answers["answer"] = Question::find($question->id)->answers;
+				
+				
+			});
+			foreach ($questions as $input_key => $correct) {
+		    	$answers = Question::find($correct->id)->answers;		 		
+			}
+			$created_by = Test::find($the_test->id)->user;
+			
+		    $answers = $answers->all();
+			 return view('take_test.private')
+			->with('test', $the_test)
+			->with('questions', $questions)
+			->with('answers',$answers)
+			->with('created_by',$created_by->name);
 
 		} else // Ako nije ni published, ni public
 		{
-			return 'Hacker ne smije uči';
+			 //'Hacker no entry';
+			return view('/');
 		}
 
 	}
+/* 
+   TAKE_PRIVATE_TEST: 
+   ========================================================================== */
+
+
+
+	public function take_private_test($test) {
+		// dd(Input::get('passcode');
+		$answers = [];
+		$the_test = Test::find($test); // Sav info o testu
+		$questions = Test::find($test)->questions; // Sav info pitanja za dani test
+
+		if (Hash::check(Input::get('passcode'), $the_test->passcode))
+		{
+    		
+		
+			
+
+			//SHUFFLE QUESTIONS (Preko Test shufflea)
+			if($the_test->shuffle){  
+			 	$questions =$questions->shuffle();
+			}
+
+			if($the_test->is_published && $the_test->is_public===0){ // Ako je published i public
+				
+				$questions->each(function($question) use ($answers){				
+					$answers["answer"] = Question::find($question->id)->answers;
+				});
+
+				foreach ($questions as $input_key => $correct) {
+			    	$answers = Question::find($correct->id)->answers;		 		
+				}
+			    $answers = $answers->all();
+
+				return view('take_test.testing1') // TU MIJENJA
+				->with('message','You have entered a correct passcode')
+				->with('test', $the_test)
+				->with('questions', $questions)
+				->with('answers',$answers);
+			}
+		} else {
+			return Redirect::back()
+            ->with('message','Incorrect passcode');
+            
+		}
+}
+
+/* 
+	FINISHED:    
+   ========================================================================== */
 
 	public function finished($id){
 		dd(Input::all());
@@ -177,6 +246,10 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 	- Omogucit samogeneriranje, gdje user kopira cijeli public test na svoj comand panel. 
 	-When Adding new answer on true_false check that one is correct, or it will return
 	-- true 0 and false 0. Need to use DB
+	- On question.show warn user is multiple_choice doesnt have one correct answer
+	--and should fix that till prociding
+	-IF student selects a correct=0 multiple_response than he get negative points=-2
+	--Otherwise he can select all and get the max.
 
 **/
 
@@ -310,4 +383,6 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 		// dd($test_id);
 		dd(Input::all());
 	}
+
+
 }

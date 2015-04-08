@@ -10,7 +10,7 @@
 	<ul>
 		<li>
 			{!! Form::label('test_name', 'Test name:') !!}
-			{!! Form::text('test_name') !!}		            	            
+			{!! Form::text('test_name',Input::old('test_name')) !!}		            	            
 		</li>
 		<li>
 			{!! Form::label('intro', 'intro:') !!}
@@ -22,11 +22,17 @@
 		</li>
 		<li>
 			{!! Form::label('passcode', 'passcode:') !!}
-			{!! Form::password('passcode', Input::old('passcode')) !!}
+			{!! Form::text('passcode', NULL, array('placeholder'=>'Type the passcode')) !!}
 		</li>
 		<li>
 			{!! Form::label('shuffle', 'shuffle:') !!}
-			{!! Form::text('shuffle', Input::old('shuffle(array)')) !!}
+			{!! Form::hidden("shuffle", 0, false) !!}
+			{!! Form::checkbox("shuffle", 1, Input::old('shuffle')) !!}
+			
+
+			
+	
+	
 		</li>
 		<li>
 			{!! Form::submit('Update', array('class' => 'btn btn-info')) !!}

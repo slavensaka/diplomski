@@ -46,7 +46,7 @@ class TestController extends Controller {
 	 */
 	public function store()
 	{
-		
+		// dd(Input::all());
 		$test = new Test;
 		$test->test_name = Input::get('test_name');
 		$test->intro = Input::get('intro');
@@ -119,5 +119,14 @@ class TestController extends Controller {
 		return Redirect::route('tests.index');
 	}
 
+	// public function getNameAttribute($value)
+	// {
+ //    return Crypt::decrypt($value);
+	// }
+	
+	// public function setNameAttribute($value)
+	// {
+	//     $this->attributes['name'] = Crypt::encrypt($value);
+	// }
 	
 }
