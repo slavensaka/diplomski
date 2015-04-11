@@ -32,7 +32,7 @@
                     <span class="icon-bar"></span>
                 </button> 
                 @if (Auth::check())
-                <a class="navbar-brand" href="homepage">Auto Generate</a>
+                <a class="navbar-brand" href="../homepage">Auto Generate</a>
                 @else 
                 <a class="navbar-brand" href="/">Auto Generate</a>
                 @endif
@@ -41,7 +41,10 @@
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
+                {{-- <li><a href="/">Taken Tests</a></li> --}}
+
                 @if (Auth::check())
+                    <li><a href="tests_taken">Tests Taken</a></li>
                     <li><a href="/">{{ Auth::user()->name }} Tests</a></li>
                 @endif
                 </ul>

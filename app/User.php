@@ -34,6 +34,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 */
 	protected $hidden = ['password', 'remember_token'];
 
+    /**
+    *
+    * One to many with tests
+    *
+    **/
+
 	public function tests()
 	{
 		return $this->hasMany('Dipl\Test');
@@ -48,6 +54,17 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	public function questions()
     {
         return $this->hasManyThrough('Dipl\Question', 'Dipl\Test','id', 'user_id');
+    }
+
+    /**
+    *
+    * Many to many with tests 
+    *
+    **/
+
+    public function taken_tests()
+    {
+        return $this->belongsToMany('Dipl\Test');
     }
 
 }

@@ -20,5 +20,14 @@ class DatabaseSeeder extends Seeder {
 
 		$this->call('AnswerTableSeeder');
 		$this->command->info('Answer table seeded!');
+
+		$this->call('StudentTableSeeder');
+		$this->command->info('Student table seeded!');
+
+		$this->call('StudentTestPivotTableSeeder');
+		$this->command->info('StudentTestPivot table seeded!');
+
+		$this->call('UserTestPivotTableSeeder');
+		$this->command->info('UserTestPivot table seeded!');
 	}
 }

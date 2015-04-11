@@ -4,6 +4,7 @@ use DB;
 use App;
 use Input;
 use Route;
+use Session;
 use Redirect;
 use Response;
 use Dipl\Test;
@@ -58,29 +59,64 @@ class AnswerController extends Controller {
      ->where('correct', '=', 1)->sum('correct');
         $new_answer = Input::get("correct");
         $answers += (int)$new_answer;
-        if(!($question->type === 'multiple_response')){
-        if($answers > 1) {
+        
+        //Check that one true_false if correct, that both are not 0.
+        if($question->type === 'true_false' && Input::get("correct") === "0"){
+            $count_of_true_false = DB::table('anwsers')
+            ->where('question_id',Input::get('quest_id'))
+            ->where('correct', '=', 0)->get();
             
+
+            if(Input::get("correct" === '1')){
+                
+            }
+         }
+
+         //Check that one multiple_choice if correct, that both are not 0.
+         /**
+         
+             TODO:
+             - On question.show warn user is multiple_choice doesnt have one correct answer
+             --and should fix that till prociding UNCOMMENT THIS
+         
+         **/
+            
+         // if($question->type === 'multiple_choice') {
+         //    $count_of_multiple_choice = DB::table('anwsers')
+         //    ->where('question_id',Input::get('quest_id'))
+         //    ->where('correct', '=', 0)->get();
+
+         //    // dd(count($count_of_multiple_choice));
+         //    if(count($count_of_multiple_choice) >= 1){
+         //        Session::put('warning', 'One must be an correct answer');
+         //        Session::put('question_id', Input::get('quest_id'));
+         //    }
+         // }
+
+         // Check that more than one is correct in a multiple_response
+        if(!($question->type === 'multiple_response')){    
+        if($answers > 1) {
             $question_id = Input::get('quest_id');
             $test_id = Question::find($question_id)->test;
             return Redirect::back()
             ->with('message','Error, more than one is correct.')
             ->with('answer',$new_answer);
 
-         }
-    }
-        
+        }
+       }
+
             $answer = new Answer;
             $answer->answer = Input::get('answer');
             $answer->correct = Input::get('correct');
             $question_id = Input::get('quest_id');
             $answer->question_id = $question_id;
             $answer->save();
-            $answers = DB::table('anwsers')->where('correct','=', 1)
+
+            $answers = DB::table('anwsers')->where('correct','=', 1)//NE TREBA?
             ->where('question_id','=', $answer->question_id)->get();
 
-             $test_id = Question::find($question_id)->test;
-        return Redirect::action('QuestionController@show', array($test_id));
+            $test_id = Question::find($question_id)->test;
+            return Redirect::action('QuestionController@show', array($test_id));
        
             // DB::table('anwsers')->where('id', Input::get("answer_id_form.$i"))
             //     ->update(array('answer' => current(Input::get("answer_form")[$i]) ,

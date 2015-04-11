@@ -23,19 +23,31 @@
 					
 			</tbody>
 	</table>
+
 {!! Form::open(array('route' => array('take_private_test', $test->id),'method' => 'post')) !!}
- 	{!! Form::label('student_name', 'Name') !!}
+ 	
+ 	@if(Auth::check())
+	{!! Form::label('passcode', 'Passcode') !!}
+	{!! Form::text('passcode', NULL, array('required' => "required",
+		'placeholder' => 'Password')) !!}
+	<br>
+	{!! Form::submit('Enter') !!}
+	{!! Form::close() !!}
+	
+	@else 
+	{!! Form::label('student_name', 'Your Name:') !!}
 	{!! Form::text('student_name', NULL,
 		array('required' => "required",'placeholder'=>'Type your name')) !!}
 	<br>
 	
 	{!! Form::label('passcode', 'Passcode') !!}
 	{!! Form::text('passcode', NULL, array('required' => "required",
-	'placeholder' => 'Password')) !!}
+		'placeholder' => 'Password')) !!}
 	<br>
 	
 	{!! Form::submit('Enter') !!}
 	{!! Form::close() !!}
+	@endif
 @if(Session::has('message'))
 {!! Session::get('message'); !!}
 @endif

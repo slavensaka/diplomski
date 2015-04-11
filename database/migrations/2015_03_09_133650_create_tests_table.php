@@ -17,6 +17,7 @@ class CreateTestsTable extends Migration {
 			$table->boolean('is_published')->default('0');
 			$table->boolean('is_public')->default('0');
 			$table->unsignedInteger('user_id');
+			// $table->unsignedInteger('student_id');
 			$table->timestamps();
 		});
 	}

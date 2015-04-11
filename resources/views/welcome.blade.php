@@ -1,26 +1,8 @@
 @extends('app')
 @section('content')
-{{-- <!DOCTYPE html>
-<html>
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link href="/css/app.css" rel="stylesheet">
-	<title>Auto Generate</title>
-    <link rel="stylesheet" href="">
-</head> --}}
-
-{{-- <body> --}}
     <div class="container">
         <div class="content">
-            {{-- <div class="quote">Create automatically graded online tests for free!</div>
-            <p>
-                {!! link_to('auth/register', 'Register FREE', array('class' => 'btn btn-primary')) !!}
-            </p>
-            <p>
-                {!! link_to('auth/login', 'Admin login', array('class' => 'btn btn-primary')) !!}
-            </p> --}}
             <h1> Take public tests: </h1>
 
             <table class="table table-striped table-bordered">
@@ -58,8 +40,6 @@
                         </td>
                     </tr>
                     @endif
-        
-              
                     @endforeach
                             </tbody>
             </table>

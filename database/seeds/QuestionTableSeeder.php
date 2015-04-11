@@ -5,20 +5,6 @@ use Illuminate\Database\Eloquent\Model;
 use Dipl\Question as Question;
 
 class QuestionTableSeeder extends Seeder {
- // 192 T1
- // 56 T2
- // DA T3
- // DA T4
- // DA T5
- // DA T6
- //NE T7
- //8the InternetTRUE(a library catalogue,an article index,a computerized warehouse inventory)
- // 9TRUE(records) fields articles names
- // 10False
- //11TRUE(facebook, linkedin,twitter,flickr)
- //12true
- //13TRUE(FURY),Apocalypse Now,Black Hawk Down,platoon
- //14TRUE(terminator, birdman, interstellar) ,Gigli
 
 	public function run()
 	{

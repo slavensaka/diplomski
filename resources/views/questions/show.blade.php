@@ -1,9 +1,9 @@
 @extends('app')
 @section('content')
-{{-- 
+
 {!! Html::script('js/jquery-1.11.2.min.js') !!}
-{!! Html::script('js/one_correct_answer.js') !!}
- --}}
+{!! Html::script('js/functions.js') !!}
+
 @if (Auth::guest())
 	<h1>Your not logged in</h1>
 @else
@@ -55,14 +55,25 @@
 					{!! Form::close() !!}
 				</td>
 			</tr>
+{{-- 
+@if(Session::has('warning') && $question->type === 'multiple_choice' && $question->id == Session::has('question_id'))
+<tr class="warning_session">
+<td>
+{!! Session::pull('warning'); !!}		
+
+</td>
+</tr>
+@endif
+ --}}
 			<tr>
 				<th>ID</th>
 				<th>Answer</th>
-				<th>Edit Answer</th>
 				<th>Correct</th>
+				<th>Question ID </th>
+				<th>Delete Answer</th>
 				{{-- <th>Is_Correct</th> --}}
 				
-				<th>Question_id</th>
+				
 			</tr>
 @foreach ($answers as $tests_answer)
 @if($question->id === $tests_answer->question_id)
@@ -94,6 +105,7 @@
 					{!! Form::submit('Delete Answer', array('class' => 'btn btn-danger')) !!}
 					{!! Form::close() !!}
 				</td>
+				
 @endif
 @endforeach
 				</tr>

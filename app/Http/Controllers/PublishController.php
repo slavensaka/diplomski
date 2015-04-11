@@ -3,13 +3,17 @@
 use Dipl\Http\Requests;
 use Dipl\Http\Controllers\Controller;
 use Dipl\Test;
+use Dipl\User;
 use Dipl\Answer;
 use Dipl\Question;
 use Illuminate\Http\Request;
 use Input;
 use Redirect;
 use DB;
+use Dipl\Student;
 use Hash;
+use View;
+use Auth;
 use Dipl\Support\HelperFunctions;
 use Illuminate\Http\Response;
 
@@ -80,7 +84,7 @@ class PublishController extends Controller {
 	public function take_test($test) {
 
 		$answers = [];
-		
+		$student_name = '';
 		$the_test = Test::find($test); // Sav info o testu
 		$questions = Test::find($test)->questions; // Sav info pitanja za dani test
 
@@ -89,6 +93,13 @@ class PublishController extends Controller {
 		 	$questions =$questions->shuffle();
 		}
 
+		if(Auth::check()){
+			$student_name = Auth::user()->name;
+		} else {
+			$numberrand = rand(1, 1000);
+			$student_name = "User$numberrand"; 
+			
+		}
 		if($the_test->is_published && $the_test->is_public){ // Ako je published i public
 			$questions->each(function($question) use ($answers){				
 				$answers["answer"] = Question::find($question->id)->answers;
@@ -102,7 +113,8 @@ class PublishController extends Controller {
 			return view('take_test.testing1') // TU MIJENJA
 			->with('test', $the_test)
 			->with('questions', $questions)
-			->with('answers',$answers);
+			->with('answers',$answers)
+			->with('student_name',$student_name);
 
 			//OVO return view('take_test.take_public_test')
 			// ->with('test', $the_test)
@@ -143,17 +155,30 @@ class PublishController extends Controller {
 
 
 	public function take_private_test($test) {
-		// dd(Input::get('passcode');
+		// dd(Input::all());
+		// dd(Input::get('student_name');
+		$student_name='';
+		if(Auth::check()){
+			$student_name = Auth::user()->name;
+		} else {
+			$student_name = Input::get('student_name');
+
+			$student = Student::where('student_name', '=', $student_name)->exists();
+			if($student){
+				return Redirect::back()->with('message','Username already taken');  
+			}
+		}
+
+
 		$answers = [];
 		$the_test = Test::find($test); // Sav info o testu
 		$questions = Test::find($test)->questions; // Sav info pitanja za dani test
 
+
+
 		if (Hash::check(Input::get('passcode'), $the_test->passcode))
 		{
-    		
-		
-			
-
+    
 			//SHUFFLE QUESTIONS (Preko Test shufflea)
 			if($the_test->shuffle){  
 			 	$questions =$questions->shuffle();
@@ -174,12 +199,12 @@ class PublishController extends Controller {
 				->with('message','You have entered a correct passcode')
 				->with('test', $the_test)
 				->with('questions', $questions)
-				->with('answers',$answers);
+				->with('answers',$answers)
+				->with('student_name',$student_name);
 			}
 		} else {
 			return Redirect::back()
-            ->with('message','Incorrect passcode');
-            
+            ->with('message','Incorrect passcode');          
 		}
 }
 
@@ -188,7 +213,7 @@ class PublishController extends Controller {
    ========================================================================== */
 
 	public function finished($id){
-		dd(Input::all());
+		// dd(Input::all());
 		(int)$correct_answer = [];
 		$question_id = [];
 		$new_answer = [];
@@ -240,14 +265,8 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 /**
 
 	TODO:
-	- Ako je test private, stavi na homepage sa naponemnom da se mora unijet passcode
-	-- Ako je passcode točan dopusti korisniku da rijesi test
 	- Omogučit slike, database se mora promijenit
 	- Omogucit samogeneriranje, gdje user kopira cijeli public test na svoj comand panel. 
-	-When Adding new answer on true_false check that one is correct, or it will return
-	-- true 0 and false 0. Need to use DB
-	- On question.show warn user is multiple_choice doesnt have one correct answer
-	--and should fix that till prociding
 	-IF student selects a correct=0 multiple_response than he get negative points=-2
 	--Otherwise he can select all and get the max.
 
@@ -376,13 +395,50 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 			$points_count += $points[$i]["points"];
 		}
 		return redirect()->route('result',
-			[$test->id, 'points_count' => $points_count]);
+			[$test->id, 'points_count' => $points_count, 
+			'student_name' => Input::get('student_name')]);
 	}
+
+/* 
+   Result: When user submits a test
+   ========================================================================== */
 
 	public function result($test_id){
 		// dd($test_id);
 		dd(Input::all());
+		 
+	}
+
+	public function tests_taken(){
+		// dd(Auth::user()->name);
+		if(Auth::check()){
+			 $taken_tests = User::find(Auth::user()->id)->taken_tests;
+
+			 $taken_tests =DB::table('users')
+			 ->join('test_user', 'users.id', '=', 'test_user.user_id')
+			 // ->where('test_user.test_id', '=', $taken_test->id)
+		 	 ->where("test_user.user_id","=",Auth::user()->id)
+             ->select('users.name', 'test_user.user_id', 'test_user.test_id',
+    			'test_user.test_result','test_user.created_at')->get();
+       
+		return View::make('take_test/tests_taken')->with('taken_tests',$taken_tests);
+		}
+		
+	}
+
+	public function delete_taken_test($test_id){
+		
+		DB::table('test_user')
+		->where('user_id', '=',Auth::user()->id)
+		->where('test_id', '=', $test_id)->delete();
+		return Redirect::back(); 
 	}
 
 
 }
+
+
+
+
+
+
