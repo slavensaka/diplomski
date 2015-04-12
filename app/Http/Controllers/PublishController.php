@@ -267,14 +267,13 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 
 	TODO:
 	- Omogučit slike, database se mora promijenit 
-	-IF student selects a correct=0 multiple_response than he get negative points=-2
-	--Otherwise he can select all and get the max.
 
 **/
 
 	public function testing1($id){ // test id
 		// dd(Input::all());
 		$points = [];
+		$points_decrease = [];
 		$points_count=0;
 		$test =Test::find($id);
 		$input = Input::all();
@@ -353,14 +352,31 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 
 		$answers =$answers->toArray();
 		$answers = array_flatten($answers);
-
+		// dd($input);
+		// dd($answers);
 		// $counting =count($answers);
 		foreach($answers as $answer) {
 			if(in_array($answer->answer,$input)) {
 				$quest = Answer::find($answer->id)->question;
 				$points[] = $quest;
+				// dd($points);
 			}
 		}
+		//If the input are incorrect answers, reduce count
+		$incorrect_answers = $multiple_response->map(function($question) use($flip) {
+			return $incorrect_answers = DB::table('anwsers')
+			->where('question_id', '=', $question->id)
+			->where("correct","=","0")->get();
+		});
+		$incorrect_answers =$incorrect_answers->toArray();
+		$incorrect_answers = array_flatten($incorrect_answers);
+		foreach($incorrect_answers as $answer) {
+			if(in_array($answer->answer,$input)) {
+				$quest = Answer::find($answer->id)->question;
+				$points_decrease[] = $quest;
+			}
+		}
+
 
 		/**
 		 * Fill_In VALJA
@@ -394,6 +410,11 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 		for($i=0;$i<count($points);$i++){
 			$points_count += $points[$i]["points"];
 		}
+
+		for($i=0;$i<count($points_decrease);$i++){
+			$points_count -= $points_decrease[$i]["points"];
+		}
+
 		return redirect()->route('result',
 			[$test->id, 'points_count' => $points_count, 
 			'student_name' => Input::get('student_name')]);
