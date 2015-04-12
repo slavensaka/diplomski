@@ -13,6 +13,7 @@ use DB;
 use Dipl\Student;
 use Hash;
 use View;
+use Carbon\Carbon;
 use Auth;
 use Dipl\Support\HelperFunctions;
 use Illuminate\Http\Response;
@@ -265,8 +266,7 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 /**
 
 	TODO:
-	- Omogučit slike, database se mora promijenit
-	- Omogucit samogeneriranje, gdje user kopira cijeli public test na svoj comand panel. 
+	- Omogučit slike, database se mora promijenit 
 	-IF student selects a correct=0 multiple_response than he get negative points=-2
 	--Otherwise he can select all and get the max.
 
@@ -434,6 +434,47 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 		return Redirect::back(); 
 	}
 
+	public function copy_public_test($test_id) {
+
+		$test = Test::find($test_id);
+		$new_test = new Test;
+		$new_test->test_name = $test->test_name;
+		$new_test->intro = $test->intro;
+		$new_test->conclusion = $test->conclusion;
+		$new_test->null;
+		$new_test->shuffle = $test->shuffle;
+		$new_test->is_public = $test->is_public;
+		$new_test->user_id = Auth::user()->id;
+		$new_test->save();
+		
+		$last_id=DB::getPdo()->lastInsertId();
+
+		$questions = Test::find($test_id)->questions;
+		foreach($questions as $question){
+			$new_question = new Question;
+			$new_question->question = $question->question;
+			$new_question->points = $question->points;
+			$new_question->shuffle_question = $question->shuffle_question;
+			$new_question->type = $question->type;
+			$new_question->created_at = Carbon::now();
+			$new_question->updated_at = Carbon::now()->addMinutes(2);
+			$new_question->test_id = $last_id;
+			$new_question->save();
+
+		}
+
+			foreach($questions as $key => $question){
+			$questions_last = Test::find($last_id)->questions;
+			$answers = Question::find($question->id)->answers;
+			foreach($answers as $answer){
+				$new_answer = new Answer;
+				$new_answer->answer = $answer->answer;
+				$new_answer->correct = $answer->correct;
+				$new_answer->question_id = $questions_last[$key]["id"];
+				$new_answer->save();
+			}
+		}
+	}
 
 }
 

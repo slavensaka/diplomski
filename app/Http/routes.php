@@ -58,6 +58,9 @@ Route::get('tests_taken', ['as' => 'tests_taken', 'uses' => 'PublishController@t
 
 Route::delete('tests_taken/{test_id}', ['as' => 'delete_taken_test', 'uses' => 'PublishController@delete_taken_test']);
 
+Route::get('copy_test/{test_id}', ['as' => 'copy_public_test', 'uses' => 'PublishController@copy_public_test']);
+
+
 /**
 *
 * Experimental file uploader

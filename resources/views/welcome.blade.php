@@ -38,6 +38,12 @@
                         		array($published_test->id), 
                         		array('class' => 'btn btn-success')) !!}
                         </td>
+                        @if(Auth::check() && !($published_test->user_id === Auth::user()->id))
+                        <td>{!! link_to_route('copy_public_test', 'Copy this Test', 
+                                array($published_test->id), 
+                                array('class' => 'btn btn-primary')) !!}
+                        </td>
+                        @endif
                     </tr>
                     @endif
                     @endforeach
