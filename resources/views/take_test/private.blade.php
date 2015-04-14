@@ -7,7 +7,7 @@
 
 
 
-<h1>Create a New Question</h1>
+<h1>Take this private test</h1>
 	<table class="table table-striped table-bordered">
 			<thead>
 				<tr>
@@ -26,7 +26,7 @@
 
 {!! Form::open(array('route' => array('take_private_test', $test->id),'method' => 'post')) !!}
  	
- 	@if(Auth::check())
+ 	@if(Auth::check() || Session::has('student_name'))
 	{!! Form::label('passcode', 'Passcode') !!}
 	{!! Form::text('passcode', NULL, array('required' => "required",
 		'placeholder' => 'Password')) !!}
@@ -35,14 +35,14 @@
 	{!! Form::close() !!}
 	
 	@else 
-	{!! Form::label('student_name', 'Your Name:') !!}
+	{!! Form::label('student_name', 'Username:') !!}
 	{!! Form::text('student_name', NULL,
-		array('required' => "required",'placeholder'=>'Type your name')) !!}
+		array('required' => "required",'placeholder'=>'Enter username')) !!}
 	<br>
 	
 	{!! Form::label('passcode', 'Passcode') !!}
 	{!! Form::text('passcode', NULL, array('required' => "required",
-		'placeholder' => 'Password')) !!}
+		'placeholder' => 'Enter Passcode')) !!}
 	<br>
 	
 	{!! Form::submit('Enter') !!}

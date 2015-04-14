@@ -43,18 +43,22 @@
                 <ul class="nav navbar-nav">
                 {{-- <li><a href="/">Taken Tests</a></li> --}}
                 @if(Session::has('student_name'))
-                <li><a href="../tests_taken">Student Taken Tests</a></li>
+                <li><a href="../tests_taken">Students Taken Tests</a></li>
                 @endif
 
                 @if (Auth::check())
                    <?php Session::forget('student_name'); ?>
-                    <li><a href="tests_taken">User Taken Tests</a></li>
+                    <li><a href="tests_taken">Users Taken Tests</a></li>
                     <li><a href="/">{{ Auth::user()->name }} Tests</a></li>
                 @endif
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
+                
                     @if (Auth::guest())
+                    <li><a href="../student_login">Student Login</a></li>
+                  {{--   <li>{!! link_to_route('student_login', 'Go Back', $question->id , array('class' => 'btn btn-danger')) !!}
+                    </li> --}}
                     <li><a href="/auth/login">Login</a></li>
                     <li><a href="/auth/register">Register</a></li>
                     @else

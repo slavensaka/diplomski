@@ -100,10 +100,11 @@ class PublishController extends Controller {
 		if(Auth::check()){
 			$student_name = Auth::user()->name;
 		} else {
-			$numberrand = rand(1, 1000);
-			// $string = str_random(5);
-			$student_name = "User$numberrand"; 
-			
+			// if(!Session::has('student_name')){
+				$numberrand = rand(1, 1000);
+				// $string = str_random(5);
+				$student_name = "User$numberrand"; 
+			// }
 		}
 		if($the_test->is_published && $the_test->is_public){ // Ako je published i public
 			$questions->each(function($question) use ($answers){				
@@ -169,7 +170,8 @@ class PublishController extends Controller {
 			$student_name = Input::get('student_name');
 
 			$student = Student::where('student_name', '=', $student_name)->exists();
-			if($student){
+			$user = User::where('name', '=', $student_name)->exists();
+			if($student || $user){
 				return Redirect::back()->with('message','Username already taken');  
 			}
 		}
@@ -448,13 +450,13 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 			$new_user->save();
 
 		} else {
+			$student = Student::where('student_name', '=', Session::get('student_name'))->first();
 
+			if(!$student){
 			$user = new Student;
 			$user->student_name =Input::get('student_name');
 			$saved =$user->save();
-			if($saved){
-				Session::put('student_name', Input::get('student_name'));
-			}
+
 			$last_id=DB::getPdo()->lastInsertId();
 
 			$user = new StudentTestPivot;
@@ -463,13 +465,27 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 			$user->test_result = $points_count;
 			$user->save();
 
+			if($saved){
+				Session::put('student_name', Input::get('student_name'));
+			}
+
+			} else {
+			$user = new StudentTestPivot;
+			$user->student_id = $student->id;
+			$user->test_id = $test->id;
+			$user->test_result = $points_count;
+			$user->save();
+
+			}
+						
 			
 		}
 
 		 return View::make('take_test/result_show')
          ->with(compact('correct_points','test','questions','answers'))
          ->with('points_count', $points_count)
-         ->with('student_name', Input::get('student_name'));
+         ->with('student_name', Input::get('student_name'))
+         ->with('student_name',Session::get('student_name'));
 
 		// return redirect()->route('result',
 		// 	[$test->id, 'points_count' => $points_count, 

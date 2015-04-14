@@ -63,6 +63,10 @@ Route::get('copy_test/{test_id}', ['as' => 'copy_public_test', 'uses' => 'Publis
 
 Route::get('show_tests_taken/{test_id}', ['as' => 'show_tests_taken', 'uses' => 'PublishController@show_tests_taken']);
 
+Route::get('student_login', ['as' => 'student_login', 'uses' => 'StudentController@student_login']);
+
+Route::post('student_login_verify', ['as' => 'student_login_verify', 'uses' => 'StudentController@student_login_verify']);
+
 
 /**
 *
