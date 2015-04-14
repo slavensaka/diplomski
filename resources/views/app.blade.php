@@ -42,9 +42,13 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                 {{-- <li><a href="/">Taken Tests</a></li> --}}
+                @if(Session::has('student_name'))
+                <li><a href="../tests_taken">Student Taken Tests</a></li>
+                @endif
 
                 @if (Auth::check())
-                    <li><a href="tests_taken">Tests Taken</a></li>
+                   <?php Session::forget('student_name'); ?>
+                    <li><a href="tests_taken">User Taken Tests</a></li>
                     <li><a href="/">{{ Auth::user()->name }} Tests</a></li>
                 @endif
                 </ul>

@@ -1,7 +1,7 @@
 <?php use Dipl\Question; ?> 
 {!! Html::script('js/jquery-1.11.2.min.js') !!}
 {!! Html::script('js/functions.js') !!}
-{{-- {{ dd($test) }}  --}}
+{{-- {{ dd($test->conclusion) }}  --}}
 {{-- {{ dd($questions) }} --}}
 {{-- {{ dd($student_name) }} --}}
 {{-- {{ print_r($answers) }} --}}
@@ -26,6 +26,7 @@ $answer = $questions->each(function($question) use($test, $student_name){
 		// echo $answer->question_id;
 		// echo $question->id;
 	echo Form::open(array('route' => array('testing1',$test->id),'method' => 'post')) ;	 
+
 if($question->type === 'multiple_choice' || $question->type === 'true_false') {
 ?>
 <ul>
@@ -33,6 +34,7 @@ if($question->type === 'multiple_choice' || $question->type === 'true_false') {
 <?php echo Form::label($answer["answer"],$answer["answer"]); ?>
 <?php echo Form::radio($answer->question_id, $answer["answer"]); ?>
 <?php echo Form::hidden('student_name', $student_name); ?>
+
 	</li>
 
 </ul>
@@ -57,6 +59,7 @@ echo Form::checkbox($answer["id"],$answer["answer"]);
 
 <?php
 // echo Form::hidden('student_name', $student_name);
+// echo Form::hidden('test_id', $test->id);
 echo Form::submit('Send', array('class' => 'btn btn-info updated_answers'));
 echo Form::close() ;
 

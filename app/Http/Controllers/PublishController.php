@@ -11,10 +11,13 @@ use Input;
 use Redirect;
 use DB;
 use Dipl\Student;
+use Dipl\UserTestPivot;
 use Hash;
 use View;
 use Carbon\Carbon;
 use Auth;
+use Session;
+use Dipl\StudentTestPivot;
 use Dipl\Support\HelperFunctions;
 use Illuminate\Http\Response;
 
@@ -98,6 +101,7 @@ class PublishController extends Controller {
 			$student_name = Auth::user()->name;
 		} else {
 			$numberrand = rand(1, 1000);
+			// $string = str_random(5);
 			$student_name = "User$numberrand"; 
 			
 		}
@@ -273,11 +277,13 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 	public function testing1($id){ // test id
 		// dd(Input::all());
 		$points = [];
+		$correct_points = [];
 		$points_decrease = [];
 		$points_count=0;
 		$test =Test::find($id);
 		$input = Input::all();
 		// $questions = Test::find($id)->questions;
+
 		/**
 		 * Multiple_Choice
 		 */
@@ -302,6 +308,9 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 			if(in_array($multiple_answer->answer,$input)) {
 				$quest = Answer::find($multiple_answer->id)->question;
 				$points[] = $quest;
+
+				$answer_correct = Answer::find($multiple_answer->id);
+				$correct_points[] =$answer_correct;
 			}
 		}
 
@@ -329,6 +338,9 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 				if($answer->answer === $input[$answer->question_id] ) {
 					$quest = Answer::find($answer->id)->question;
 					$points[] = $quest;
+
+					$answer_correct = Answer::find($answer->id);
+					$correct_points[] =$answer_correct;
     			}
 			}
 		}
@@ -360,6 +372,9 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 				$quest = Answer::find($answer->id)->question;
 				$points[] = $quest;
 				// dd($points);
+				$answer_correct = Answer::find($answer->id);
+				$correct_points[] =$answer_correct;
+
 			}
 		}
 		//If the input are incorrect answers, reduce count
@@ -403,6 +418,9 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 			if(in_array($result,$input)) {
 				$quest = Answer::find($answer->id)->question;
 				$points[] = $quest;
+
+				$answer_correct = Answer::find($answer->id);
+				$correct_points[] =$answer_correct;
 			}
 		}
 
@@ -414,35 +432,85 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 		for($i=0;$i<count($points_decrease);$i++){
 			$points_count -= $points_decrease[$i]["points"];
 		}
+	
+		$questions = Test::find($test->id)->questions;
+		$answers = Test::find($test->id)->answers;
 
-		return redirect()->route('result',
-			[$test->id, 'points_count' => $points_count, 
-			'student_name' => Input::get('student_name')]);
+		
+		
+		$user = User::where('name', '=', Input::get('student_name'))->first();
+		
+		if($user){
+			$new_user = new UserTestPivot;
+			$new_user->user_id = $user->id;
+			$new_user->test_id = $test->id;
+			$new_user->test_result = $points_count;
+			$new_user->save();
+
+		} else {
+
+			$user = new Student;
+			$user->student_name =Input::get('student_name');
+			$saved =$user->save();
+			if($saved){
+				Session::put('student_name', Input::get('student_name'));
+			}
+			$last_id=DB::getPdo()->lastInsertId();
+
+			$user = new StudentTestPivot;
+			$user->student_id = $last_id;
+			$user->test_id = $test->id;
+			$user->test_result = $points_count;
+			$user->save();
+
+			
+		}
+
+		 return View::make('take_test/result_show')
+         ->with(compact('correct_points','test','questions','answers'))
+         ->with('points_count', $points_count)
+         ->with('student_name', Input::get('student_name'));
+
+		// return redirect()->route('result',
+		// 	[$test->id, 'points_count' => $points_count, 
+		// 	'student_name' => Input::get('student_name'),
+		// 	'correct_points' => $correct_points]);
 	}
 
-/* 
-   Result: When user submits a test
-   ========================================================================== */
-
-	public function result($test_id){
-		// dd($test_id);
-		dd(Input::all());
-		 
-	}
 
 	public function tests_taken(){
 		// dd(Auth::user()->name);
+		// dd(Input::all());
+		$test_info = [];
 		if(Auth::check()){
-			 $taken_tests = User::find(Auth::user()->id)->taken_tests;
+			 // $taken_tests = User::find(Auth::user()->id)->taken_tests;
 
-			 $taken_tests =DB::table('users')
+			$taken_tests =DB::table('users')
 			 ->join('test_user', 'users.id', '=', 'test_user.user_id')
 			 // ->where('test_user.test_id', '=', $taken_test->id)
 		 	 ->where("test_user.user_id","=",Auth::user()->id)
              ->select('users.name', 'test_user.user_id', 'test_user.test_id',
     			'test_user.test_result','test_user.created_at')->get();
-       
-		return View::make('take_test/tests_taken')->with('taken_tests',$taken_tests);
+
+		return View::make('take_test/tests_taken')
+		->with('taken_tests',$taken_tests)
+		->with('test_info',$test_info);
+		} else {
+			
+
+			
+			$student_id = Student::where('student_name', 
+				'=', Session::get('student_name'))->first();
+				
+			$taken_tests =DB::table('students')
+			 ->join('student_test', 'students.id', '=', 'student_test.student_id')
+			 // ->where('student_test.test_id', '=', $taken_test->id)
+		 	 ->where("student_test.student_id","=",$student_id->id)//TU
+             ->select('students.student_name', 'student_test.student_id', 'student_test.test_id',
+    			'student_test.test_result','student_test.created_at')->get();
+             // dd($taken_tests);
+        return View::make('take_test/tests_taken_students')
+		->with('taken_tests',$taken_tests);
 		}
 		
 	}
@@ -495,6 +563,24 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 				$new_answer->save();
 			}
 		}
+		// if(User::find(Auth::id())) 
+		// {
+		// 	$tests = User::find(Auth::id())->tests;
+ 	// 		return view('users.index', compact('tests'))
+ 	// 		->with('message',"The public test has been copied to your panel.");
+		// } 
+		return Redirect::route('tests')
+		->with('message',"The public test \"$test->test_name\" has been copied to your panel."); 
+	}
+
+	//Show_tests_taken: display the test user has taken 
+	public function show_tests_taken($test_id){
+
+		// dd(Input::all());
+		$questions = Test::find($test_id)->questions;
+		$answers = Test::find($test_id)->answers;
+		return view('take_test.show_tests_taken', compact('questions','answers'))
+		->with('test_result',Input::get('test_result'));
 	}
 
 }

@@ -52,13 +52,16 @@ Route::post('finished/{id}', ['as' => 'finished', 'uses' => 'PublishController@f
 
 Route::post('testing1/{id}', ['as' => 'testing1', 'uses' => 'PublishController@testing1']);
 
-Route::get('result/{test_id}', ['as' => 'result', 'uses' => 'PublishController@result']);
+// Route::get('result/{test_id}', ['as' => 'result', 'uses' => 'PublishController@result']);
+// Route::get('result', ['as' => 'result', 'uses' => 'PublishController@result']);
 
 Route::get('tests_taken', ['as' => 'tests_taken', 'uses' => 'PublishController@tests_taken']);
 
 Route::delete('tests_taken/{test_id}', ['as' => 'delete_taken_test', 'uses' => 'PublishController@delete_taken_test']);
 
 Route::get('copy_test/{test_id}', ['as' => 'copy_public_test', 'uses' => 'PublishController@copy_public_test']);
+
+Route::get('show_tests_taken/{test_id}', ['as' => 'show_tests_taken', 'uses' => 'PublishController@show_tests_taken']);
 
 
 /**

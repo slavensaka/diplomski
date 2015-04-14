@@ -17,7 +17,7 @@ for($i=0;$i<=count($taken_tests)-1; $i++) {
 	<thead>
 			<tr>
 				<th>Test Taken At</th>
-				<th>Student Name</th>
+				<th>Test Taker</th>
 				<th>Test_Result</th>
 				<th>User_Id</th>
 				<th>Test_Id</th>
@@ -28,11 +28,10 @@ for($i=0;$i<=count($taken_tests)-1; $i++) {
 		</thead>
 		<tbody>
 			<tr class="danger">
-
-				<td>{{ $taken_tests[$i]->created_at }}</td>	
-				<td>{{ $taken_tests[$i]->name }}</td>
+				<td>{{ $taken_tests[$i]->created_at }}</td>
+				<td>{{ $taken_tests[$i]->student_name }}</td>
 				<td><b>{{ $taken_tests[$i]->test_result }}</b></td>
-				<td>{{ $taken_tests[$i]->user_id }}</td>
+				<td>{{ $taken_tests[$i]->student_id }}</td>
 				<td>{{ $taken_tests[$i]->test_id }}</td>
 				
 				
