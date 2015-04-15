@@ -14,6 +14,7 @@ class CreateStudentTestPivotTable extends Migration {
 	{
 		Schema::create('student_test', function(Blueprint $table)
 		{
+			$table->increments('id');
 			$table->unsignedInteger('student_id');
 			$table->unsignedInteger('test_id');
 			$table->unsignedInteger('test_result');

@@ -36,18 +36,21 @@ class QuestionController extends Controller {
 	 */
 	public function create()
 	{
-		$question = Input::all();
-		if(count($question)){
-		 foreach($question as $key => $value){
-	  			$question_test_id = $key;
-		}		
-		return view('questions/create')->with('question_test_id', $question_test_id);
-		} else {
-			$user_id = Auth::user()->id;
-			$tests = User::find($user_id)->tests;
-			$question_test_id = $tests->last()->id;
-			return view('questions/create')->with('question_test_id', $question_test_id);
-		}
+		// dd(Input::all());
+			$test_id = Input::get("test_id");
+		// dd($test_id);
+		// $question = Input::all();
+		// if(count($question)){
+		//  foreach($question as $key => $value){
+	 //  			$question_test_id = $key;
+		// }		
+		// return view('questions/create')->with('question_test_id', $question_test_id);
+		// } else {
+			// $user_id = Auth::user()->id;
+			// $tests = User::find($user_id)->tests;
+			// $question_test_id = $tests->last()->id;
+			return view('questions/create')->with('test_id', $test_id);
+		// }
 	}
 
 	/**
@@ -55,8 +58,11 @@ class QuestionController extends Controller {
 	 *
 	 * @return Response
 	 */
+	
+	
 	public function store()
 	{
+// dd(Input::all());
 		$question = new Question;
 		$question->test_id = Input::get('test_id');
 		$question->question = Input::get('question');
@@ -66,8 +72,10 @@ class QuestionController extends Controller {
 		$question->created_at = Carbon::now();
 		$question->updated_at = Carbon::now()->addMinutes(2);
 		$question->save();
+
 		$last_question_id = DB::getPdo()->lastInsertId();
 		$test_id = Question::find($last_question_id)->test;
+		// dd($test_id);
 		return Redirect::action('QuestionController@show', array($test_id));
 	}
 
@@ -79,9 +87,10 @@ class QuestionController extends Controller {
 	 */
 	public function show($id) // TEST ID
 	{
+		// dd($id);
 		$questions = Test::find($id)->questions;
 		$answers = Test::find($id)->answers;
-		return view('questions.show', compact('questions','answers'));
+		return view('questions.show', compact('questions','answers'))->with("test_id",$id);
 	}
 
 	/**

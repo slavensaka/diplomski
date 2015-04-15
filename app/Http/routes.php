@@ -65,6 +65,8 @@ Route::get('show_tests_taken/{test_id}', ['as' => 'show_tests_taken', 'uses' => 
 
 Route::get('student_login', ['as' => 'student_login', 'uses' => 'StudentController@student_login']);
 
+Route::get('student_register', ['as' => 'student_register', 'uses' => 'StudentController@student_register']);
+
 Route::post('student_login_verify', ['as' => 'student_login_verify', 'uses' => 'StudentController@student_login_verify']);
 
 

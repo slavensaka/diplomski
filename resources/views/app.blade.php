@@ -48,7 +48,7 @@
 
                 @if (Auth::check())
                    <?php Session::forget('student_name'); ?>
-                    <li><a href="tests_taken">Users Taken Tests</a></li>
+                    <li><a href="../tests_taken">{{ Auth::user()->name }} Taken Tests</a></li>
                     <li><a href="/">{{ Auth::user()->name }} Tests</a></li>
                 @endif
                 </ul>
@@ -57,6 +57,7 @@
                 
                     @if (Auth::guest())
                     <li><a href="../student_login">Student Login</a></li>
+                    <li><a href="../student_register">Student Register</a></li>
                   {{--   <li>{!! link_to_route('student_login', 'Go Back', $question->id , array('class' => 'btn btn-danger')) !!}
                     </li> --}}
                     <li><a href="/auth/login">Login</a></li>

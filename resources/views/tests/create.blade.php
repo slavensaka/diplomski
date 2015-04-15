@@ -13,13 +13,13 @@
 	{!! Form::text('test_name', Input::old('test_name'),
 		array('required' => "required",'placeholder'=>'Type the test name')) !!}
 	<br>
-	{!! Form::label('intro', 'intro') !!}
-	{!! Form::text('intro', Input::old('intro'),
-		array('placeholder'=>'Type the intro')) !!}
+	{!! Form::label('intro', 'Intro') !!}
+	{!! Form::textarea('intro', Input::old('intro'), 
+		['placeholder'=>'Type the intro', 'class' => 'field','size' => '30x5']) !!}
 	<br>
 	{!! Form::label('conclusion', 'conclusion') !!}
-	{!! Form::text('conclusion', Input::old('conclusion'),
-		array('placeholder'=>'Type the conclusion')) !!}
+	{!! Form::textarea('conclusion', Input::old('conclusion'), 
+		['placeholder'=>'Type the conclusion', 'class' => 'field','size' => '30x5']) !!}
 	<br>
 	{!! Form::label('passcode', 'Passcode') !!}
 	{!! Form::text('passcode', NULL ,array('placeholder' => 'Enter passcode')) !!}

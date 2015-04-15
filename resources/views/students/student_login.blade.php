@@ -28,12 +28,30 @@
 	<div class="col-md-6">
 	{!! Form::text('student_name', Session::get("student_name"),
 		array('placeholder'=>'Type username')) !!}
+	<div class="name">
+	@if(Session::has('name'))
+		{!! Session::get('name'); !!}
+	@endif
 	</div>
 	</div>
+	</div>
+<div class="form-group">
+	{!! Form::label('pass', 'Password', array('class' => 'col-md-4 control-label')) !!}
+	<div class="col-md-6">	
+{!! Form::input('pass', 'pass', Session::get("pass")) !!}
+<div class="pass">
+	@if(Session::has('pass_message'))
+		{!! Session::get('pass_message'); !!}
+	@endif
+	</div>
+	</div>
+	</div>
+
 	<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
 	{!! Form::submit('Send it!',array('class' => 'btn btn-primary')) !!}
 	{!! Form::close() !!}
+
 	</div></div>				
 
 				

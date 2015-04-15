@@ -1,6 +1,6 @@
 @extends('app')
 @section('content')
-
+{{-- {!! dd($test_id) !!} --}}
 {!! Html::script('js/jquery-1.11.2.min.js') !!}
 {!! Html::script('js/functions.js') !!}
 
@@ -36,7 +36,8 @@
 				<td>{{ $question->type }}</td>
 				<td>{{ $question->test_id }}</td>
 				<td>{!! link_to_route('answers.create', 'Add new Answer', 
-				       array('type' => $question->type, 'quest_id' => $question), 
+				       array('type' => $question->type, 'quest_id' => $question,
+				       		 'test_id' => $test_id), 
 				       array('class' => 'btn btn-info')) !!}
 				</td>
 				<td>
@@ -118,7 +119,7 @@
 </p>
 <p>
 	{!! link_to_route('questions.create', 'Add new question', 
-		array($question->test_id), 
+		array('test_id' => $test_id), 
 		array('class' => 'btn btn-primary')) !!}
 </p>
 
@@ -132,7 +133,7 @@
 <h2>There are no questions for this test. Create:</h2>
 <p>
 	{!! link_to_route('questions.create', 'Add new question', 
-		array(), 
+		array('test_id' => $test_id), 
 		array('class' => 'btn btn-primary')) !!}
 </p>
 

@@ -5,7 +5,7 @@
 
 
 
-
+@if(count($taken_tests))
 
 <?php
 
@@ -21,7 +21,9 @@ for($i=0;$i<=count($taken_tests)-1; $i++) {
 				<th>Test_Result</th>
 				<th>User_Id</th>
 				<th>Test_Id</th>
-				<th>Test_name</th>
+					<th>Id</th>
+				<th>Show Test</th>
+				<th>Remove Test</th>
 				
 				
 			</tr>
@@ -34,6 +36,7 @@ for($i=0;$i<=count($taken_tests)-1; $i++) {
 				<td><b>{{ $taken_tests[$i]->test_result }}</b></td>
 				<td>{{ $taken_tests[$i]->user_id }}</td>
 				<td>{{ $taken_tests[$i]->test_id }}</td>
+				<td>{{ $taken_tests[$i]->id }}</td>
 				
 				
 						{{-- TODO SHOW THE TEST --}}
@@ -44,6 +47,7 @@ for($i=0;$i<=count($taken_tests)-1; $i++) {
 				<td>
 					{!! Form::open(array('method'=> 'DELETE', 
 						'route' => array('delete_taken_test', $taken_tests[$i]->test_id))) !!}
+					{!! Form::hidden("id", $taken_tests[$i]->id, false) !!}
 					{!! Form::submit('Remove', array('class' => 'btn btn-danger')) !!}
 					{!! Form::close() !!}
 				</td>
@@ -59,8 +63,12 @@ for($i=0;$i<=count($taken_tests)-1; $i++) {
 <?php
 
 }
-?>
 
+
+?>
+@else
+<h1>There are no tests taken</h1>
+@endif
 
 
 

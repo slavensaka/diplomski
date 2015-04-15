@@ -28,8 +28,8 @@ return [
 	| to immediately expire on the browser closing, set that option.
 	|
 	*/
-
-	'lifetime' => 1440,
+	// Session student_name, two weeks,   
+	'lifetime' => 20160, 
 
 	'expire_on_close' => true,
 

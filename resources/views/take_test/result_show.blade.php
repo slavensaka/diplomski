@@ -18,7 +18,17 @@
 </p> --}}
 <h1>{!! $test->conclusion !!}</h1>
 <h1>Your score on this test was: {!!  $points_count !!}</h1>
+@if(Auth::check())
+<h1>Test taker: {!!  Auth::user()->name !!}</h1>
+@else
 <h1>Test taker: {!!  $student_name !!}</h1>
+<h4>Consider login in as a <a href="../student_login">STUDENT HERE</a>
+, we already made you an account!</h4>
+
+<h4>Or <b>create your own tests</b> by 
+	<a href="/auth/register">REGISTERING HERE</a> for free.</h4>
+@endif
+
 
 @if($questions->count())
 	<table class="table table-striped table-bordered">
@@ -79,11 +89,15 @@
 				<td><b>You answered Correctly</b> </td>
 				<td><b>{{ $tests_answer->answer }}</b></td>
 			</tr>
-			
+				
+
 				@endif 
 
 				@endforeach
+
+				
 			<tr>
+			
 				<td>{{ $tests_answer->id }}</td>
 				<td>{{ $tests_answer->answer }}</td>
 				
@@ -105,7 +119,7 @@
 
 
 @else
-<h2>There are no questions questions for this test</h2>
+<h2>There are no questions for this test</h2>
 {{-- <p>
 	{!! link_to_route('tests', 'Go Back To Tests', 
 		array(Auth::user()->name), 

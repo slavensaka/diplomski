@@ -15,13 +15,19 @@
 
 <?php 
 $answer = $questions->each(function($question) use($test, $student_name){
-		  echo '<p><b>'.($question["question"]).'</b></p>'.'<br>';
-		  $answers = Question::find($question->id)->answers;
+	
+		  // for ($i=0;$i<count($questions);$i++){
+    //     		echo count($questions);
+    //     	}
 		  
-		  //OVAJ SHUFFLE VALJA JE ZA ANSWERS (Question)
+		  echo '<p><b>'.($question["question"]).'</b></p>'.'<br>';
+
+		  $answers = Question::find($question->id)->answers;
+
+		  //OVAJ SHUFFLE VALJA, JE ZA ANSWERS (Question)
 		  if($question->shuffle_question){
 		  	$answers->shuffle(); 
-		  }
+		  } 
 		$answers->each(function($answer) use ($question,$answers,$test, $student_name){
 		// echo $answer->question_id;
 		// echo $question->id;
@@ -53,7 +59,7 @@ echo Form::checkbox($answer["id"],$answer["answer"]);
 		echo Form::text($answer->question_id);
 	}
 
-	});
+	}); 
 });
 ?>
 

@@ -113,7 +113,9 @@ class PublishController extends Controller {
 			foreach ($questions as $input_key => $correct) {
 		    	$answers = Question::find($correct->id)->answers;		 		
 			}
-
+			if(!count($answers)){
+				return 'No answers are added on this test';
+			}
 		    $answers = $answers->all();
 
 			return view('take_test.testing1') // TU MIJENJA
@@ -139,7 +141,9 @@ class PublishController extends Controller {
 		    	$answers = Question::find($correct->id)->answers;		 		
 			}
 			$created_by = Test::find($the_test->id)->user;
-			
+			if(!count($answers)){
+				return 'No answers are added on this test';
+			} 
 		    $answers = $answers->all();
 			 return view('take_test.private')
 			->with('test', $the_test)
@@ -174,7 +178,7 @@ class PublishController extends Controller {
 			if($student || $user){
 				return Redirect::back()->with('message','Username already taken');  
 			}
-		}
+		}	
 
 
 		$answers = [];
@@ -273,6 +277,7 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 
 	TODO:
 	- Omogučit slike, database se mora promijenit 
+	- For test password make the interface 
 
 **/
 
@@ -453,8 +458,11 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 			$student = Student::where('student_name', '=', Session::get('student_name'))->first();
 
 			if(!$student){
+			$random = HelperFunctions::generate_password();
+			$hashed_password = Hash::make($random);
 			$user = new Student;
 			$user->student_name =Input::get('student_name');
+			$user->pass = $hashed_password;
 			$saved =$user->save();
 
 			$last_id=DB::getPdo()->lastInsertId();
@@ -467,9 +475,11 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 
 			if($saved){
 				Session::put('student_name', Input::get('student_name'));
+				Session::put('pass', $random);
 			}
 
 			} else {
+
 			$user = new StudentTestPivot;
 			$user->student_id = $student->id;
 			$user->test_id = $test->id;
@@ -506,7 +516,7 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 			 // ->where('test_user.test_id', '=', $taken_test->id)
 		 	 ->where("test_user.user_id","=",Auth::user()->id)
              ->select('users.name', 'test_user.user_id', 'test_user.test_id',
-    			'test_user.test_result','test_user.created_at')->get();
+    			'test_user.test_result','test_user.created_at','test_user.id')->get();
 
 		return View::make('take_test/tests_taken')
 		->with('taken_tests',$taken_tests)
@@ -523,7 +533,7 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 			 // ->where('student_test.test_id', '=', $taken_test->id)
 		 	 ->where("student_test.student_id","=",$student_id->id)//TU
              ->select('students.student_name', 'student_test.student_id', 'student_test.test_id',
-    			'student_test.test_result','student_test.created_at')->get();
+    			'student_test.test_result','student_test.created_at','student_test.id')->get();
              // dd($taken_tests);
         return View::make('take_test/tests_taken_students')
 		->with('taken_tests',$taken_tests);
@@ -532,11 +542,22 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 	}
 
 	public function delete_taken_test($test_id){
-		
-		DB::table('test_user')
-		->where('user_id', '=',Auth::user()->id)
-		->where('test_id', '=', $test_id)->delete();
-		return Redirect::back(); 
+		// dd($test_id);
+		// dd(Input::all());
+		if(Auth::check()){
+			DB::table('test_user')
+			->where('user_id', '=',Auth::user()->id)
+			->where('test_id', '=', $test_id)
+			->where('id','=',Input::get('id'))->delete();
+			return Redirect::back(); 
+		} else {
+			$student=Student::where('student_name','=',Session::get('student_name'))->first();
+			DB::table('student_test')
+			->where('student_id', '=',$student->id)
+			->where('test_id', '=', $test_id)
+			->where('id','=',Input::get('id'))->delete();
+			return Redirect::back(); 
+		}	
 	}
 
 	public function copy_public_test($test_id) {
