@@ -31,7 +31,7 @@
 	
 	{!! Form::hidden('test_id', $test_id, array('id' => 'question')) !!}
 	<br>
-	{!! Form::submit('Send it!') !!}
+	{!! Form::submit('Send it!',array('class' => 'btn btn-info')) !!}
 	{!! Form::close() !!}
 
 @endif

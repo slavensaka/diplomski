@@ -96,6 +96,7 @@ class TestController extends Controller {
 	 */
 	public function update($id)
 	{	
+		// dd(Input::all());
 		$passcode = Hash::make(Input::get('passcode'));
 		$updated_at = Carbon::now();
 		DB::table('tests')->where('id', $id)->update(array(

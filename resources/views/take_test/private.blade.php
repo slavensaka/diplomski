@@ -28,11 +28,13 @@
  	
  	@if(Auth::check() || Session::has('student_name'))
 	{!! Form::label('passcode', 'Passcode') !!}
-	{!! Form::text('passcode', NULL, array('required' => "required",
+	{!! Form::text('passcode', NULL, array(
 		'placeholder' => 'Password')) !!}
 	<br>
 	{!! Form::submit('Enter') !!}
+	<a href="{{ URL::previous() }}">Go Back</a>
 	{!! Form::close() !!}
+	
 	
 	@else 
 	{!! Form::label('student_name', 'Username:') !!}
@@ -41,11 +43,12 @@
 	<br>
 	
 	{!! Form::label('passcode', 'Passcode') !!}
-	{!! Form::text('passcode', NULL, array('required' => "required",
+	{!! Form::text('passcode', NULL, array(
 		'placeholder' => 'Enter Passcode')) !!}
 	<br>
 	
 	{!! Form::submit('Enter') !!}
+	<a href="{{ URL::previous() }}">Go Back</a>
 	{!! Form::close() !!}
 	@endif
 @if(Session::has('message'))

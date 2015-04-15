@@ -36,8 +36,8 @@ class TestTableSeeder extends Seeder {
 		// Test3
 		Test::create(array(
 				'test_name' => 'Baza podataka',
-				'intro' => 'Test o koliko znate bazu podataka',
-				'conclusion' => 'You\'ve solved the test on how much you know about databases',
+				'intro' => 'Test on how much you know about databases',
+				'conclusion' => 'You\'ve completed the test on how much you know about databases. Congratulations!',
 				'passcode' => Hash::make('1234'),
 				'shuffle' => 0,
 				'is_published' => 1,

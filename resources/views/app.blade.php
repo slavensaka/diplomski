@@ -32,7 +32,7 @@
                     <span class="icon-bar"></span>
                 </button> 
                 @if (Auth::check())
-                <a class="navbar-brand" href="../homepage">Auto Generate</a>
+                <a class="navbar-brand" href="../../homepage">Auto Generate</a>
                 @else 
                 <a class="navbar-brand" href="/">Auto Generate</a>
                 @endif
@@ -42,26 +42,45 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                 {{-- <li><a href="/">Taken Tests</a></li> --}}
-                @if(Session::has('student_name'))
-                <li><a href="../tests_taken">Students Taken Tests</a></li>
+                @if(Session::has("student_name"))
+                <li><a href="../../tests_taken">Students Taken Tests</a></li>
+                @endif
+                @if(Session::has("logged_in"))
+                <li><a href="../../control_panel">Control Panel</a></li>
                 @endif
 
                 @if (Auth::check())
-                   <?php Session::forget('student_name'); ?>
-                    <li><a href="../tests_taken">{{ Auth::user()->name }} Taken Tests</a></li>
+                   <?php Session::forget('student_name');
+                         Session::forget("changed"); 
+                         Session::forget("logged_in"); ?>
+                    <li><a href="../../tests_taken">{{ Auth::user()->name }} Taken Tests</a></li>
                     <li><a href="/">{{ Auth::user()->name }} Tests</a></li>
                 @endif
                 </ul>
 
-                <ul class="nav navbar-nav navbar-right">
+
                 
-                    @if (Auth::guest())
-                    <li><a href="../student_login">Student Login</a></li>
-                    <li><a href="../student_register">Student Register</a></li>
+                <ul class="nav navbar-nav navbar-right">
+               
+                    @if (Auth::guest() )
+                   
+                
+              @if(!Session::has("logged_in"))
+                    <li><a href="../../student_login">Student Login</a></li>
+              
+                    <li><a href="../../student_register">Student Register</a></li>
+            @else 
+                    <li><a href="../../student_logout">Student Logout</a></li>
+             @endif
                   {{--   <li>{!! link_to_route('student_login', 'Go Back', $question->id , array('class' => 'btn btn-danger')) !!}
                     </li> --}}
                     <li><a href="/auth/login">Login</a></li>
                     <li><a href="/auth/register">Register</a></li>
+                    
+                
+                    
+
+
                     @else
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
@@ -70,6 +89,7 @@
                         </ul>
                     </li>
                     @endif
+
                 </ul>
             </div>
         </div>

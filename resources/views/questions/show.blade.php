@@ -41,7 +41,7 @@
 				       array('class' => 'btn btn-info')) !!}
 				</td>
 				<td>
-					{!! link_to_route('questions.edit', 'Edit Question and Answers', 
+					{!! link_to_route('questions.edit', 'Edit Q/A', 
 						array($question->id), 
 						array('class' => 'btn btn-warning')) !!}
 				</td>

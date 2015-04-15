@@ -1,7 +1,7 @@
 <?php use Dipl\Question; ?> 
 {!! Html::script('js/jquery-1.11.2.min.js') !!}
 {!! Html::script('js/functions.js') !!}
-{{-- {{ dd($test->conclusion) }}  --}}
+{{-- {{ dd($test->intro) }}  --}}
 {{-- {{ dd($questions) }} --}}
 {{-- {{ dd($student_name) }} --}}
 {{-- {{ print_r($answers) }} --}}
@@ -12,7 +12,7 @@
 @if(Session::has('message'))
 {!! Session::get('message'); !!}
 @endif
-
+<div class="intro"><h1><b>{!! $test->intro !!}</b></h1></div>
 <?php 
 $answer = $questions->each(function($question) use($test, $student_name){
 	
@@ -66,7 +66,7 @@ echo Form::checkbox($answer["id"],$answer["answer"]);
 <?php
 // echo Form::hidden('student_name', $student_name);
 // echo Form::hidden('test_id', $test->id);
-echo Form::submit('Send', array('class' => 'btn btn-info updated_answers'));
+echo Form::submit('Send', array("onclick"=>"this.disabled=true;forms[0].submit();",'class' => 'btn btn-info updated_answers'));
 echo Form::close() ;
 
 ?>

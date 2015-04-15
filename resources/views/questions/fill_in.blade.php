@@ -34,7 +34,7 @@
 		{!! link_to_route('answers.show', 'Go Back', $question->id, array('class' => 'btn btn-danger')) !!}
 	</li>
 	</ul>
-		{!! Form::close() !!}
+{!! Form::close() !!}
 
 
 

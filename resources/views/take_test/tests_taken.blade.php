@@ -17,12 +17,17 @@ for($i=0;$i<=count($taken_tests)-1; $i++) {
 	<thead>
 			<tr>
 				<th>Test Taken At</th>
-				<th>Student Name</th>
 				<th>Test_Result</th>
+				<th>Test Name</th>
+
+				<th>Student Name</th>
+				
 				<th>User_Id</th>
 				<th>Test_Id</th>
 					<th>Id</th>
+					
 				<th>Show Test</th>
+				
 				<th>Remove Test</th>
 				
 				
@@ -32,8 +37,14 @@ for($i=0;$i<=count($taken_tests)-1; $i++) {
 			<tr class="danger">
 
 				<td>{{ $taken_tests[$i]->created_at }}</td>	
-				<td>{{ $taken_tests[$i]->name }}</td>
 				<td><b>{{ $taken_tests[$i]->test_result }}</b></td>
+				<td>
+				<?php echo $test= DB::table('tests')
+				->where("id", $taken_tests[$i]->test_id)->pluck('test_name'); ?>
+				</td>
+				
+				<td>{{ $taken_tests[$i]->name }}</td>
+				
 				<td>{{ $taken_tests[$i]->user_id }}</td>
 				<td>{{ $taken_tests[$i]->test_id }}</td>
 				<td>{{ $taken_tests[$i]->id }}</td>

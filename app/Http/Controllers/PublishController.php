@@ -278,6 +278,10 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 	TODO:
 	- Omogučit slike, database se mora promijenit 
 	- For test password make the interface 
+	-If question has no answers, alert user somehow. Maybe when he tries to publish it
+	-Make a submit time(vrijeme test) 10 minuta. After end submit the test
+	- prevent multiple inserts when submitting a test in PHP
+	-Show tests that were taken by students on users control_panel that are users tests.
 
 **/
 

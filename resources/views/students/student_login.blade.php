@@ -38,7 +38,21 @@
 <div class="form-group">
 	{!! Form::label('pass', 'Password', array('class' => 'col-md-4 control-label')) !!}
 	<div class="col-md-6">	
+
+@if(Session::has("changed") && Session::has("student_name"))
+{!! Form::password('pass',
+			array('placeholder' => 'Type Password','required' => "required")) !!}
+
+
+@elseif(Session::has("student_name"))
 {!! Form::input('pass', 'pass', Session::get("pass")) !!}
+
+@else
+{!! Form::password('pass',
+			array('placeholder' => 'Type Password','required' => "required")) !!}
+@endif
+
+
 <div class="pass">
 	@if(Session::has('pass_message'))
 		{!! Session::get('pass_message'); !!}

@@ -64,7 +64,7 @@
 					<td class="is_public">
 						{!! link_to_route('is_private', 'PRIVATE', 
 						array('test_id'=>$test->id), 
-						array('class' => 'btn btn-info is_public')) !!}
+						array('class' => 'btn btn-success is_public')) !!}
 					</td>
 					@else
 					<td class="publish">

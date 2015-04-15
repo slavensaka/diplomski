@@ -69,6 +69,10 @@ Route::get('student_register', ['as' => 'student_register', 'uses' => 'StudentCo
 
 Route::post('student_login_verify', ['as' => 'student_login_verify', 'uses' => 'StudentController@student_login_verify']);
 
+Route::post('control_panel', ['as' => 'control_panel', 'uses' => 'StudentController@control_panel']);
+
+Route::get('control_panel', ['as' => 'control_panel', 'uses' => 'StudentController@control_panel']);
+
 
 /**
 *
