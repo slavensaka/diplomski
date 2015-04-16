@@ -57,6 +57,8 @@ Route::post('testing1/{id}', ['as' => 'testing1', 'uses' => 'PublishController@t
 
 Route::get('tests_taken', ['as' => 'tests_taken', 'uses' => 'PublishController@tests_taken']);
 
+Route::get('students', ['as' => 'students', 'uses' => 'PublishController@your_students']);
+
 Route::delete('tests_taken/{test_id}', ['as' => 'delete_taken_test', 'uses' => 'PublishController@delete_taken_test']);
 
 Route::get('copy_test/{test_id}', ['as' => 'copy_public_test', 'uses' => 'PublishController@copy_public_test']);
@@ -66,6 +68,10 @@ Route::get('show_tests_taken/{test_id}', ['as' => 'show_tests_taken', 'uses' => 
 Route::get('student_login', ['as' => 'student_login', 'uses' => 'StudentController@student_login']);
 
 Route::get('student_register', ['as' => 'student_register', 'uses' => 'StudentController@student_register']);
+
+Route::post('student_register_form', ['as' => 'student_register_form', 'uses' => 'StudentController@student_register_form']);
+
+Route::get('student_logout', ['as' => 'student_logout', 'uses' => 'StudentController@student_logout']);
 
 Route::post('student_login_verify', ['as' => 'student_login_verify', 'uses' => 'StudentController@student_login_verify']);
 

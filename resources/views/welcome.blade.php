@@ -8,15 +8,15 @@
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th>Created By:</th>
-                        <th>Id</th>
-                        <th>Testname</th>
-                        <th>Intro</th>
-                        <th>Conclusion</th>
-                        <th>Test is Shuffled</th>
-                        <th>Is_published</th>
-                        <th>Is_public</th>
-                        <th>user_id</th>
+                        <th>Created By User</th>
+                        {{-- <th>Id</th> --}}
+                        <th>Test name</th>
+                        {{-- <th>Intro</th> --}}
+                        {{-- <th>Conclusion</th> --}}
+                        <th>Questions Shuffled</th>
+                        {{-- <th>Is_published</th> --}}
+                        {{-- <th>Is_public</th> --}}
+                        {{-- <th>user_id</th> --}}
                     </tr>
                 </thead>
                 <tbody>
@@ -26,14 +26,16 @@
                     @if($published_test->is_published && $published_test->is_public)
                     <tr>
                         <td>{{ $published_test->name }}</td>
-                        <td>{{ $published_test->id }}</td>
+                        {{-- <td>{{ $published_test->id }}</td> --}}
                         <td>{{ $published_test->test_name }}</td>
-                        <td>{{ $published_test->intro }}</td>
-                        <td>{{ $published_test->conclusion }}</td>
-                        <td>{{ $published_test->shuffle }}</td>
-                        <td>{{ $published_test->is_published }}</td>
-                        <td>{{ $published_test->is_public }}</td>
-                        <td>{{ $published_test->user_id }}</td>
+                        {{-- <td>{{ $published_test->intro }}</td> --}}
+                        {{-- <td>{{ $published_test->conclusion }}</td> --}}
+                        @if($published_test->shuffle)
+                        <td>{{ "Yes" }}</td> @else <td>{{ "No" }}</td> @endif
+                        {{-- <td>{{ $published_test->is_published }}</td> --}}
+                        {{-- <td>{{ $published_test->is_public }}</td> --}}
+                        {{-- <td>{{ $published_test->user_id }}</td> --}}
+
                         <td>{!! link_to_route('take_test', 'Take This Test', 
                         		array($published_test->id), 
                         		array('class' => 'btn btn-success')) !!}
@@ -54,15 +56,15 @@
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th>Created By:</th>
-                        <th>Id</th>
-                        <th>Testname</th>
-                        <th>Intro</th>
-                        <th>Conclusion</th>
-                        <th>Test is Shuffled</th>
-                        <th>Is_published</th>
-                        <th>Is_public</th>
-                        <th>user_id</th>
+                        <th>Created By User</th>
+                        {{-- <th>Id</th> --}}
+                        <th>Test name</th>
+                        {{-- <th>Intro</th> --}}
+                        {{-- <th>Conclusion</th> --}}
+                        <th>Questions shuffled</th>
+                        {{-- <th>Is_published</th> --}}
+                        {{-- <th>Is_public</th> --}}
+                        {{-- <th>user_id</th> --}}
                     </tr>
                 </thead>
                 <tbody>
@@ -70,14 +72,16 @@
                @if($published_test->is_published && $published_test->is_public === 0)
                     <tr>
                         <td>{{ $published_test->name }}</td>
-                        <td>{{ $published_test->id }}</td>
+                        {{-- <td>{{ $published_test->id }}</td> --}}
                         <td>{{ $published_test->test_name }}</td>
-                        <td>{{ $published_test->intro }}</td>
-                        <td>{{ $published_test->conclusion }}</td>
-                        <td>{{ $published_test->shuffle }}</td>
-                        <td>{{ $published_test->is_published }}</td>
-                        <td>{{ $published_test->is_public }}</td>
-                        <td>{{ $published_test->user_id }}</td>
+                        {{-- <td>{{ $published_test->intro }}</td> --}}
+                        {{-- <td>{{ $published_test->conclusion }}</td> --}}
+                        @if($published_test->shuffle)
+                        <td>{{ "Yes" }}</td> @else <td>{{ "No" }}</td> @endif
+                        
+                        {{-- <td>{{ $published_test->is_published }}</td> --}}
+                        {{-- <td>{{ $published_test->is_public }}</td> --}}
+                        {{-- <td>{{ $published_test->user_id }}</td> --}}
                         <td>{!! link_to_route('take_test', 'Take This Test', 
                                 array($published_test->id), 
                                 array('class' => 'btn btn-danger')) !!}

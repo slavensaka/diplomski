@@ -1,2 +1,2 @@
-# diplomski
-Moj diplomski rad
+# Master Thesis
+My master thesis work

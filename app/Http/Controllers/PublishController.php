@@ -278,10 +278,9 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 	TODO:
 	- Omogučit slike, database se mora promijenit 
 	- For test password make the interface 
-	-If question has no answers, alert user somehow. Maybe when he tries to publish it
-	-Make a submit time(vrijeme test) 10 minuta. After end submit the test
+	- If question has no answers, alert user somehow. Maybe when he tries to publish it
+	- Make a submit time(vrijeme test) 10 minuta. After end submit the test
 	- prevent multiple inserts when submitting a test in PHP
-	-Show tests that were taken by students on users control_panel that are users tests.
 
 **/
 
@@ -622,6 +621,42 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 		$answers = Test::find($test_id)->answers;
 		return view('take_test.show_tests_taken', compact('questions','answers'))
 		->with('test_result',Input::get('test_result'));
+	}
+
+	public function your_students(){
+		// return Auth::id();
+		if(Auth::check()){
+			 // $taken_tests = User::find(Auth::user()->id)->taken_tests;
+
+
+             $your_users =DB::table('tests')
+			 ->join('test_user', 'tests.id', '=', 'test_user.test_id')
+			 // ->join('student_test','tests.id', '=','student_test.test_id')
+			 // ->where('test_user.test_id', '=', $taken_test->id)
+		 	 ->where("tests.user_id","=",Auth::id())
+		 	 // ->groupBy('test_user.test_id')
+             // ->select('tests.id','tests.test_name','tests.user_id','tests.created_at',
+             // 	'test_user.id', "loki"=>'test_user.user_id','test_user.test_id','test_user.test_result',
+             // 	'test_user.created_at')
+				->get();
+
+              $your_students =DB::table('tests')
+			 ->join('student_test', 'tests.id', '=', 'student_test.test_id')
+			 // ->join('student_test','tests.id', '=','student_test.test_id')
+		 	 ->where("tests.user_id","=",Auth::id())
+		 	 // ->where('student_test.test_id', '=', )
+		 	 // ->groupBy('student_test.test_id')
+             // ->select('tests.id','tests.test_name','tests.user_id','tests.created_at',
+             // 	'student_test.id', 'student_test.student_id','student_test.test_id','student_test.test_result',
+             // 	'student_test.created_at')
+             ->get();
+
+             $result = array_merge($your_users,$your_students);
+             // dd($result);
+			return View::make('take_test/your_students')
+			
+			->with('your_students', $result);
+		}
 	}
 
 }

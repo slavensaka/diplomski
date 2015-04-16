@@ -43,7 +43,9 @@
                 <ul class="nav navbar-nav">
                 {{-- <li><a href="/">Taken Tests</a></li> --}}
                 @if(Session::has("student_name"))
-                <li><a href="../../tests_taken">Students Taken Tests</a></li>
+                <li id="students_taken_tests">
+                <a href="../../tests_taken">Students Taken Tests</a>
+                </li>
                 @endif
                 @if(Session::has("logged_in"))
                 <li><a href="../../control_panel">Control Panel</a></li>
@@ -53,6 +55,7 @@
                    <?php Session::forget('student_name');
                          Session::forget("changed"); 
                          Session::forget("logged_in"); ?>
+                    <li><a href="../../students">Your Students</a></li>
                     <li><a href="../../tests_taken">{{ Auth::user()->name }} Taken Tests</a></li>
                     <li><a href="/">{{ Auth::user()->name }} Tests</a></li>
                 @endif
@@ -70,7 +73,13 @@
               
                     <li><a href="../../student_register">Student Register</a></li>
             @else 
-                    <li><a href="../../student_logout">Student Logout</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Student {{  Session::get("student_name")}} <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="../../student_logout">Logout</a></li>
+                        </ul>
+                    </li>
+                    
              @endif
                   {{--   <li>{!! link_to_route('student_login', 'Go Back', $question->id , array('class' => 'btn btn-danger')) !!}
                     </li> --}}

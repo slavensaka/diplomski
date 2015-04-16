@@ -2,6 +2,7 @@
 @section('content')
 {!! Html::script('js/jquery-1.11.2.min.js') !!}
 {!! Html::script('js/remove_publish.js') !!}
+{!! Html::script('js/students_taken_tests.js') !!}
 
 @if (Auth::guest())
 	<h1>Your not logged in</h1>
@@ -22,15 +23,15 @@
 	<table class="table table-striped table-bordered">
 			<thead>
 				<tr>
-					<th>Test ID</th>
-					<th>Test_name</th>
+					<th>TEST ID</th>
+					<th>Test name</th>
 					<th>Intro</th>
 					<th>Conclusion</th>
-					<th>user_id</th>
-					<th>Is_Public</th>
+					{{-- <th>user_id</th> --}}
+					{{-- <th>Is_Public</th> --}}
 					<th>Add Q/A</th>
 					<th>Edit Test</th>
-					<th>Delete</th>
+					<th>Delete Test</th>
 					<th>Public/Private</th>
 					<th>Publish/Unpublish</th>
 				</tr>
@@ -40,10 +41,10 @@
 				<tr>
 					<td>{{ $test->id }}</td>
 					<td>{{ $test->test_name }}</td>
-					<td>{{ $test->intro }}</td>
-					<td>{{ $test->conclusion }}</td>
-					<td>{{ $test->user_id }}</td>
-					<td>{{ $test->is_public }}</td>
+					<td><i>{{ $test->intro }}</i></td>
+					<td><i>{{ $test->conclusion }}</i></td>
+					{{-- <td>{{ $test->user_id }}</td> --}}
+					{{-- <td>{{ $test->is_public }}</td> --}}
 					<td>
 						{!! link_to_route('questions.show', 'Add Q/A', 
 						array($test->id), array('class' => 'btn btn-primary')) !!}
@@ -56,7 +57,8 @@
 						{!! Form::open(array('method'=> 'DELETE', 
 						'route' => array('tests.destroy', $test->id))) !!}
 						{!! Form::submit('Delete Test', 
-						array('class' => 'btn btn-danger')) !!}
+						array('class' => 'btn btn-danger', 
+						'onclick' =>"if(!confirm('Are you sure?')) return false;")) !!}
 						{!! Form::close() !!}
 					</td>
 					{{-- For public --}}

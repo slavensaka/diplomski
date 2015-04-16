@@ -20,8 +20,8 @@
 						</div>
 					@endif
 	
-
-					 {!! Form::open(array('url' => url('student_login_verify'), 
+<h3>Student Login Form</h3>
+ {!! Form::open(array('url' => url('student_login_verify'), 
  'class'=>'form-horizontal')) !!}
 <div class="form-group">
 	{!! Form::label('username', 'Username', array('class' => 'col-md-4 control-label')) !!}
@@ -63,7 +63,7 @@
 
 	<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
-	{!! Form::submit('Send it!',array('class' => 'btn btn-primary')) !!}
+	{!! Form::submit('Login',array('class' => 'btn btn-primary')) !!}
 	{!! Form::close() !!}
 
 	</div></div>				

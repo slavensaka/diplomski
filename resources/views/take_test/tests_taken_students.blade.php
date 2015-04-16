@@ -12,17 +12,21 @@
 for($i=0;$i<=count($taken_tests)-1; $i++) {
 ?>
 
-
+<h1>Tests you have taken:</h1>
 <table class="table table-striped table-bordered">
 	<thead>
 			<tr>
-				<th>Test Taken At</th>
-				<th>Test Taker</th>
-				<th>Test_Result</th>
-				<th>User_Id</th>
-				<th>Test_Id</th>
+<th>Test Id/Name</th>
+<th>Student Name</th>
+<th>Your Test Result Was</th>
+<th>Test Taken On</th>
+
+				{{-- <th>Student Name</th> --}}
 			
-				<th>Id</th>
+				{{-- <th>User_Id</th> --}}
+				{{-- <th>Test_Id</th> --}}
+			
+				{{-- <th>Id</th> --}}
 				<th>Show Test</th>
 				<th>Remove Test</th>
 				
@@ -31,13 +35,19 @@ for($i=0;$i<=count($taken_tests)-1; $i++) {
 		</thead>
 		<tbody>
 			<tr class="danger">
-				<td>{{ $taken_tests[$i]->created_at }}</td>
-				<td>{{ $taken_tests[$i]->student_name }}</td>
-				<td><b>{{ $taken_tests[$i]->test_result }}</b></td>
-				<td>{{ $taken_tests[$i]->student_id }}</td>
-				<td>{{ $taken_tests[$i]->test_id }}</td>
+<td>TEST ID: <b>{{ $taken_tests[$i]->test_id }}</b> |
+{{  $test= DB::table('tests')->where("id", $taken_tests[$i]->test_id)->pluck('test_name') }}
+</td>
+<td>{{ $taken_tests[$i]->student_name }}</td>
+<td><b>{{ $taken_tests[$i]->test_result }}</b></td>
+<td>At:{{ date('H:i',strtotime($taken_tests[$i]->created_at))}} 
+    | On:{{ date('d.m.Y',strtotime($taken_tests[$i]->created_at))}}
+</td>						
+				
+				{{-- <td>{{ $taken_tests[$i]->student_id }}</td> --}}
+				{{-- <td>{{ $taken_tests[$i]->test_id }}</td> --}}
 			
-				<td>{{ $taken_tests[$i]->id }}</td>
+				{{-- <td>{{ $taken_tests[$i]->id }}</td> --}}
 				
 				
 						{{-- TODO SHOW THE TEST --}}

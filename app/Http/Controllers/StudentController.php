@@ -11,14 +11,6 @@ use Dipl\Student;
 use Redirect;
 use Dipl\Support\HelperFunctions;
 use Illuminate\Http\Response;
-/**
-
-	TODO:
-	- Generate a random pass for User 1234 and echo it out in student login.
-	- 
-
-**/
-
 
 class StudentController extends Controller {
 
@@ -35,6 +27,7 @@ class StudentController extends Controller {
 	public function student_login_verify() {
 		// dd(Input::all());
 		$student_name = Input::get('student_name');
+		Session::put("student_name",Input::get("student_name"));//TU
 
 		$student = Student::where('student_name', '=', $student_name)->exists();
 
@@ -71,6 +64,7 @@ class StudentController extends Controller {
 	public function control_panel() {
 		// dd(Input::all());
 		Session::put("logged_in",1);
+
 		if(!Input::all()){
 			return view('students.control_panel')
 					->with('student_name',Session::get("student_name")) ;
@@ -96,6 +90,29 @@ class StudentController extends Controller {
 	}
 
 	public function student_register() {
-			
+		return view('students.student_register');
+	}
+
+	public function student_register_form() {
+		
+		$student_name = Input::get('student_name');
+		$student = Student::where('student_name', '=',$student_name)->exists();
+		if($student){
+			return Redirect::back()
+				->with("name_message","Username taken, Try again!");
+			} else {
+				$student = new Student;
+				$student->student_name = Input::get("student_name");
+				$student->changed_password = 1;
+				$student->pass = Hash::make(Input::get("pass"));
+				$student->save();
+		}
+	}
+
+	public function student_logout() {
+ 		Session::forget('student_name');
+        Session::forget("changed"); 
+        Session::forget("logged_in");
+        return Redirect::route('/');
 	}
 }
