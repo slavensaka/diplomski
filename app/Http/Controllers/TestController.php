@@ -149,7 +149,7 @@ class TestController extends Controller {
 	 * Remove the specified resource from storage.
 	 *
 	 * @param  int  $id
-	 * @return Response
+	 * @return Respons
 	 */
 	public function destroy($id)
 	{
