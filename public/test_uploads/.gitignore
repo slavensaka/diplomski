@@ -1,1 +1,6 @@
-[^.]*
+*.jpeg
+*.png
+*.tif
+*.jpg
+*.gif
+*.bmp
