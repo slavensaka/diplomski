@@ -6,13 +6,13 @@
 
 
 @if(count($taken_tests))
-
+<h1>Tests you have taken:</h1>
 <?php
 
 for($i=0;$i<=count($taken_tests)-1; $i++) {
 ?>
 
-<h1>Tests you have taken:</h1>
+
 <table class="table table-striped table-bordered">
 	<thead>
 			<tr>
@@ -59,7 +59,9 @@ for($i=0;$i<=count($taken_tests)-1; $i++) {
 					{!! Form::open(array('method'=> 'DELETE', 
 						'route' => array('delete_taken_test', $taken_tests[$i]->test_id))) !!}
 					{!! Form::hidden("id", $taken_tests[$i]->id, false) !!}
-					{!! Form::submit('Remove', array('class' => 'btn btn-danger')) !!}
+					{!! Form::submit('Remove', 
+					array('onclick' => "if(!confirm('Are you sure?')) return false;",
+					'class' => 'btn btn-danger')) !!}
 					{!! Form::close() !!}
 				</td>
 				

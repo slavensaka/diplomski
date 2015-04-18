@@ -26,7 +26,9 @@
 					<th>TEST ID</th>
 					<th>Test name</th>
 					<th>Intro</th>
+					<th>Intro Image</th>
 					<th>Conclusion</th>
+					<th>Conclusion Image</th>
 					{{-- <th>user_id</th> --}}
 					{{-- <th>Is_Public</th> --}}
 					<th>Add Q/A</th>
@@ -42,7 +44,14 @@
 					<td>{{ $test->id }}</td>
 					<td>{{ $test->test_name }}</td>
 					<td><i>{{ $test->intro }}</i></td>
+					
+					<td>{!! Html::image("test_uploads/thumbs/$test->intro_image", 
+							$test->intro_image, array('class' => 'thumb')) !!}
+					</td>
 					<td><i>{{ $test->conclusion }}</i></td>
+					<td>{!! Html::image("test_uploads/thumbs/$test->conclusion_image",
+							$test->conclusion_image, array("class"=>"thumb")) !!}
+					</td>
 					{{-- <td>{{ $test->user_id }}</td> --}}
 					{{-- <td>{{ $test->is_public }}</td> --}}
 					<td>

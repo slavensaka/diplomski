@@ -8,7 +8,7 @@
 @else
 	<h1>Create a New Test</h1>
 
-	{!! Form::open(array('route' => 'tests.store')) !!}
+	{!! Form::open(array('route' => 'tests.store', 'files'=> true)) !!}
  	{!! Form::label('test_name', 'Test name:') !!}
 	{{-- {!! Form::text('test_name', Input::old('test_name'),
 		array('required' => "required",'placeholder'=>'Type the test name')) !!}
@@ -26,6 +26,22 @@
 		['placeholder'=>'Type the intro message', 'class' => 'field','size' => '30x5']) !!}
 		<b>Displayed message at the start of test</b>
 	</div>
+
+	<div>
+	{!! Form::label('intro_image', 'Intro image:') !!}
+	{!! Form::file('intro_image', array('class' => 'btn btn-info')) !!}
+ 	<?php //  echo $errors->first('intro_image', '<p>:Lorem</p>'); ?>
+	<?php echo $errors->first('intro_image'); ?>
+	<b>Intro image</b>
+	</div>
+
+	<div>
+	{!! Form::label('conclusion_image', 'Conclusion image:') !!}
+	{!! Form::file('conclusion_image') !!}
+	<?php echo $errors->first('conclusion_image'); ?>
+	<b>Conclusion image</b>
+	</div>
+
 	{!! Form::label('conclusion', 'Test conclusion message:') !!}
 	<div>
 	{!! Form::textarea('conclusion', Input::old('conclusion'), 
@@ -56,6 +72,9 @@
 	<br/>
 	{!! Form::submit('Create Test', array('class' => 'btn btn-info')) !!}
 	<a href="{{ URL::previous() }}">Go Back</a>
+	<br/><br/>
+	{!! Form::reset('Reset Form Fields', array('class' => 'btn btn-danger')) !!}
+	
 	{!! Form::close() !!}
 
 @endif

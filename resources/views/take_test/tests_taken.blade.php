@@ -6,13 +6,13 @@
 
 
 @if(count($taken_tests))
-
+<h1>Tests you have taken:</h1>
 <?php
 
 for($i=0;$i<=count($taken_tests)-1; $i++) {
 ?>
 
-<h1>Tests you have taken:</h1>
+
 <table class="table table-striped table-bordered">
 	<thead>
 			<tr>

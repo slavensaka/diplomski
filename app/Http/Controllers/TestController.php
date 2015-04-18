@@ -10,8 +10,14 @@ use Dipl\User;
 use Dipl\Test;
 use Redirect;
 use Hash;
+use Str;
 use DB;
+use Image;
+use Config;
+use Validator;
 use Carbon\Carbon;
+use Dipl\Support\HelperFunctions;
+
 class TestController extends Controller {
 
 	/**
@@ -47,19 +53,44 @@ class TestController extends Controller {
 	public function store()
 	{
 		// dd(Input::all());
-		$test = new Test;
-		$test->test_name = Input::get('test_name');
-		$test->intro = Input::get('intro');
-		$test->conclusion = Input::get('conclusion');
-		$test->passcode = Hash::make(Input::get('passcode'));
-		$test->shuffle = Input::get('shuffle');
-		$test->is_public = Input::get('is_public');
-		$user = User::find(Auth::user()->id);
-		$user=(string)$user->id;
-		$test->user_id = $user;
-		$test->save();
-		return Redirect::route('tests')
-		->with('message','CREATED NEW TEST');
+
+		$validation = Validator::make(Input::all(), Test::$test_image_upload_rules);
+	/**
+	
+		TODO:
+		- Need to check if user inputed images else will fail
+		--Call to a member function getClientOriginalName() on a non-object
+		
+	
+	**/
+	
+		if($validation->fails()){
+			return Redirect::back()->withInput()->withErrors($validation);
+		} else {
+
+			$intro_fullname = HelperFunctions::get_slug_upload_make_image(Input::file('intro_image'));
+			$conclusion_fullname = HelperFunctions::get_slug_upload_make_image(Input::file('conclusion_image'));		
+
+			if($intro_fullname && $conclusion_fullname) {
+				
+				$test = new Test;
+				$test->test_name = Input::get('test_name');
+				$test->intro = Input::get('intro');
+				$test->conclusion = Input::get('conclusion');
+				$test->passcode = Hash::make(Input::get('passcode'));
+				$test->intro_image = $intro_fullname;
+				$test->conclusion_image = $conclusion_fullname;
+				$test->shuffle = Input::get('shuffle');
+				$test->is_public = Input::get('is_public');
+				$user = User::find(Auth::user()->id);
+				$user=(string)$user->id;
+				$test->user_id = $user;
+				$test->save();
+
+				return Redirect::route('tests')
+				->with('message','CREATED NEW TEST');
+			}
+		}
 	}
 
 	/**
@@ -97,12 +128,18 @@ class TestController extends Controller {
 	public function update($id)
 	{	
 		// dd(Input::all());
+		$validation = Validator::make(Input::all(), Test::$test_image_upload_rules);
 		$passcode = Hash::make(Input::get('passcode'));
 		$updated_at = Carbon::now();
+
+		$intro_fullname = HelperFunctions::get_slug_upload_make_image(Input::file('intro_image'));
+		$conclusion_fullname = HelperFunctions::get_slug_upload_make_image(Input::file('conclusion_image'));		
+
 		DB::table('tests')->where('id', $id)->update(array(
 			'test_name' => Input::get('test_name'), 'intro' => Input::get('intro'),
 			'conclusion' => Input::get('conclusion'), 'shuffle' => Input::get('shuffle'),
-			'passcode' => $passcode, 'updated_at' => $updated_at
+			'passcode' => $passcode, 'updated_at' => $updated_at, 'intro_image' => $intro_fullname,
+			'conclusion_image' => $conclusion_fullname
 			));
 		return Redirect::route('tests.index', $id)
 		->with('message', 'TEST UPDATED');

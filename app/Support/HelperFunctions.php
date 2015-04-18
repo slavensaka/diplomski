@@ -1,4 +1,8 @@
 <?php namespace Dipl\Support;
+use Input;
+use Str;
+use Config;
+use Image;
 
 class HelperFunctions {
 
@@ -35,4 +39,18 @@ class HelperFunctions {
             return $str;
     }
 
+    public static function get_slug_upload_make_image($inputed_file = null){
+
+        $intro_image = $inputed_file;
+        $intro_image_filename = $intro_image->getClientOriginalName();
+        $intro_image_filename = pathinfo($intro_image_filename, PATHINFO_FILENAME);
+        $intro_fullname = Str::slug(Str::random(8).$intro_image_filename).'.'. $intro_image->getClientOriginalExtension();
+        $intro_image_upload = $intro_image->move(Config::get( 'test_images.upload_folder'),$intro_fullname);
+        $make =Image::make(Config::get( 'test_images.upload_folder').'/'.$intro_fullname)
+        ->resize(Config::get( 'test_images.thumb_width'), Config::get( 'test_images.thumb_height'))
+        ->save(Config::get( 'test_images.thumb_folder').'/'.$intro_fullname);
+        return $intro_fullname;
+        }
+
 }
+
