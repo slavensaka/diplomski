@@ -16,6 +16,7 @@
 		<thead>
 			<tr>
 				<th>ID</th>
+				<th>Question Image</th>
 				<th>Question</th>
 				<th>Points</th>
 				<th>Shuffle_question</th>
@@ -27,6 +28,10 @@
 		@foreach ($questions as $question)
 			<tr class="success">
 				<td>{{ $question->id }}</td>
+				<td>
+				{!!  Html::image("question_uploads/thumbs/".$question->question_image, 
+							$question->question_image, array('class' => 'thumb')) !!}
+				</td>
 				<td>{{ $question->question }}</td>
 				<td>{{ $question->points }}</td>
 				<td>{{ $question->shuffle_question }}</td>

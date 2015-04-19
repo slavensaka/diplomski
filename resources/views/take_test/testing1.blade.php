@@ -12,6 +12,10 @@
 @if(Session::has('message'))
 {!! Session::get('message'); !!}
 @endif
+<div class="intro_image">
+{!! Html::image("test_uploads/$test->intro_image",
+	$test->intro_image, array("class"=>"thumb")) !!}
+</div>
 <div class="intro"><h1><b>{!! $test->intro !!}</b></h1></div>
 <?php 
 $answer = $questions->each(function($question) use($test, $student_name){
@@ -20,7 +24,9 @@ $answer = $questions->each(function($question) use($test, $student_name){
     //     		echo count($questions);
     //     	}
 		  
-		  echo '<p><b>'.($question["question"]).'</b></p>'.'<br>';
+		  echo '<p><b>'.($question["question"]).'</b></p>';
+		  echo Html::image("question_uploads/".$question["question_image"] );
+		 
 
 		  $answers = Question::find($question->id)->answers;
 
@@ -37,9 +43,10 @@ if($question->type === 'multiple_choice' || $question->type === 'true_false') {
 ?>
 <ul>
 	<li>
+<?php	echo '</br>'; ?>
 <?php echo Form::label($answer["answer"],$answer["answer"]); ?>
 <?php echo Form::radio($answer->question_id, $answer["answer"]); ?>
-<?php echo Form::hidden('student_name', $student_name); ?>
+<?php echo Form::hidden('student_name', $student_name);  ?>
 
 	</li>
 
@@ -47,6 +54,7 @@ if($question->type === 'multiple_choice' || $question->type === 'true_false') {
 <?php 
 echo "<br>";
  } elseif($question->type === 'multiple_response') {
+ 	echo '</br>';
  echo Form::label($answer["answer"], $answer["answer"]);
  // echo Form::hidden($answer["answer"], "multiple_response");
 
@@ -54,9 +62,12 @@ echo Form::hidden('student_name', $student_name);
 
 echo Form::checkbox($answer["id"],$answer["answer"]); 
 // echo Form::selectRange($answer->question_id, 1, count($answers) );
-
+echo '</br>';
 	} else {
+		echo '</br>';
+		echo '</br>';
 		echo Form::text($answer->question_id);
+
 	}
 
 	}); 
@@ -66,8 +77,10 @@ echo Form::checkbox($answer["id"],$answer["answer"]);
 <?php
 // echo Form::hidden('student_name', $student_name);
 // echo Form::hidden('test_id', $test->id);
+
 echo Form::submit('Send', array("onclick"=>"this.disabled=true;forms[0].submit();",'class' => 'btn btn-info updated_answers'));
-echo Form::close() ;
+?> <a href="{{ URL::previous() }}">Go Back</a>
+<?php echo Form::close(); ?>
 
 ?>
 

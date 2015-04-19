@@ -16,7 +16,13 @@
 		array(), 
 		array('class' => 'btn btn-primary')) !!}
 </p> --}}
-<h1>{!! $test->conclusion !!}</h1>
+
+<div class="conclusion_image">
+{!! Html::image("test_uploads/$test->conclusion_image",
+				$test->conclusion_image, array("class"=>"thumb")) !!}
+</div>
+
+<h1>Conclusion: {!! $test->conclusion !!}</h1>
 <h1>Your score on this test was: {!!  $points_count !!}</h1>
 @if(Auth::check())
 <h1>Test taker: {!!  Auth::user()->name !!}</h1>
@@ -117,7 +123,7 @@
  @endforeach {{-- $answers--}}
 @endforeach {{-- $questions --}}
 
-
+ <div><a class="navbar-brand" href="../../homepage">Go Back</a></div>
 @else
 <h2>There are no questions for this test</h2>
 {{-- <p>

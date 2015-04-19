@@ -15,6 +15,7 @@ class CreateTestsTable extends Migration {
 			$table->string('passcode', 60);
 			$table->string('intro_image',400)->default('');
 			$table->string('conclusion_image',400)->default('');
+			$table->unsignedInteger('test_submit_time');
 			$table->boolean('shuffle')->default('0');
 			$table->boolean('is_published')->default('0');
 			$table->boolean('is_public')->default('0');

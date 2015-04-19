@@ -12,7 +12,8 @@
 @endif
 
 
-{!! Form::model($question, array('method' => 'PATCH', 'route' =>array('questions.update', $question->id)), function(){       }) !!}
+{!! Form::model($question, array('method' => 'PATCH', 
+'route' =>array('questions.update', $question->id), 'files'=> true), function(){  }) !!}
 <ul>
 	<li>
 		{!! Form::label('question', 'Question:') !!}
@@ -22,7 +23,14 @@
 		{!! Form::label('points', 'Points:') !!}
 		{!! Form::text('points') !!}
 	</li>
-
+	<li>
+		{!! Form::label('question_image', 'Question Image:') !!}
+		{!! Html::image("question_uploads/thumbs/$question->question_image", 
+							$question->question_image) !!}
+	</li>
+	<li>
+		{!! Form::file('question_image') !!}
+	</li>
 	<li>
 		{!! Form::label('shuffle_question', 'shuffle_question') !!}
 		{!! Form::hidden("shuffle_question", 0, false) !!}

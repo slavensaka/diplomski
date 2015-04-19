@@ -276,7 +276,6 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 /**
 
 	TODO:
-	- Omogučit slike, database se mora promijenit 
 	- For test password make the interface 
 	- If question has no answers, alert user somehow. Maybe when he tries to publish it
 	- Make a submit time(vrijeme test) 10 minuta. After end submit the test
@@ -566,11 +565,14 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 	public function copy_public_test($test_id) {
 
 		$test = Test::find($test_id);
+		
 		$new_test = new Test;
 		$new_test->test_name = $test->test_name;
 		$new_test->intro = $test->intro;
 		$new_test->conclusion = $test->conclusion;
-		$new_test->null;
+		$new_test->null; // WHAT
+		$new_test->intro_image = $test->intro_image;
+		$new_test->conclusion_image = $test->conclusion_image;
 		$new_test->shuffle = $test->shuffle;
 		$new_test->is_public = $test->is_public;
 		$new_test->user_id = Auth::user()->id;
@@ -583,6 +585,7 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 			$new_question = new Question;
 			$new_question->question = $question->question;
 			$new_question->points = $question->points;
+			$new_question->question_image = $question->question_image;
 			$new_question->shuffle_question = $question->shuffle_question;
 			$new_question->type = $question->type;
 			$new_question->created_at = Carbon::now();

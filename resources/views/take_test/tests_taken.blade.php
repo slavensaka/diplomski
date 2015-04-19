@@ -20,26 +20,16 @@ for($i=0;$i<=count($taken_tests)-1; $i++) {
 <th>Student Name</th>
 <th>Your Test Result Was</th>
 <th>Test Taken On</th>
-			
-				
-			
+<th>Show Test</th>
+<th>Remove Test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="danger">
+<td><?php  $test= DB::table('tests')->where("id", $taken_tests[$i]->test_id)->pluck('intro_image') ?>
+{!!   Html::image("test_uploads/thumbs/".$test)  !!}
 
-				
-		{{-- 		
-				<th>User_Id</th>
-				
-					<th>Id</th> --}}
-					
-				<th>Show Test</th>
-				
-				<th>Remove Test</th>
-				
-				
-			</tr>
-		</thead>
-		<tbody>
-			<tr class="danger">
-<td>TEST ID: <b>{{ $taken_tests[$i]->test_id }}</b> |
+TEST ID: <b>{{ $taken_tests[$i]->test_id }}</b> |
 {{  $test= DB::table('tests')->where("id", $taken_tests[$i]->test_id)->pluck('test_name') }}
 </td>
 <td>{{ $taken_tests[$i]->name }}</td>

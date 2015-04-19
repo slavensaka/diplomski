@@ -7,11 +7,13 @@ use Route;
 use Request;
 use Redirect;
 use Dipl\Test;
+use Validator;
 use Dipl\User;
 use Dipl\Answer;
 use Carbon\Carbon;
 use Dipl\Question;
 use Dipl\Http\Requests;
+use Dipl\Support\HelperFunctions;
 use Dipl\Http\Controllers\Controller;
 
 class QuestionController extends Controller {
@@ -63,20 +65,31 @@ class QuestionController extends Controller {
 	public function store()
 	{
 // dd(Input::all());
-		$question = new Question;
-		$question->test_id = Input::get('test_id');
-		$question->question = Input::get('question');
-		$question->points = Input::get('points');
-		$question->shuffle_question = Input::get('shuffle_question');
-		$question->type = Input::get('type');
-		$question->created_at = Carbon::now();
-		$question->updated_at = Carbon::now()->addMinutes(2);
-		$question->save();
 
-		$last_question_id = DB::getPdo()->lastInsertId();
-		$test_id = Question::find($last_question_id)->test;
-		// dd($test_id);
-		return Redirect::action('QuestionController@show', array($test_id));
+		$validation = Validator::make(Input::all(), Question::$question_image_upload_rules);
+
+		if($validation->fails()){
+			return Redirect::back()->withInput()->withErrors($validation);
+		} else {
+
+			$question_fullname = HelperFunctions::question_get_slug_upload_make_image(Input::file('question_image'));
+			// dd(Input::get('test_id'));
+			$question = new Question;
+			$question->test_id = Input::get('test_id');
+			$question->question = Input::get('question');
+			$question->points = Input::get('points');
+			$question->shuffle_question = Input::get('shuffle_question');
+			$question->question_image = $question_fullname;
+			$question->type = Input::get('type');
+			$question->created_at = Carbon::now();
+			$question->updated_at = Carbon::now()->addMinutes(2);
+			$question->save();
+
+			$last_question_id = DB::getPdo()->lastInsertId();
+			$test_id = Question::find($last_question_id)->test;
+			// dd($test_id);
+			return Redirect::action('QuestionController@show', array($test_id));
+		}
 	}
 
 	/**
@@ -103,6 +116,7 @@ class QuestionController extends Controller {
 	{
 		$question = Question::find($id);
 		$answers = Question::find($id)->answers;
+
 		if($question->type === 'multiple_choice') {
 			 return view('questions.multiple_choice',compact('question','answers'));	
 		} else if ($question->type === 'true_false'){
@@ -123,9 +137,20 @@ class QuestionController extends Controller {
 	public function update($id)
 	{
 		// dd(Input::all());
-		$input = Input::all();
-		$question = Question::find($id);
-		$question->update($input);
+
+		$validation = Validator::make(Input::all(), Question::$question_image_upload_rules);
+		$question_fullname = HelperFunctions::question_get_slug_upload_make_image(Input::file('question_image'));
+		$updated_at = Carbon::now();
+
+		DB::table('questions')->where('id', $id)
+		->update(array(
+			'question' => Input::get('question'), 
+			'points' => Input::get('points'),
+			'question_image' => $question_fullname, 
+			'shuffle_question' => Input::get('shuffle_question'),
+			'updated_at' => $updated_at 
+			));
+
 		return Redirect::back()
 		->with('message', 'QUESTION UPDATED');
 

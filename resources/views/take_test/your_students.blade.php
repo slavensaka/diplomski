@@ -15,6 +15,7 @@
 <th>Test Id/Name</th>	
 
 			{{-- <th>User ID</th> --}}
+	
 			<th>Students Name</th>
 			<th>Students Test Result</th>
 			{{-- <th>Test_User Id</th> --}}
@@ -27,11 +28,15 @@
 	<tbody>
 		<tr class="info">
 
-<td>TEST ID: <b>{{ $your_students[$i]->test_id }}</b> | {{ $your_students[$i]->test_name }}</td>
+<td>{!!   Html::image("test_uploads/thumbs/".$your_students[$i]->intro_image)  !!}
+
+
+TEST ID: <b> {{ $your_students[$i]->test_id }}</b> | {{ $your_students[$i]->test_name }}</td>
 
 	
 {{-- <td>{{ $your_students[$i]->user_id }}</td> --}}
 @if(empty($your_students[$i]->student_id)) {{-- Users --}}
+
 <td><?php echo $test= DB::table('users')
 	->where("id", $your_students[$i]->user_id)->pluck('name'); ?>
 </td>

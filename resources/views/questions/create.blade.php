@@ -7,7 +7,7 @@
 	<h1>Create a New Question</h1>
 	
 	{{-- {{  'Test_id: ' }}{!!  $test_id !!} --}}
-	{!! Form::open(array('route' => 'questions.store')) !!}
+	{!! Form::open(array('route' => 'questions.store', 'files'=> true)) !!}
  	{!! Form::label('question', 'Question') !!}
 	{!! Form::text('question', Input::old('question'),
 		array('required' => "required",'placeholder'=>'Type the question')) !!}
@@ -22,6 +22,8 @@
 	{!! Form::label('points', 'points') !!}
 	{!! Form::text('points', Input::old('points'),
 		array('required' => "required",'placeholder'=>'Type points number')) !!}
+	<br>
+	{!! Form::file('question_image') !!}
 	<br>
 	{!! Form::label('shuffle_question', 'Shuffle question answers:') !!}
 	{!! Form::hidden("shuffle_question", 0, false) !!}

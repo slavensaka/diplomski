@@ -1,6 +1,6 @@
 @extends('app')
 @section('content')
-
+{{-- {!! dd($users_published_tests) !!} --}}
     <div class="container">
         <div class="content">
             <h1> Take public tests: </h1>
@@ -9,6 +9,7 @@
                 <thead>
                     <tr>
                         <th>Created By User</th>
+                        <th>Intro image</th>
                         {{-- <th>Id</th> --}}
                         <th>Test name</th>
                         {{-- <th>Intro</th> --}}
@@ -26,6 +27,8 @@
                     @if($published_test->is_published && $published_test->is_public)
                     <tr>
                         <td>{{ $published_test->name }}</td>
+                        <td>{!! Html::image("test_uploads/thumbs/$published_test->intro_image",
+                            $published_test->intro_image, array("class"=>"thumb")) !!}</td>
                         {{-- <td>{{ $published_test->id }}</td> --}}
                         <td>{{ $published_test->test_name }}</td>
                         {{-- <td>{{ $published_test->intro }}</td> --}}
@@ -57,7 +60,7 @@
                 <thead>
                     <tr>
                         <th>Created By User</th>
-                        {{-- <th>Id</th> --}}
+                        <th>Intro Image</th>
                         <th>Test name</th>
                         {{-- <th>Intro</th> --}}
                         {{-- <th>Conclusion</th> --}}
@@ -72,6 +75,8 @@
                @if($published_test->is_published && $published_test->is_public === 0)
                     <tr>
                         <td>{{ $published_test->name }}</td>
+                        <td>{!! Html::image("test_uploads/thumbs/$published_test->intro_image",
+                            $published_test->intro_image, array("class"=>"thumb")) !!}</td>
                         {{-- <td>{{ $published_test->id }}</td> --}}
                         <td>{{ $published_test->test_name }}</td>
                         {{-- <td>{{ $published_test->intro }}</td> --}}

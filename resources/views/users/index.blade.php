@@ -31,7 +31,7 @@
 					<th>Conclusion Image</th>
 					{{-- <th>user_id</th> --}}
 					{{-- <th>Is_Public</th> --}}
-					<th>Add Q/A</th>
+					<th>Manage Q/A</th>
 					<th>Edit Test</th>
 					<th>Delete Test</th>
 					<th>Public/Private</th>
@@ -55,7 +55,7 @@
 					{{-- <td>{{ $test->user_id }}</td> --}}
 					{{-- <td>{{ $test->is_public }}</td> --}}
 					<td>
-						{!! link_to_route('questions.show', 'Add Q/A', 
+						{!! link_to_route('questions.show', 'Manage Q/A', 
 						array($test->id), array('class' => 'btn btn-primary')) !!}
 					</td>
 					<td>

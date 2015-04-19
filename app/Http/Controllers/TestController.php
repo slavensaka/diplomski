@@ -59,7 +59,10 @@ class TestController extends Controller {
 	
 		TODO:
 		- Need to check if user inputed images else will fail
-		--Call to a member function getClientOriginalName() on a non-object
+		-- Call to a member function getClientOriginalName() on a non-object
+		- Delete tests.test_image after update, then replace into database with the new name of image 
+		- Do same for questions.edit. Delete after update image and then add the new one.
+
 		
 	
 	**/

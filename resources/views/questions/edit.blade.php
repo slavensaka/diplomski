@@ -13,8 +13,9 @@
 {!! link_to_route('answers.show', 'Go Back', $question->id , 
 	array('class' => 'btn btn-warning')) !!}
 
+
 {!! Form::model($question, array('method' => 'PATCH', 
-	'route' => array('questions.update', $question->id)), function(){ }) !!}
+	'route' => array('questions.update', $question->id),'files'=> true), function(){ }) !!}
 	<ul>
 		<li>
 			{!! Form::label('question', 'Question:') !!}
@@ -23,6 +24,9 @@
 		<li>
 			{!! Form::label('points', 'Points:') !!}
 			{!! Form::text('points') !!}
+		</li>
+		<li>
+			{!! Form::file('question_image') !!}
 		</li>
 		<li>
 			{!! Form::label('shuffle_question', 'shuffle_question:') !!}
