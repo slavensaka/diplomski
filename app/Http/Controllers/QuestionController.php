@@ -2,8 +2,10 @@
 
 use DB;
 use Auth;
+use File;
 use Input;
 use Route;
+use Config;
 use Request;
 use Redirect;
 use Dipl\Test;
@@ -139,7 +141,7 @@ class QuestionController extends Controller {
 		// dd(Input::all());
 
 		$validation = Validator::make(Input::all(), Question::$question_image_upload_rules);
-		$question_fullname = HelperFunctions::question_get_slug_upload_make_image(Input::file('question_image'));
+		$question_fullname = HelperFunctions::update_question_upload_make_image(Input::file('question_image'),$id);
 		$updated_at = Carbon::now();
 
 		DB::table('questions')->where('id', $id)
@@ -170,6 +172,17 @@ class QuestionController extends Controller {
 	{
 		Question::find($id)->delete();
 		return redirect()->back();
+	}
+
+	public function question_image_delete() {
+		// dd(Input::get("question_image"));
+		File::delete(Config::get('question_images.upload_folder').'/'.Input::get("question_image"));
+        File::delete(Config::get('question_images.thumb_folder').'/'.Input::get("question_image"));
+
+        DB::table('questions')->where('question_image', '=', Input::get("question_image"))
+        ->update(array("question_image"=> ""));
+    
+		return Redirect::back()->with("question_image_message","Question Image Successfully deleted");
 	}
 
 }

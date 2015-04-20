@@ -1,8 +1,8 @@
 @extends('app')
 @section('content')
 {{-- {!! dd($test_id) !!} --}}
-{!! Html::script('js/jquery-1.11.2.min.js') !!}
-{!! Html::script('js/functions.js') !!}
+{{-- {!! Html::script('js/jquery-1.11.2.min.js') !!} --}}
+{{-- {!! Html::script('js/functions.js') !!} --}}
 
 @if (Auth::guest())
 	<h1>Your not logged in</h1>
@@ -31,8 +31,12 @@
 		@foreach ($questions as $question)
 			<tr class="success">
 				<td>{{ $question->id }}</td>
+				@if($question->question_image === "")
+				<td>X</td>
+				@else
 				<td>{!! Html::image("question_uploads/thumbs/$question->question_image", 
 							$question->question_image) !!}</td>
+				@endif
 				<td>{{ $question->question }}</td>
 				<td>{{ $question->points }}</td>
 				<td>{{ $question->shuffle_question }}</td>

@@ -6,7 +6,7 @@ use Dipl\Test;
 use Dipl\User;
 use Dipl\Answer;
 use Dipl\Question;
-use Illuminate\Http\Request;
+use Request;
 use Input;
 use Redirect;
 use DB;
@@ -86,7 +86,7 @@ class PublishController extends Controller {
 	   ========================================================================== */
 
 	public function take_test($test) {
-
+		// dd(Input::all());
 		$answers = [];
 		$student_name = '';
 		$the_test = Test::find($test); // Sav info o testu
@@ -285,6 +285,15 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 
 	public function testing1($id){ // test id
 		// dd(Input::all());
+		if(Request::ajax()) {
+			$new_user = new UserTestPivot;
+			$new_user->user_id = Input::get('user_id');
+			$new_user->test_id = Input::get('test_id');
+			$new_user->test_result = Input::get('test_res');
+			$new_user->save();
+      		return "Saved";
+    	}
+
 		$points = [];
 		$correct_points = [];
 		$points_decrease = [];

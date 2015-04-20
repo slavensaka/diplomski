@@ -2,7 +2,9 @@
 use Input;
 use Str;
 use Config;
+use DB;
 use Image;
+use File;
 
 class HelperFunctions {
 
@@ -48,16 +50,55 @@ class HelperFunctions {
         $intro_image_upload = $intro_image->move(Config::get( 'test_images.upload_folder'),$intro_fullname);
         Image::make($intro_image_upload)->resize(Config::get( 'test_images.width'), Config::get( 'test_images.height'))
         ->save();
-        // $resize_test_upload = Image::make(Config::get('test_images.upload_folder').'/'.$intro_fullname)
-        // ->resize(Config::get('test_images.width'),Config::get('test_images.height'))
-        // ->save
         $make =Image::make(Config::get( 'test_images.upload_folder').'/'.$intro_fullname)
         ->resize(Config::get( 'test_images.thumb_width'), Config::get( 'test_images.thumb_height'))
         ->save(Config::get( 'test_images.thumb_folder').'/'.$intro_fullname);
         return $intro_fullname;
-        }
+        } 
 
-     public static function question_get_slug_upload_make_image($inputed_file = null){
+
+
+
+    public static function update_slug_upload_make_image($type,$inputed_file = null,$id = null){
+        
+        $intro_image = $inputed_file;
+        $test_id = $id;
+        $image = '';
+            if($type === 'intro'){
+               $image = DB::table('tests')->where('id','=',$test_id)->pluck('intro_image');
+               if(!$image){
+                //Do nothing
+            } else {
+                File::delete(Config::get('test_images.upload_folder').'/'.$image);
+                File::delete(Config::get('test_images.thumb_folder').'/'.$image);
+            }
+            } else if($type === 'conclusion'){
+                $image = DB::table('tests')->where('id','=',$test_id)->pluck('conclusion_image');
+                if(!$image){
+                //Do nothing
+            } else {
+
+                File::delete(Config::get('test_images.upload_folder').'/'.$image);
+                File::delete(Config::get('test_images.thumb_folder').'/'.$image);
+            }
+            }
+            
+        $intro_image_filename = $intro_image->getClientOriginalName();
+        $intro_image_filename = pathinfo($intro_image_filename, PATHINFO_FILENAME);
+        $intro_fullname = Str::slug(Str::random(8).$intro_image_filename).'.'. $intro_image->getClientOriginalExtension();
+
+        $intro_image_upload = $intro_image->move(Config::get( 'test_images.upload_folder'),$intro_fullname);
+
+        Image::make($intro_image_upload)->resize(Config::get( 'test_images.width'), Config::get( 'test_images.height'))
+        ->save();
+
+        $make =Image::make(Config::get( 'test_images.upload_folder').'/'.$intro_fullname)
+        ->resize(Config::get( 'test_images.thumb_width'), Config::get( 'test_images.thumb_height'))
+        ->save(Config::get( 'test_images.thumb_folder').'/'.$intro_fullname);
+        return $intro_fullname;
+     }
+
+    public static function question_get_slug_upload_make_image($inputed_file = null){
 
         $intro_image = $inputed_file;
         $intro_image_filename = $intro_image->getClientOriginalName();
@@ -74,6 +115,33 @@ class HelperFunctions {
         ->save(Config::get( 'question_images.thumb_folder').'/'.$intro_fullname);
         return $intro_fullname;
         }
+
+    public static function update_question_upload_make_image($inputed_file = null,$id = null){
+
+        $intro_image = $inputed_file;
+        $test_id = $id;
+        $image = '';
+            
+        $image = DB::table('questions')->where('id','=',$test_id)->pluck('question_image');
+        
+        if(!$image){
+            //Do nothing
+        } else {
+            File::delete(Config::get('question_images.upload_folder').'/'.$image);
+            File::delete(Config::get('question_images.thumb_folder').'/'.$image);
+        }
+
+        $intro_image_filename = $intro_image->getClientOriginalName();
+        $intro_image_filename = pathinfo($intro_image_filename, PATHINFO_FILENAME);
+        $intro_fullname = Str::slug(Str::random(8).$intro_image_filename).'.'. $intro_image->getClientOriginalExtension();
+        $intro_image_upload = $intro_image->move(Config::get( 'question_images.upload_folder'),$intro_fullname);
+        Image::make($intro_image_upload)->resize(Config::get( 'question_images.width'), Config::get( 'question_images.height'))
+        ->save();
+        $make =Image::make(Config::get( 'question_images.upload_folder').'/'.$intro_fullname)
+        ->resize(Config::get( 'question_images.thumb_width'), Config::get( 'question_images.thumb_height'))
+        ->save(Config::get( 'question_images.thumb_folder').'/'.$intro_fullname);
+        return $intro_fullname;
+    }
 
 }
 

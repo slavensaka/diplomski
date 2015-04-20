@@ -21,9 +21,21 @@
 		</li>
 		<li>
 		{!! Form::label('intro_image', 'Intro image:') !!}
-		
+			@if($test->intro_image === "")
+			X
+			@else 
 		{!! Html::image("test_uploads/thumbs/$test->intro_image", 
 							$test->intro_image, array('class' => 'thumb')) !!}
+			@endif
+		{!! link_to_route('intro_image_delete', 'DELETE', 
+				array('intro_image'=>$test->intro_image), 
+				array('class' => 'btn btn-success')) !!}				
+		
+		</li>
+		<li>
+			@if(Session::has('intro_image_message'))
+				{!! Session::get('intro_image_message'); !!}
+			@endif
 		</li>
 		</br>
 		<li>
@@ -32,9 +44,20 @@
 		</br>
 		<li>
 		{!! Form::label('conclusion_image', 'Conclusion image:') !!}
-		
+		@if($test->conclusion_image === "")
+		X
+		@else
 		{!! Html::image("test_uploads/thumbs/$test->conclusion_image",
 							$test->conclusion_image, array("class"=>"thumb")) !!}
+		@endif
+		{!! link_to_route('conclusion_image_delete', 'DELETE', 
+				array('conclusion_image'=>$test->conclusion_image), 
+				array('class' => 'btn btn-success')) !!}	
+		</li>
+		<li>
+			@if(Session::has('conclusion_image_message'))
+				{!! Session::get('conclusion_image_message'); !!}
+			@endif
 		</li>
 		</br>
 		<li>

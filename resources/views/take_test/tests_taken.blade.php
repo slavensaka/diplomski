@@ -26,12 +26,22 @@ for($i=0;$i<=count($taken_tests)-1; $i++) {
 </thead>
 <tbody>
 <tr class="danger">
-<td><?php  $test= DB::table('tests')->where("id", $taken_tests[$i]->test_id)->pluck('intro_image') ?>
+<?php  $test= DB::table('tests')->where("id", $taken_tests[$i]->test_id)->pluck('intro_image') ?>
+@if($test)
+<td>
 {!!   Html::image("test_uploads/thumbs/".$test)  !!}
-
 TEST ID: <b>{{ $taken_tests[$i]->test_id }}</b> |
 {{  $test= DB::table('tests')->where("id", $taken_tests[$i]->test_id)->pluck('test_name') }}
 </td>
+@else
+<td>
+
+
+TEST ID: <b>{{ $taken_tests[$i]->test_id }}</b> |
+{{  $test= DB::table('tests')->where("id", $taken_tests[$i]->test_id)->pluck('test_name') }}
+
+</td>
+@endif
 <td>{{ $taken_tests[$i]->name }}</td>
 <td><b>{{ $taken_tests[$i]->test_result }}</b></td>
 

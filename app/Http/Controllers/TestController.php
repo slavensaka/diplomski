@@ -12,6 +12,7 @@ use Redirect;
 use Hash;
 use Str;
 use DB;
+use File;
 use Image;
 use Config;
 use Validator;
@@ -134,9 +135,12 @@ class TestController extends Controller {
 		$validation = Validator::make(Input::all(), Test::$test_image_upload_rules);
 		$passcode = Hash::make(Input::get('passcode'));
 		$updated_at = Carbon::now();
-
-		$intro_fullname = HelperFunctions::get_slug_upload_make_image(Input::file('intro_image'));
-		$conclusion_fullname = HelperFunctions::get_slug_upload_make_image(Input::file('conclusion_image'));		
+		$intro='intro'; $conclusion = 'conclusion';
+		$intro_fullname = HelperFunctions::update_slug_upload_make_image(
+			$intro,Input::file('intro_image'),Input::get('test_id'));
+		
+		$conclusion_fullname = HelperFunctions::update_slug_upload_make_image(
+			$conclusion,Input::file('conclusion_image'),Input::get('test_id'));		
 
 		DB::table('tests')->where('id', $id)->update(array(
 			'test_name' => Input::get('test_name'), 'intro' => Input::get('intro'),
@@ -159,6 +163,30 @@ class TestController extends Controller {
 		Test::find($id)->delete();
 		return Redirect::route('tests.index');
 	}
+
+	public function intro_image_delete() {
+		// dd(Input::get("intro_image"));
+		File::delete(Config::get('test_images.upload_folder').'/'.Input::get("intro_image"));
+        File::delete(Config::get('test_images.thumb_folder').'/'.Input::get("intro_image"));
+
+        DB::table('tests')->where('intro_image', '=', Input::get("intro_image"))
+        ->update(array("intro_image"=> ""));
+        return Redirect::back()->with("intro_image_message", "Intro Image Succesfully deleted");
+	}
+
+	public function conclusion_image_delete() {
+		// dd(Input::get("conclusion_image"));
+
+		File::delete(Config::get('test_images.upload_folder').'/'.Input::get("conclusion_image"));
+		File::delete(Config::get('test_images.thumb_folder').'/'.Input::get("conclusion_image"));
+
+		DB::table('tests')->where('conclusion_image','=',Input::get("conclusion_image"))
+		->update(array("conclusion_image" => ""));
+
+		return Redirect::back()->with("conclusion_image_message","Conclusion Image Succesfully deleted");
+	}
+
+
 
 	// public function getNameAttribute($value)
 	// {

@@ -45,13 +45,21 @@
 					<td>{{ $test->test_name }}</td>
 					<td><i>{{ $test->intro }}</i></td>
 					
+					 @if($test->intro_image === "")
+						<td>X</td>
+					@else 
 					<td>{!! Html::image("test_uploads/thumbs/$test->intro_image", 
 							$test->intro_image, array('class' => 'thumb')) !!}
 					</td>
+					@endif
 					<td><i>{{ $test->conclusion }}</i></td>
+					@if($test->conclusion_image === "")
+					 <td>X</td>
+					 @else 
 					<td>{!! Html::image("test_uploads/thumbs/$test->conclusion_image",
-							$test->conclusion_image, array("class"=>"thumb")) !!}
+							$test->intro_image, array("class"=>"thumb")) !!}
 					</td>
+					@endif
 					{{-- <td>{{ $test->user_id }}</td> --}}
 					{{-- <td>{{ $test->is_public }}</td> --}}
 					<td>
@@ -75,7 +83,7 @@
 					<td class="is_public">
 						{!! link_to_route('is_private', 'PRIVATE', 
 						array('test_id'=>$test->id), 
-						array('class' => 'btn btn-success is_public')) !!}
+						array('class' => 'btn btn-danger is_public')) !!}
 					</td>
 					@else
 					<td class="publish">

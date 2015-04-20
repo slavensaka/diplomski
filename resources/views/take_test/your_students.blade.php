@@ -11,28 +11,25 @@
 <table class="table table-striped table-bordered">
 	<thead>
 		<tr class="active">
-
-<th>Test Id/Name</th>	
-
+			<th>Test Id/Name</th>	
 			{{-- <th>User ID</th> --}}
-	
 			<th>Students Name</th>
 			<th>Students Test Result</th>
 			{{-- <th>Test_User Id</th> --}}
 			<th>Test Taken On</th>
-			
-	
-				
 		</tr>
 	</thead>
 	<tbody>
 		<tr class="info">
+@if($your_students[$i]->intro_image === "")
+<td>TEST ID: <b> {{ $your_students[$i]->test_id }}</b> | {{ $your_students[$i]->test_name }}</td>
+@else 
 
 <td>{!!   Html::image("test_uploads/thumbs/".$your_students[$i]->intro_image)  !!}
 
 
 TEST ID: <b> {{ $your_students[$i]->test_id }}</b> | {{ $your_students[$i]->test_name }}</td>
-
+@endif
 	
 {{-- <td>{{ $your_students[$i]->user_id }}</td> --}}
 @if(empty($your_students[$i]->student_id)) {{-- Users --}}

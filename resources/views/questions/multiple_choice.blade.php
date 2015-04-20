@@ -37,7 +37,16 @@
 		{!! Form::label('question_image', 'Question Image:') !!}
 		{!! Html::image("question_uploads/thumbs/$question->question_image", 
 							$question->question_image) !!}
+		{!! link_to_route('question_image_delete', 'DELETE', 
+				array('question_image'=>$question->question_image), 
+				array('class' => 'btn btn-success')) !!}
+
 	</li>
+	<li>
+			@if(Session::has('question_image_message'))
+				{!! Session::get('question_image_message'); !!}
+			@endif
+		</li>
 	<li>
 		{!! Form::file('question_image') !!}
 	</li>
