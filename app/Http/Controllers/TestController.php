@@ -28,11 +28,14 @@ class TestController extends Controller {
 	 */
 	public function index()
 	{
+
 		if(!Auth::check())
 		{
 			return redirect()->guest('auth/login');
 		}
-		$tests = User::find(Auth::id())->tests;
+
+		$tests = User::find(Auth::id())->tests()->paginate(5);
+
 		return view('users.index', compact('tests'));
 	}
 

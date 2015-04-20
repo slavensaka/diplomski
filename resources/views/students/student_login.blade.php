@@ -46,7 +46,8 @@
 
 @elseif(Session::has("student_name"))
 {!! Form::input('pass', 'pass', Session::get("pass")) !!}
-
+<h4>We already made you an account</h4>
+<div><b>Enjoy</b></div>
 @else
 {!! Form::password('pass',
 			array('placeholder' => 'Type Password','required' => "required")) !!}

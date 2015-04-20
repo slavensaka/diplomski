@@ -18,6 +18,7 @@
                         {{-- <th>Intro</th> --}}
                         {{-- <th>Conclusion</th> --}}
                         <th>Questions Shuffled</th>
+                        <th>Password</th>
                         {{-- <th>Is_published</th> --}}
                         {{-- <th>Is_public</th> --}}
                         {{-- <th>user_id</th> --}}
@@ -49,7 +50,7 @@
                         {{-- <td>{{ $published_test->is_published }}</td> --}}
                         {{-- <td>{{ $published_test->is_public }}</td> --}}
                         {{-- <td>{{ $published_test->user_id }}</td> --}}
-
+                        <td>No</td>
                         <td>{!! link_to_route('take_test', 'Take This Test', 
                         		array($published_test->id), 
                         		array('class' => 'btn btn-success')) !!}
@@ -76,6 +77,7 @@
                         {{-- <th>Intro</th> --}}
                         {{-- <th>Conclusion</th> --}}
                         <th>Questions shuffled</th>
+                        <th>Password</th>
                         {{-- <th>Is_published</th> --}}
                         {{-- <th>Is_public</th> --}}
                         {{-- <th>user_id</th> --}}
@@ -98,8 +100,9 @@
                         {{-- <td>{{ $published_test->intro }}</td> --}}
                         {{-- <td>{{ $published_test->conclusion }}</td> --}}
                         @if($published_test->shuffle)
-                        <td>{{ "Yes" }}</td> @else <td>{{ "No" }}</td> @endif
-                        
+                        <td>{{ "Yes" }}</td> @else <td>{{ "No" }}</td> 
+                        @endif
+                        <td>Yes</td>
                         {{-- <td>{{ $published_test->is_published }}</td> --}}
                         {{-- <td>{{ $published_test->is_public }}</td> --}}
                         {{-- <td>{{ $published_test->user_id }}</td> --}}

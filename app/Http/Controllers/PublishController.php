@@ -276,22 +276,36 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 /**
 
 	TODO:
-	- For test password make the interface 
 	- If question has no answers, alert user somehow. Maybe when he tries to publish it
-	- Make a submit time(vrijeme test) 10 minuta. After end submit the test
-	- prevent multiple inserts when submitting a test in PHP
 
 **/
 
 	public function testing1($id){ // test id
 		// dd(Input::all());
 		if(Request::ajax()) {
-			$new_user = new UserTestPivot;
-			$new_user->user_id = Input::get('user_id');
-			$new_user->test_id = Input::get('test_id');
-			$new_user->test_result = Input::get('test_res');
-			$new_user->save();
-      		return "Saved";
+			if(Input::get("type") === "user") {
+				$new_user = new UserTestPivot;
+				$new_user->user_id = Input::get('user_id');
+				$new_user->test_id = Input::get('test_id');
+				$new_user->test_result = Input::get('test_res');
+				$new_user->save();
+				$data = Input::all();
+      			print_r($data);die;
+			} else {
+				$user_id =(int) Input::get("user_id");
+				$test_id =(int) Input::get("test_id");
+				$test_res =(int) Input::get("test_res");
+
+				$student = new StudentTestPivot;
+				$student->student_id = $user_id;
+				$student->test_id = $test_id;
+				$student->test_result = $test_res;
+				$student->save();
+				$data = Input::all();
+      			print_r($data);die;
+			}
+		
+      		
     	}
 
 		$points = [];
@@ -527,7 +541,7 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 			 // ->where('test_user.test_id', '=', $taken_test->id)
 		 	 ->where("test_user.user_id","=",Auth::user()->id)
              ->select('users.name', 'test_user.user_id', 'test_user.test_id',
-    			'test_user.test_result','test_user.created_at','test_user.id')->get();
+    			'test_user.test_result','test_user.created_at','test_user.id')->paginate(5);
 
 		return View::make('take_test/tests_taken')
 		->with('taken_tests',$taken_tests)
@@ -544,7 +558,7 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 			 // ->where('student_test.test_id', '=', $taken_test->id)
 		 	 ->where("student_test.student_id","=",$student_id->id)//TU
              ->select('students.student_name', 'student_test.student_id', 'student_test.test_id',
-    			'student_test.test_result','student_test.created_at','student_test.id')->get();
+    			'student_test.test_result','student_test.created_at','student_test.id')->paginate(5);
              // dd($taken_tests);
         return View::make('take_test/tests_taken_students')
 		->with('taken_tests',$taken_tests);

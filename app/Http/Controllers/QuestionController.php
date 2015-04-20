@@ -103,7 +103,7 @@ class QuestionController extends Controller {
 	public function show($id) // TEST ID
 	{
 		// dd($id);
-		$questions = Test::find($id)->questions;
+		$questions = Test::find($id)->questions()->paginate(5);
 		$answers = Test::find($id)->answers;
 		return view('questions.show', compact('questions','answers'))->with("test_id",$id);
 	}

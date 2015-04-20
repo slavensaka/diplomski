@@ -109,6 +109,7 @@
 
 				</tr>
 			@endforeach
+			<?php echo $tests->render(); ?>
 			</tbody>
 	</table>
 @else

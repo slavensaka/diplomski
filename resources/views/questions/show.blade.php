@@ -10,6 +10,26 @@
 	<h1>Users Tests Questions</h1>
 {{-- {!! dd($answers) !!} --}}
 
+<?php echo $questions->render(); ?>
+<p>
+	{!! link_to_route('tests', 'Go Back To Tests', 
+		array(Auth::user()->name), 
+		array('class' => 'btn btn-primary')) !!}
+</p>
+<p>
+	{!! link_to_route('questions.create', 'Add new question', 
+		array('test_id' => $test_id), 
+		array('class' => 'btn btn-primary')) !!}
+</p>
+
+
+@if(Session::has('success'))
+{!! Session::get('success'); !!}
+@endif
+
+
+
+
 @if(Session::has('message'))
 {!! Session::get('message'); !!}
 @endif
@@ -17,6 +37,8 @@
 @if($questions->count())
 	<table class="table table-striped table-bordered">
 		<thead>
+		@foreach ($questions as $question)
+		
 			<tr>
 				<th>ID</th>
 				<th>Question Image</th>
@@ -28,7 +50,6 @@
 			</tr>
 		</thead>
 		<tbody>
-		@foreach ($questions as $question)
 			<tr class="success">
 				<td>{{ $question->id }}</td>
 				@if($question->question_image === "")
@@ -119,23 +140,10 @@
 				</tr>
 @endforeach
 
-<p>
-	{!! link_to_route('tests', 'Go Back To Tests', 
-		array(Auth::user()->name), 
-		array('class' => 'btn btn-primary')) !!}
-</p>
-<p>
-	{!! link_to_route('questions.create', 'Add new question', 
-		array('test_id' => $test_id), 
-		array('class' => 'btn btn-primary')) !!}
-</p>
-
-@if(Session::has('success'))
-{!! Session::get('success'); !!}
-@endif
-
 		</tbody>
 		</table>
+<?php echo $questions->render(); ?>
+
 @else
 <h2>There are no questions for this test. Create:</h2>
 <p>
@@ -144,9 +152,7 @@
 		array('class' => 'btn btn-primary')) !!}
 </p>
 
-@if(Session::has('success'))
-{!! Session::get('success'); !!}
-@endif
+
 
 
 

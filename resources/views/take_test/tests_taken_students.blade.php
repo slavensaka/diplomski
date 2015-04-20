@@ -8,7 +8,7 @@
 @if(count($taken_tests))
 <h1>Tests you have taken:</h1>
 <?php
-
+echo $taken_tests->render(); 
 for($i=0;$i<=count($taken_tests)-1; $i++) {
 ?>
 
@@ -76,6 +76,7 @@ for($i=0;$i<=count($taken_tests)-1; $i++) {
 <?php
 
 }
+echo $taken_tests->render(); 
 ?>
 @else
 <h1>There are no tests taken</h1>

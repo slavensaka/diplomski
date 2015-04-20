@@ -84,7 +84,8 @@
         </div>
     </nav>
 
-<?php use Dipl\Question; ?> 
+<?php use Dipl\Question;
+    use Dipl\Student; ?> 
 {!! Html::script('js/jquery-1.11.2.min.js') !!}
 {!! Html::script('js/functions.js') !!}
 {{-- {{ dd($test->intro) }}  --}}
@@ -98,11 +99,23 @@
 @if(Session::has('message'))
 {!! Session::get('message'); !!}
 @endif
+
 <?php $test_res = 0; ?>
+@if(Auth::check())
+<?php $type ="user" ?>
+<div class="type"> {{ $type }} </div>
 <div class="user_id">{{ Auth::user()->id }} </div>
 <div class="test_id">{{ $test->id }} </div>
 <div class="test_res"> {{ $test_res }}</div>
-
+@else 
+<?php $student_id = Student::where('student_name', '=', Session::get('student_name'))->pluck("id");  
+      $type="student";
+?>
+<div class="type"> {{ $type }} </div>
+<div class="user_id">{{ $student_id }} </div>
+<div class="test_id">{{ $test->id }} </div>
+<div class="test_res"> {{ $test_res }}</div>
+@endif
 
 <div class="counter_time">{{ $test->counter_time  }}</div>
 <div class="counter"></div>

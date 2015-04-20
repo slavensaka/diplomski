@@ -8,7 +8,7 @@
 @if(count($taken_tests))
 <h1>Tests you have taken:</h1>
 <?php
-
+echo $taken_tests->render(); 
 for($i=0;$i<=count($taken_tests)-1; $i++) {
 ?>
 
@@ -87,6 +87,7 @@ TEST ID: <b>{{ $taken_tests[$i]->test_id }}</b> |
 
 }
 
+echo $taken_tests->render(); 
 
 ?>
 @else
