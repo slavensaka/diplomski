@@ -2,7 +2,9 @@
 @section('content')
 {{-- {!! dd($users_published_tests) !!} --}}
 
-
+@if(Session::has('message'))
+{!! Session::get('message'); !!}
+@endif
     <div class="container">
         <div class="content">
             <h1> Take public tests: </h1>

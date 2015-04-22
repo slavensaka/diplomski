@@ -10,6 +10,16 @@
 	<h1>Users Tests Questions</h1>
 {{-- {!! dd($answers) !!} --}}
 
+
+
+
+
+
+@if(Session::has('message'))
+{!! Session::get('message'); !!}
+@endif
+
+@if($questions->count())
 <?php echo $questions->render(); ?>
 <p>
 	{!! link_to_route('tests', 'Go Back To Tests', 
@@ -26,15 +36,6 @@
 @if(Session::has('success'))
 {!! Session::get('success'); !!}
 @endif
-
-
-
-
-@if(Session::has('message'))
-{!! Session::get('message'); !!}
-@endif
-
-@if($questions->count())
 	<table class="table table-striped table-bordered">
 		<thead>
 		@foreach ($questions as $question)

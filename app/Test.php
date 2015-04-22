@@ -9,11 +9,15 @@ class Test extends Model {
 	protected $hidden = ['passcode'];
 	protected $fillable = ['test_name', 'intro', 'conclusion', 'passcode', 'shuffle', 
 						   'test_id', 'is_published','student_id', 
-						   'intro_image','conclusion_image'];
+						   'intro_image','conclusion_image','counter_time'];
 	public $timestamps = true;
 
-	public static $test_image_upload_rules = array(
-		// 'title'=> 'required|min:3',
+	public static $test_upload_rules = array(
+		'test_name'=> 'required|min:3|max:80',
+		'intro' => 'min:3',
+		'conclusion' => 'min:3',
+		'passcode' => 'min:6',
+		'counter_time' => 'integer',
 		'intro_image'=> 'image',
 		'conclusion_image'=> 'image'
 	);

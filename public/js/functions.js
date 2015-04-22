@@ -90,7 +90,7 @@ function save(){
       '_token': $('input[name=_token]').val()},
       success: function(data){
         // alert(data);
-        alert("Your attempt is saved into the database");
+        alert("Your attempt will be saved into the database");
       }
     });      
 }

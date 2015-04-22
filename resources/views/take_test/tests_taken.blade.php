@@ -9,7 +9,6 @@
 <h1>Tests you have taken:</h1>
 <?php
 echo $taken_tests->render(); 
-for($i=0;$i<=count($taken_tests)-1; $i++) {
 ?>
 
 
@@ -19,13 +18,15 @@ for($i=0;$i<=count($taken_tests)-1; $i++) {
 <th>Test Id/Name</th>
 <th>Student Name</th>
 <th>Your Test Result Was</th>
-<th>Test Taken On</th>
+<th>Test Taken At</th>
 <th>Show Test</th>
-<th>Remove Test</th>
+{{-- <th>Remove Test</th> --}}
 </tr>
 </thead>
 <tbody>
-<tr class="danger">
+<?php for($i=0;$i<=count($taken_tests)-1; $i++) {
+?>
+<tr class="warning">
 <?php  $test= DB::table('tests')->where("id", $taken_tests[$i]->test_id)->pluck('intro_image') ?>
 @if($test)
 <td>
@@ -46,8 +47,8 @@ TEST ID: <b>{{ $taken_tests[$i]->test_id }}</b> |
 <td><b>{{ $taken_tests[$i]->test_result }}</b></td>
 
 	
-<td>At:{{ date('H:i',strtotime($taken_tests[$i]->created_at))}} 
-    | On:{{ date('d.m.Y',strtotime($taken_tests[$i]->created_at))}}
+<td><b>{{ date('H:i',strtotime($taken_tests[$i]->created_at))}} </b>
+    | {{ date('d.m.Y',strtotime($taken_tests[$i]->created_at))}}
 </td>
 				
 				
@@ -65,7 +66,7 @@ TEST ID: <b>{{ $taken_tests[$i]->test_id }}</b> |
 					'test_result' => $taken_tests[$i]->test_result), 
 						array('class' => 'btn btn-primary',)) !!}
 				</td>
-				<td>
+				{{-- <td>
 					{!! Form::open(array('method'=> 'DELETE', 
 						'route' => array('delete_taken_test', $taken_tests[$i]->test_id))) !!}
 					{!! Form::hidden("id", $taken_tests[$i]->id, false) !!}
@@ -73,13 +74,12 @@ TEST ID: <b>{{ $taken_tests[$i]->test_id }}</b> |
 					array('onclick' =>"if(!confirm('Are you sure?')) return false;",
 					'class' => 'btn btn-danger')) !!}
 					{!! Form::close() !!}
-				</td>
+				</td> --}}
 				
 			</tr>
 			
 
-		</tbody>
-		</table>
+		
 
 		
 
@@ -90,7 +90,10 @@ TEST ID: <b>{{ $taken_tests[$i]->test_id }}</b> |
 echo $taken_tests->render(); 
 
 ?>
-@else
+
+</tbody>
+		</table>
+		@else
 <h1>There are no tests taken</h1>
 @endif
 

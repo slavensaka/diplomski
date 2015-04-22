@@ -17,10 +17,14 @@
 		array('class' => 'btn btn-primary')) !!}
 </p> --}}
 
+@if($test->conclusion_image === "")
+<div class="conclusion_image"></div>
+@else 
 <div class="conclusion_image">
 {!! Html::image("test_uploads/$test->conclusion_image",
 				$test->conclusion_image, array("class"=>"thumb")) !!}
 </div>
+@endif
 
 <h1>Conclusion: {!! $test->conclusion !!}</h1>
 <h1>Your score on this test was: {!!  $points_count !!}</h1>
@@ -40,23 +44,27 @@
 	<table class="table table-striped table-bordered">
 		<thead>
 			<tr>
+				<th>Question Image</th>
 				<th>ID</th>
 				<th>Question</th>
 				<th>Points</th>
 				<th>Shuffle_question</th>
 				<th>Type</th>
 				<th>Test_id</th>
+			
 			</tr>
 		</thead>
 		<tbody>
 		@foreach ($questions as $question)
 			<tr class="success">
+			<td>{!! Html::image("question_uploads/thumbs/".$question->question_image) !!}</td>
 				<td>{{ $question->id }}</td>
 				<td>{{ $question->question }}</td>
 				<td>{{ $question->points }}</td>
 				<td>{{ $question->shuffle_question }}</td>
 				<td>{{ $question->type }}</td>
 				<td>{{ $question->test_id }}</td>
+				
 			</tr>
 			<tr>
 				<th>ID</th>

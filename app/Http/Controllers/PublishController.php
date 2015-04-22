@@ -23,6 +23,11 @@ use Illuminate\Http\Response;
 
 class PublishController extends Controller {
 
+	public function __construct()
+	{
+		$this->middleware('auth', ['except' => ['take_test','take_private_test',
+			'finished', 'testing1', 'tests_taken', 'show_tests_taken']]);
+	}
 	public function publish() {
 		$new_test_id = Input::get('test_id');
 		$test = Test::find($new_test_id);
@@ -276,7 +281,13 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 /**
 
 	TODO:
-	- If question has no answers, alert user somehow. Maybe when he tries to publish it
+	
+	- Stavi nešto na student control panel
+	- Student logged in should be able to remove his account and change password
+	- Add text block to question(text to explain a question)
+	- Do the css implementation 
+	- Implement share buttons.
+	- validate questions, answers, register,login forms.
 
 **/
 
@@ -678,9 +689,8 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
              ->get();
 
              $result = array_merge($your_users,$your_students);
-             // dd($result);
+
 			return View::make('take_test/your_students')
-			
 			->with('your_students', $result);
 		}
 	}

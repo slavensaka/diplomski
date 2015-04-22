@@ -5,32 +5,41 @@
 
 @if(count($your_students))
 
-<h4>Ovo su studenti</h4>
-<?php for($i=0;$i<=count($your_students)-1; $i++) { ?>
+<h4>This are your students who took your tests</h4>
+
 
 <table class="table table-striped table-bordered">
 	<thead>
 		<tr class="active">
-			<th>Test Id/Name</th>	
-			{{-- <th>User ID</th> --}}
+			<th>Test Name</th>	
+			<th>Test ID</th>
+			<th>Test Taken At</th>	
+			
 			<th>Students Name</th>
 			<th>Students Test Result</th>
 			{{-- <th>Test_User Id</th> --}}
-			<th>Test Taken On</th>
+			
 		</tr>
+
 	</thead>
 	<tbody>
-		<tr class="info">
+<?php for($i=0;$i<=count($your_students)-1; $i++) { ?>
+		<tr class="warning">
+
 @if($your_students[$i]->intro_image === "")
-<td>TEST ID: <b> {{ $your_students[$i]->test_id }}</b> | {{ $your_students[$i]->test_name }}</td>
+ <td>{{ $your_students[$i]->test_name }}</td>
 @else 
 
 <td>{!!   Html::image("test_uploads/thumbs/".$your_students[$i]->intro_image)  !!}
 
 
-TEST ID: <b> {{ $your_students[$i]->test_id }}</b> | {{ $your_students[$i]->test_name }}</td>
+ {{ $your_students[$i]->test_name }}</td>
 @endif
-	
+<td><b> {{ $your_students[$i]->test_id }}</b></td>	
+<td><b>{{ date('H:i',strtotime($your_students[$i]->created_at))}}</b>
+    | {{ date('d.m.Y',strtotime($your_students[$i]->created_at))}}
+</td>
+
 {{-- <td>{{ $your_students[$i]->user_id }}</td> --}}
 @if(empty($your_students[$i]->student_id)) {{-- Users --}}
 
@@ -45,19 +54,17 @@ TEST ID: <b> {{ $your_students[$i]->test_id }}</b> | {{ $your_students[$i]->test
 <td><b>{{ $your_students[$i]->test_result }}</b></td>
 {{-- <td>{{ $your_students[$i]->id }}</td> --}}
 
-<td>At:{{ date('H:i',strtotime($your_students[$i]->created_at))}}
-    | On:{{ date('d.m.Y',strtotime($your_students[$i]->created_at))}}
-</td>
+
 
 
 
 
 </tr>
-	</tbody>
-</table>
+
 			
 <?php } ?>
-
+	</tbody>
+</table>
 @else <h1>There are no students</h1> @endif
 
 

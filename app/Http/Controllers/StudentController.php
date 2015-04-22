@@ -7,6 +7,7 @@ use Input;
 use Hash;
 use DB;
 use View;
+use Validator;
 use Dipl\Student;
 use Redirect;
 use Dipl\Support\HelperFunctions;
@@ -14,6 +15,7 @@ use Illuminate\Http\Response;
 
 class StudentController extends Controller {
 
+	
 	public function student_login() {
 		if(Session::has("logged_in")){
 			return redirect()->route('control_panel',
@@ -26,6 +28,12 @@ class StudentController extends Controller {
 
 	public function student_login_verify() {
 		// dd(Input::all());
+
+		$validation = Validator::make(Input::all(), Student::$student_rules);
+		if($validation->fails()){
+				return Redirect::back()->withInput()->withErrors($validation);
+			} else {
+
 		$student_name = Input::get('student_name');
 		Session::put("student_name",Input::get("student_name"));//TU
 
@@ -59,6 +67,7 @@ class StudentController extends Controller {
 			}
 			}
 		}
+	}
 	}
 
 	public function control_panel() {
@@ -94,7 +103,10 @@ class StudentController extends Controller {
 	}
 
 	public function student_register_form() {
-		
+		$validation = Validator::make(Input::all(), Student::$student_rules);
+		if($validation->fails()){
+				return Redirect::back()->withInput()->withErrors($validation);
+			} else {
 		$student_name = Input::get('student_name');
 		$student = Student::where('student_name', '=',$student_name)->exists();
 		if($student){
@@ -106,7 +118,11 @@ class StudentController extends Controller {
 				$student->changed_password = 1;
 				$student->pass = Hash::make(Input::get("pass"));
 				$student->save();
-		}
+
+				Session::put("logged_in",1);
+				return view('students.control_panel')
+					->with('student_name',Input::get('student_name'));
+		}}
 	}
 
 	public function student_logout() {

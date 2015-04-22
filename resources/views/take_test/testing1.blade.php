@@ -85,7 +85,8 @@
     </nav>
 
 <?php use Dipl\Question;
-    use Dipl\Student; ?> 
+    use Dipl\Student;
+     ?> 
 {!! Html::script('js/jquery-1.11.2.min.js') !!}
 {!! Html::script('js/functions.js') !!}
 {{-- {{ dd($test->intro) }}  --}}
@@ -93,6 +94,20 @@
 {{-- {{ dd($student_name) }} --}}
 {{-- {{ print_r($answers) }} --}}
 
+
+<noscript>
+    <h2>
+        JavaScript is disabled! To take test JavaScript is needed.</br>
+        Please enable JavaScript in your web browser!</br>
+        Redirecting back...
+    </h2>
+    <meta http-equiv="refresh" content="5; URL=/" />
+    
+    <style type="text/css">
+        #testing1_form { display:none; }
+        .updated_answers { display:none; }
+    </style>
+</noscript>
 
 
 
@@ -126,7 +141,7 @@
 </div>
 @endif
 <div class="intro"><h1><b>{!! $test->intro !!}</b></h1></div>
-<div class="testing1_form">
+<div id="testing1_form" class="testing1_form">
 <?php 
 
 $answer = $questions->each(function($question) use($test, $student_name){

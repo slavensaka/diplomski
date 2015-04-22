@@ -21,6 +21,11 @@ use Dipl\Support\HelperFunctions;
 
 class TestController extends Controller {
 
+	public function __construct()
+	{
+		$this->middleware('auth');
+	}
+	
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -29,12 +34,8 @@ class TestController extends Controller {
 	public function index()
 	{
 
-		if(!Auth::check())
-		{
-			return redirect()->guest('auth/login');
-		}
 
-		$tests = User::find(Auth::id())->tests()->paginate(5);
+		$tests = User::find(Auth::id())->tests()->paginate(10);
 
 		return view('users.index', compact('tests'));
 	}
@@ -58,47 +59,87 @@ class TestController extends Controller {
 	{
 		// dd(Input::all());
 
-		$validation = Validator::make(Input::all(), Test::$test_image_upload_rules);
-	/**
-	
-		TODO:
-		- Need to check if user inputed images else will fail
-		-- Call to a member function getClientOriginalName() on a non-object
-		- Delete tests.test_image after update, then replace into database with the new name of image 
-		- Do same for questions.edit. Delete after update image and then add the new one.
-
+		$validation = Validator::make(Input::all(), Test::$test_upload_rules);
 		
-	
-	**/
-	
-		if($validation->fails()){
-			return Redirect::back()->withInput()->withErrors($validation);
-		} else {
+		
+			
+		
+			$counter_time = Input::get("counter_time");
+			$counter_time *=  60;
+			if($validation->fails()){
+				return Redirect::back()->withInput()->withErrors($validation);
+			} else {
 
-			$intro_fullname = HelperFunctions::get_slug_upload_make_image(Input::file('intro_image'));
-			$conclusion_fullname = HelperFunctions::get_slug_upload_make_image(Input::file('conclusion_image'));		
-
-			if($intro_fullname && $conclusion_fullname) {
+				if(Input::file('intro_image') && Input::file('conclusion_image')){
+					$intro_fullname = HelperFunctions::get_slug_upload_make_image(Input::file('intro_image'));
+					$conclusion_fullname = HelperFunctions::get_slug_upload_make_image(Input::file('conclusion_image'));		
+					$test = new Test;
+					$test->test_name = Input::get('test_name');
+					$test->intro = Input::get('intro');
+					$test->conclusion = Input::get('conclusion');
+					$test->passcode = Hash::make(Input::get('passcode'));
+					$test->intro_image = $intro_fullname;
+					$test->conclusion_image = $conclusion_fullname;
+					$test->counter_time =$counter_time;
+					$test->shuffle = Input::get('shuffle');
+					$test->is_public = Input::get('is_public');
+					$user = User::find(Auth::user()->id);
+					$user=(string)$user->id;
+					$test->user_id = $user;
+					$test->save();
+				} elseif(Input::file('conclusion_image')){
+					$conclusion_fullname = HelperFunctions::get_slug_upload_make_image(Input::file('conclusion_image'));		
+					$test = new Test;
+					$test->test_name = Input::get('test_name');
+					$test->intro = Input::get('intro');
+					$test->conclusion = Input::get('conclusion');
+					$test->passcode = Hash::make(Input::get('passcode'));
+					$test->conclusion_image = $conclusion_fullname;
+					$test->counter_time =$counter_time;
+					$test->shuffle = Input::get('shuffle');
+					$test->is_public = Input::get('is_public');
+					$user = User::find(Auth::user()->id);
+					$user=(string)$user->id;
+					$test->user_id = $user;
+					$test->save();
+				} elseif(Input::file('intro_image')){
+					
+					$intro_fullname = HelperFunctions::get_slug_upload_make_image(Input::file('intro_image'));
+					$test = new Test;
+					$test->test_name = Input::get('test_name');
+					$test->intro = Input::get('intro');
+					$test->conclusion = Input::get('conclusion');
+					$test->passcode = Hash::make(Input::get('passcode'));
+					$test->intro_image = $intro_fullname;
+					$test->counter_time =$counter_time;
+					$test->shuffle = Input::get('shuffle');
+					$test->is_public = Input::get('is_public');
+					$user = User::find(Auth::user()->id);
+					$user=(string)$user->id;
+					$test->user_id = $user;
+					$test->save();
+					
+				} else {
+					$test = new Test;
+					$test->test_name = Input::get('test_name');
+					$test->intro = Input::get('intro');
+					$test->conclusion = Input::get('conclusion');
+					$test->passcode = Hash::make(Input::get('passcode'));
+					$test->counter_time =$counter_time;
+					$test->shuffle = Input::get('shuffle');
+					$test->is_public = Input::get('is_public');
+					$user = User::find(Auth::user()->id);
+					$user=(string)$user->id;
+					$test->user_id = $user;
+					$test->save();
+				}
 				
-				$test = new Test;
-				$test->test_name = Input::get('test_name');
-				$test->intro = Input::get('intro');
-				$test->conclusion = Input::get('conclusion');
-				$test->passcode = Hash::make(Input::get('passcode'));
-				$test->intro_image = $intro_fullname;
-				$test->conclusion_image = $conclusion_fullname;
-				$test->shuffle = Input::get('shuffle');
-				$test->is_public = Input::get('is_public');
-				$user = User::find(Auth::user()->id);
-				$user=(string)$user->id;
-				$test->user_id = $user;
-				$test->save();
-
+				 
 				return Redirect::route('tests')
-				->with('message','CREATED NEW TEST');
+					->with('message','CREATED NEW TEST');
 			}
 		}
-	}
+	
 
 	/**
 	 * Display the specified resource.
@@ -135,24 +176,68 @@ class TestController extends Controller {
 	public function update($id)
 	{	
 		// dd(Input::all());
-		$validation = Validator::make(Input::all(), Test::$test_image_upload_rules);
-		$passcode = Hash::make(Input::get('passcode'));
-		$updated_at = Carbon::now();
-		$intro='intro'; $conclusion = 'conclusion';
-		$intro_fullname = HelperFunctions::update_slug_upload_make_image(
-			$intro,Input::file('intro_image'),Input::get('test_id'));
-		
-		$conclusion_fullname = HelperFunctions::update_slug_upload_make_image(
-			$conclusion,Input::file('conclusion_image'),Input::get('test_id'));		
 
-		DB::table('tests')->where('id', $id)->update(array(
-			'test_name' => Input::get('test_name'), 'intro' => Input::get('intro'),
-			'conclusion' => Input::get('conclusion'), 'shuffle' => Input::get('shuffle'),
-			'passcode' => $passcode, 'updated_at' => $updated_at, 'intro_image' => $intro_fullname,
-			'conclusion_image' => $conclusion_fullname
-			));
-		return Redirect::route('tests.index', $id)
-		->with('message', 'TEST UPDATED');
+		$counter_time = Input::get("counter_time");
+		if(Input::get("counter_time") == 0){
+			$counter_time =DB::table('tests')->where('id', $id)->pluck("counter_time");	
+		} else {
+			$counter_time *=  60;
+		}
+
+		$validation = Validator::make(Input::all(), Test::$test_upload_rules);
+
+		if($validation->fails()){
+				return Redirect::back()->withInput()->withErrors($validation);
+			} else {
+
+				$passcode = Hash::make(Input::get('passcode'));
+				$updated_at = Carbon::now();
+				$intro='intro'; 
+				$conclusion = 'conclusion';
+
+				if(Input::file('intro_image') && Input::file('conclusion_image') ){
+					$intro_fullname = HelperFunctions::update_slug_upload_make_image(
+						$intro,Input::file('intro_image'),Input::get('test_id'));
+ 					$conclusion_fullname = HelperFunctions::update_slug_upload_make_image(
+						$conclusion,Input::file('conclusion_image'),Input::get('test_id'));
+ 					DB::table('tests')->where('id', $id)->update(array(
+						'test_name' => Input::get('test_name'), 'intro' => Input::get('intro'),
+						'conclusion' => Input::get('conclusion'), 'counter_time' => $counter_time,
+						 'shuffle' => Input::get('shuffle'),'passcode' => $passcode,
+						 'updated_at' => $updated_at, 'conclusion_image'=> $conclusion_fullname,
+						 'intro_image' => $intro_fullname
+						));
+					
+				} elseif(Input::file('conclusion_image')){
+					$conclusion_fullname = HelperFunctions::update_slug_upload_make_image(
+						$conclusion,Input::file('conclusion_image'),Input::get('test_id'));		
+					DB::table('tests')->where('id', $id)->update(array(
+						'test_name' => Input::get('test_name'), 'intro' => Input::get('intro'),
+						'conclusion' => Input::get('conclusion'), 'counter_time' => $counter_time,
+						 'shuffle' => Input::get('shuffle'),'passcode' => $passcode,
+						 'updated_at' => $updated_at, 'conclusion_image'=> $conclusion_fullname
+						));
+ 				} else if( Input::file('intro_image')){
+ 					$intro_fullname = HelperFunctions::update_slug_upload_make_image(
+						$intro,Input::file('intro_image'),Input::get('test_id'));
+			
+					DB::table('tests')->where('id', $id)->update(array(
+						'test_name' => Input::get('test_name'), 'intro' => Input::get('intro'),
+						'conclusion' => Input::get('conclusion'), 'counter_time' => $counter_time,
+						 'shuffle' => Input::get('shuffle'),'passcode' => $passcode, 
+						 'updated_at' => $updated_at, 'intro_image' => $intro_fullname
+						));
+					
+ 				} else {
+					DB::table('tests')->where('id', $id)->update(array(
+						'test_name' => Input::get('test_name'), 'intro' => Input::get('intro'),
+						'conclusion' => Input::get('conclusion'), 'counter_time' => $counter_time,
+						 'shuffle' => Input::get('shuffle'),'passcode' => $passcode,'updated_at' => $updated_at
+						));
+				}
+				return Redirect::route('tests.index', $id)
+				->with('message', 'TEST UPDATED');
+			}
 	}
 
 	/**

@@ -28,10 +28,15 @@
 		@foreach ($questions as $question)
 			<tr class="success">
 				<td>{{ $question->id }}</td>
+				
+				@if($question->question_image === "")
 				<td>
-				{!!  Html::image("question_uploads/thumbs/".$question->question_image, 
-							$question->question_image, array('class' => 'thumb')) !!}
+				
 				</td>
+				@else 
+					<td>{!!  Html::image("question_uploads/thumbs/".$question->question_image, 
+							$question->question_image, array('class' => 'thumb')) !!}</td>
+				@endif
 				<td>{{ $question->question }}</td>
 				<td>{{ $question->points }}</td>
 				<td>{{ $question->shuffle_question }}</td>

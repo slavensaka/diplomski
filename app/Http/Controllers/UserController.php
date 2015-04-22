@@ -5,11 +5,20 @@ use Dipl\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Auth;
+use Hash;
+use DB;
 use Dipl\User;
 use Collection;
+use Input;
+use Redirect;
 
 class UserController extends Controller {
 
+	public function __construct()
+	{
+		$this->middleware('auth');
+	}
+	
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -55,7 +64,8 @@ class UserController extends Controller {
 	 */
 	public function show($id)
 	{
-		//
+		$user = User::find($id);
+		return view('users.preferences')->with(compact('user'));
 	}
 
 	/**
@@ -82,7 +92,7 @@ class UserController extends Controller {
 	 */
 	public function update($id)
 	{
-		//
+		// dd(Input::all());
 	}
 
 	/**
@@ -105,4 +115,21 @@ class UserController extends Controller {
 	public function getUser($name){
 		return view('tests');
 	}
+
+	public function preferences(){
+		// dd(Input::all());
+		DB::table('users')->where('id', Auth::id())
+		->update(array('name' => Input::get("name"),'password' => Hash::make(Input::get("password"))));
+		return Redirect::back()->with("message","User name and/or password changed");
+	}
+
+	public function delete_user(){
+		
+		$user = User::find(Auth::id());
+		$user->delete();
+		Auth::logout();
+		return Redirect::route('/');
+		
+	}
+	
 }

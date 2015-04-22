@@ -15,7 +15,6 @@ Route::get('/', array('as' => '/','uses' => 'WelcomeController@index'));
 
 Route::get('home', 'HomeController@index');
 
-
 Route::get('homepage', function()
 {
    $users_published_tests =DB::table('users')
@@ -29,11 +28,11 @@ Route::get('homepage', function()
     return view('welcome')->with('users_published_tests', $users_published_tests);
 });
 
-Route::get('tests', array('as' => 'tests','uses' => 'TestController'));
-Route::get('answers', array('as' => 'answer','uses' => 'AnswerController'));
+Route::get('tests', array('as' => 'tests', 'middleware' => 'auth', 'uses' => 'TestController'));
+Route::get('answers', array('as' => 'answer', 'middleware' => 'auth', 'uses' => 'AnswerController'));
 
 Route::controllers(['auth' => 'Auth\AuthController',
-'password' => 'Auth\PasswordController',]);
+    'password' => 'Auth\PasswordController',]);
 
 Route::resource('users', 'UserController');
 Route::resource('tests', 'TestController');
@@ -53,9 +52,6 @@ Route::post('take_private_test/{test}', ['as' => 'take_private_test', 'uses' => 
 Route::post('finished/{id}', ['as' => 'finished', 'uses' => 'PublishController@finished']);
 
 Route::post('testing1/{id}', ['as' => 'testing1', 'uses' => 'PublishController@testing1']);
-
-// Route::get('result/{test_id}', ['as' => 'result', 'uses' => 'PublishController@result']);
-// Route::get('result', ['as' => 'result', 'uses' => 'PublishController@result']);
 
 Route::get('tests_taken', ['as' => 'tests_taken', 'uses' => 'PublishController@tests_taken']);
 
@@ -86,32 +82,11 @@ Route::get('intro_image_delete', ['as' => 'intro_image_delete', 'uses' => 'TestC
 Route::get('conclusion_image_delete', ['as' => 'conclusion_image_delete', 'uses' => 'TestController@conclusion_image_delete']);
 
 Route::get('question_image_delete', ['as' => 'question_image_delete', 'uses' => 'QuestionController@question_image_delete']);
-/**
-*
-* Experimental file uploader
-*
-**/
 
+Route::post('preferences/{name?}', ['as' => 'preferences', 'uses' => 'UserController@preferences']);
 
+Route::post('delete_user', ['as' => 'delete_user', 'uses' => 'UserController@delete_user']);
 
-Route::get('fileform', function()
-{
-	return view('fileform');
-});
-
-Route::post('fileform', function()
-{
-	$file = Input::file('myfile');
-    $ext = $file->guessExtension();
-    if ($file->move('files', 'newfilename.' . $ext))
-	{
-		return 'Success';
- 	}
- 	else
- 		{
-		return 'Error';
-		}
-});
 
 
 

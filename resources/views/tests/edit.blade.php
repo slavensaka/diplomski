@@ -11,25 +11,31 @@
 		<li>
 			{!! Form::label('test_name', 'Test name:') !!}
 			{!! Form::text('test_name',Input::old('test_name')) !!}		            	            
+			<?php echo $errors->first('test_name', '<p class=" text-danger">:message</p>'); ?>
 		</li>
 		<li>
 			{!! Form::label('intro', 'Test Intro message:') !!}
+			
 		</li>
 		<li>
 			{!! Form::textarea('intro', Input::old('intro'), 
 			['placeholder'=>'Type the intro', 'class' => 'field','size' => '30x5']) !!}
+			<?php echo $errors->first('intro', '<p class=" text-danger">:message</p>'); ?>
 		</li>
 		<li>
 		{!! Form::label('intro_image', 'Intro image:') !!}
 			@if($test->intro_image === "")
 			X
+			<?php echo $errors->first('intro_image', '<p class=" text-danger">:message</p>'); ?>
 			@else 
 		{!! Html::image("test_uploads/thumbs/$test->intro_image", 
-							$test->intro_image, array('class' => 'thumb')) !!}
-			@endif
+							$test->intro_image, array('class' => 'img-rounded')) !!}
 		{!! link_to_route('intro_image_delete', 'DELETE', 
 				array('intro_image'=>$test->intro_image), 
-				array('class' => 'btn btn-success')) !!}				
+				array('class' => 'btn btn-success')) !!}
+		<?php echo $errors->first('intro_image', '<p class=" text-danger">:message</p>'); ?>
+			@endif
+						
 		
 		</li>
 		<li>
@@ -37,38 +43,50 @@
 				{!! Session::get('intro_image_message'); !!}
 			@endif
 		</li>
-		</br>
+	
 		<li>
-		{!! Form::file('intro_image', array('class' => 'btn btn-info')) !!}
+		{!! Form::file('intro_image', array('class' => '')) !!}
 		</li>
 		</br>
 		<li>
 		{!! Form::label('conclusion_image', 'Conclusion image:') !!}
 		@if($test->conclusion_image === "")
 		X
+		<?php echo $errors->first('conclusion_image', '<p class=" text-danger">:message</p>'); ?>
 		@else
 		{!! Html::image("test_uploads/thumbs/$test->conclusion_image",
-							$test->conclusion_image, array("class"=>"thumb")) !!}
-		@endif
+							$test->conclusion_image, array("class"=>"img-rounded")) !!}
 		{!! link_to_route('conclusion_image_delete', 'DELETE', 
 				array('conclusion_image'=>$test->conclusion_image), 
-				array('class' => 'btn btn-success')) !!}	
+				array('class' => 'btn btn-success')) !!}
+		<?php echo $errors->first('conclusion_image', '<p class=" text-danger">:message</p>'); ?>
+	
+		@endif
+		
 		</li>
+
 		<li>
 			@if(Session::has('conclusion_image_message'))
 				{!! Session::get('conclusion_image_message'); !!}
 			@endif
 		</li>
-		</br>
 		<li>
 		{!! Form::file('conclusion_image') !!}
 		</li>
+		</br>
 		<li>
 			{!! Form::label('conclusion', 'Test conclusion message:') !!}
 		</li>
 		<li>
 			{!! Form::textarea('conclusion', Input::old('conclusion'), 
 			['placeholder'=>'Type the conclusion', 'class' => 'field','size' => '30x5']) !!}
+					<?php echo $errors->first('conclusion', '<p class=" text-danger">:message</p>'); ?>
+
+		</li>
+		<li>
+		{!! Form::label('counter_time', 'Time of test in minutes:') !!}
+		{!!  Form::selectRange('counter_time', 0, 60); !!}
+		<b>0 for no time on test</b>
 		</li>
 		<li>
 			{!! Form::label('shuffle', 'Shuffle test questions:') !!}
@@ -82,20 +100,20 @@
 			{!! Form::label('passcode', 'Update passcode:') !!}
 			{!! Form::password('passcode',array('placeholder' => 'Update Passcode'),
 			Input::old('passcode')) !!}
-			{{-- {!! Form::text('passcode', NULL, array('placeholder'=>'Type the passcode')) !!} --}}
-			{{-- {!! Form::input('passcode', null,null) !!} --}}
+			<?php echo $errors->first('passcode', '<p class=" text-danger">:message</p>'); ?>
 		</li>
 		<li>
-			<p>If you leave passcode blank, password wont change.</p>
+			<p><b>If passcode is left blank, no passcode will be required when taking test.</b></p>
 		</li>
 		<li>
-			<p>To remove the passcode, consider making the test 
-				public on your <a href="{{ URL::previous() }}">control panel</a>
+			<p><b>To remove the passcode entirely, consider making the test 
+				PUBLIC on your </b><a href="{{ URL::previous() }}">control panel</a>
 			</p>
 		</li>
 		<li>
 			{!! Form::submit('Update', array('class' => 'btn btn-info')) !!}
-			<a href="{{ URL::previous() }}">Go Back</a>
+			{!! link_to_route('/', 'Go Back ', array(), 
+				array('class' => 'btn btn-primary')) !!}
 		</li>
 	</ul>
 	{!! Form::close() !!}
