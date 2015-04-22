@@ -22,7 +22,7 @@
 			"Dipl\\": "app/"
 		},
 		"files": [
-			"App/Support/HelperFunctions.php"
+			"Dipl/Support/HelperFunctions.php"
 		]
 	},
 	"autoload-dev": {
