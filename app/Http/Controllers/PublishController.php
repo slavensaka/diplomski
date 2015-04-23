@@ -119,7 +119,7 @@ class PublishController extends Controller {
 		    	$answers = Question::find($correct->id)->answers;		 		
 			}
 			if(!count($answers)){
-				return 'No answers are added on this test';
+				return 'No question/answers were added to this test. Try again later!';
 			}
 		    $answers = $answers->all();
 

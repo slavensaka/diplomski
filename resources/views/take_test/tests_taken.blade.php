@@ -87,12 +87,13 @@ TEST ID: <b>{{ $taken_tests[$i]->test_id }}</b> |
 
 }
 
-echo $taken_tests->render(); 
+
 
 ?>
 
 </tbody>
 		</table>
+<?php echo $taken_tests->render(); ?>
 		@else
 <h1>There are no tests taken</h1>
 @endif

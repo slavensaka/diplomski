@@ -65,6 +65,7 @@ class TestController extends Controller {
 			
 		
 			$counter_time = Input::get("counter_time");
+			
 			$counter_time *=  60;
 			if($validation->fails()){
 				return Redirect::back()->withInput()->withErrors($validation);
@@ -181,7 +182,9 @@ class TestController extends Controller {
 		if(Input::get("counter_time") == 0){
 			$counter_time =DB::table('tests')->where('id', $id)->pluck("counter_time");	
 		} else {
+			$counter_time =$counter_time-1; 
 			$counter_time *=  60;
+
 		}
 
 		$validation = Validator::make(Input::all(), Test::$test_upload_rules);

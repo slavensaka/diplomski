@@ -72,12 +72,14 @@ class QuestionController extends Controller {
 	public function store()
 	{
 
-
+dd(Input::all());
 		$validation = Validator::make(Input::all(), Question::$question_image_upload_rules);
 
 		if($validation->fails()){
 			return Redirect::back()->withInput()->withErrors($validation);
 		} else {
+
+
 
 			if(Input::file('question_image')){
 				$question_fullname = HelperFunctions::question_get_slug_upload_make_image(

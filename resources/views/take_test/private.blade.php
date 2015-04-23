@@ -31,8 +31,8 @@
 	{!! Form::text('passcode', NULL, array(
 		'placeholder' => 'Password')) !!}
 	<br>
-	{!! Form::submit('Enter') !!}
-	<a href="{{ URL::previous() }}">Go Back</a>
+	{!! Form::submit('Enter Test', array('class' => 'btn btn-primary')) !!}
+	{!! link_to_route('/', 'Go Back', array(), array('class' => 'btn btn-danger')) !!}
 	{!! Form::close() !!}
 	
 	

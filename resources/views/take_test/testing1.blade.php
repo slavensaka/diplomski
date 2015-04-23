@@ -97,7 +97,7 @@
 
 <noscript>
     <h2>
-        JavaScript is disabled! To take test JavaScript is needed.</br>
+        JavaScript is disabled! To take this test JavaScript is needed.</br>
         Please enable JavaScript in your web browser!</br>
         Redirecting back...
     </h2>
