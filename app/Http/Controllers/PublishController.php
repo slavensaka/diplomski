@@ -134,7 +134,7 @@ class PublishController extends Controller {
 			// ->with('questions', $questions)
 			// ->with('answers',$answers);
 
-		} else if($the_test->is_published && $the_test->is_public === 0) // Ako je published, a nije public, nego private
+		} else if($the_test->is_published && $the_test->is_public == 0) // Ako je published, a nije public, nego private
 		{	
 			
 			$questions->each(function($question) use ($answers){				
