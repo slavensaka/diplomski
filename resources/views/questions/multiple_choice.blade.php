@@ -35,12 +35,15 @@
 	</li>
 	<li>
 		{!! Form::label('question_image', 'Question Image:') !!}
+		@if($question->question_image === "")
+		X
+		@else 
 		{!! Html::image("question_uploads/thumbs/$question->question_image", 
 							$question->question_image) !!}
 		{!! link_to_route('question_image_delete', 'DELETE', 
 				array('question_image'=>$question->question_image), 
 				array('class' => 'btn btn-success')) !!}
-
+		@endif
 	</li>
 	<li>
 			@if(Session::has('question_image_message'))

@@ -57,7 +57,15 @@
 		<tbody>
 		@foreach ($questions as $question)
 			<tr class="success">
-			<td>{!! Html::image("question_uploads/thumbs/".$question->question_image) !!}</td>
+			@if($question->question_image === "")
+				<td>
+				
+				</td>
+				@else 
+					<td>{!!  Html::image("question_uploads/thumbs/".$question->question_image, 
+							$question->question_image, array('class' => 'thumb')) !!}</td>
+				@endif
+			
 				<td>{{ $question->id }}</td>
 				<td>{{ $question->question }}</td>
 				<td>{{ $question->points }}</td>
@@ -131,7 +139,7 @@
  @endforeach {{-- $answers--}}
 @endforeach {{-- $questions --}}
 
- <div><a class="navbar-brand" href="../../homepage">Go Back</a></div>
+ <div><a class="btn btn-danger" href="../../homepage">Go Back</a></div>
 @else
 <h2>There are no questions for this test</h2>
 {{-- <p>

@@ -71,7 +71,7 @@ class QuestionController extends Controller {
 	
 	public function store()
 	{
-// dd(Input::all());
+
 
 		$validation = Validator::make(Input::all(), Question::$question_image_upload_rules);
 
@@ -79,23 +79,39 @@ class QuestionController extends Controller {
 			return Redirect::back()->withInput()->withErrors($validation);
 		} else {
 
-			$question_fullname = HelperFunctions::question_get_slug_upload_make_image(Input::file('question_image'));
-			// dd(Input::get('test_id'));
-			$question = new Question;
-			$question->test_id = Input::get('test_id');
-			$question->question = Input::get('question');
-			$question->points = Input::get('points');
-			$question->shuffle_question = Input::get('shuffle_question');
-			$question->question_image = $question_fullname;
-			$question->type = Input::get('type');
-			$question->created_at = Carbon::now();
-			$question->updated_at = Carbon::now()->addMinutes(2);
-			$question->save();
+			if(Input::file('question_image')){
+				$question_fullname = HelperFunctions::question_get_slug_upload_make_image(
+					Input::file('question_image'));
 
-			$last_question_id = DB::getPdo()->lastInsertId();
-			$test_id = Question::find($last_question_id)->test;
-			// dd($test_id);
+				$question = new Question;
+				$question->test_id = Input::get('test_id');
+				$question->question = Input::get('question');
+				$question->points = Input::get('points');
+				$question->shuffle_question = Input::get('shuffle_question');
+				$question->question_image = $question_fullname;
+				$question->type = Input::get('type');
+				$question->created_at = Carbon::now();
+				$question->updated_at = Carbon::now()->addMinutes(2);
+				$question->save();
+
+				$last_question_id = DB::getPdo()->lastInsertId();
+				$test_id = Question::find($last_question_id)->test;
+	        } else {
+				$question = new Question;
+				$question->test_id = Input::get('test_id');
+				$question->question = Input::get('question');
+				$question->points = Input::get('points');
+				$question->shuffle_question = Input::get('shuffle_question');
+				$question->type = Input::get('type');
+				$question->created_at = Carbon::now();
+				$question->updated_at = Carbon::now()->addMinutes(2);
+				$question->save();
+
+				$last_question_id = DB::getPdo()->lastInsertId();
+				$test_id = Question::find($last_question_id)->test;
+			}
 			return Redirect::action('QuestionController@show', array($test_id));
+			
 		}
 	}
 
@@ -143,21 +159,35 @@ class QuestionController extends Controller {
 	 */
 	public function update($id)
 	{
-		// dd(Input::all());
+		
 
 		$validation = Validator::make(Input::all(), Question::$question_image_upload_rules);
-		$question_fullname = HelperFunctions::update_question_upload_make_image(Input::file('question_image'),$id);
-		$updated_at = Carbon::now();
+		if($validation->fails()){
+			return Redirect::back()->withInput()->withErrors($validation);
+		} else {
 
-		DB::table('questions')->where('id', $id)
-		->update(array(
-			'question' => Input::get('question'), 
-			'points' => Input::get('points'),
-			'question_image' => $question_fullname, 
-			'shuffle_question' => Input::get('shuffle_question'),
-			'updated_at' => $updated_at 
-			));
-
+			if(Input::file('question_image')){
+				$question_fullname = HelperFunctions::update_question_upload_make_image(
+					Input::file('question_image'),$id);
+				$updated_at = Carbon::now();
+				DB::table('questions')->where('id', $id)
+				->update(array(
+					'question' => Input::get('question'), 
+					'points' => Input::get('points'),
+					'question_image' => $question_fullname, 
+					'shuffle_question' => Input::get('shuffle_question'),
+					'updated_at' => $updated_at 
+					));
+			} else {
+				$updated_at = Carbon::now();
+				DB::table('questions')->where('id', $id)
+				->update(array(
+					'question' => Input::get('question'), 
+					'points' => Input::get('points'),
+					'shuffle_question' => Input::get('shuffle_question'),
+					'updated_at' => $updated_at 
+					));
+			}
 		return Redirect::back()
 		->with('message', 'QUESTION UPDATED');
 
@@ -166,6 +196,7 @@ class QuestionController extends Controller {
 		// $test_id = Question::find($last_question_id)->test;
 		// return Redirect::action('QuestionController@show', array($test_id));
 	}
+}
 
 	/**
 	 * Remove the specified resource from storage.

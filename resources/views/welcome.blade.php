@@ -89,7 +89,7 @@
                 <tbody>
                  @foreach ($users_published_tests_private as $published_test_private)
                @if($published_test_private->is_published )
-                <?php echo print_r($published_test_private->is_public); ?>
+    
                     <tr>
                    
                         <td>{{ $published_test_private->name }}</td>

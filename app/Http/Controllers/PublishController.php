@@ -200,7 +200,7 @@ class PublishController extends Controller {
 			 	$questions =$questions->shuffle();
 			}
 
-			if($the_test->is_published && $the_test->is_public===0){ // Ako je published i public
+			if($the_test->is_published && $the_test->is_public == 0){ // Ako je published i public
 				
 				$questions->each(function($question) use ($answers){				
 					$answers["answer"] = Question::find($question->id)->answers;
