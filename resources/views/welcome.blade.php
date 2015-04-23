@@ -87,8 +87,9 @@
                 </thead>
                 <tbody>
                  @foreach ($users_published_tests as $published_test)
-               @if($published_test->is_published && $published_test->is_public === 0)
+               @if($published_test->is_published)
                     <tr>
+                    {{ print_r($published_test->is_published) }}
                         <td>{{ $published_test->name }}</td>
                         @if($published_test->intro_image === "")
                         <td>{{ $published_test->test_name }}</td>
