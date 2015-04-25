@@ -55,7 +55,7 @@ return [
 	|
 	*/
 
-	'from' => ['address' => 'system0slaven@gmail', 'name' => 'Slaven'],
+	'from' => ['address' => 'system0slaven@gmail.com', 'name' => 'Slaven'],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -81,7 +81,7 @@ return [
 	|
 	*/
 
-	'username' => 'system0slaven@gmail',
+	'username' => 'system0slaven@gmail.com',
 
 	/*
 	|--------------------------------------------------------------------------
