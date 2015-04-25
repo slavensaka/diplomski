@@ -15,7 +15,7 @@ return [
 	|
 	*/
 
-	'driver' => 'smtp',
+	'driver' => 'mailgun',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -55,7 +55,7 @@ return [
 	|
 	*/
 
-	'from' => ['address' => 'slavensakacic@gmail.com', 'name' => 'Slaven'],
+	'from' => ['address' => 'system0slaven@gmail', 'name' => 'Slaven'],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -81,7 +81,7 @@ return [
 	|
 	*/
 
-	'username' => 'slavensakacic@gmail',
+	'username' => 'system0slaven@gmail',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -94,7 +94,7 @@ return [
 	|
 	*/
 
-	'password' => 'isyl.28D',
+	'password' => 'vhumvzdrnkfpboxp',
 
 	/*
 	|--------------------------------------------------------------------------
