@@ -39,15 +39,14 @@ window.onbeforeunload = function (e) {
 
 // window.onbeforeunload = function () {
 //   return dwad;
-    
 // }
 
-
+// Eliminate the default onbeforeunload on test_form button,
+//So user can submit the test
 document.getElementById("test_form").onsubmit = function(e) {
       window.onbeforeunload = null;
       return true;
     };
-
 
 if (window.history && window.history.pushState ) {
 
@@ -61,13 +60,11 @@ if (window.history && window.history.pushState ) {
             if (hash === '') {
               // alert('Back button was pressed. Your cancelation will be saved in the database');
               // save();
-
                 window.location='../../homepage';
                 return false;
             }
           }
         });
-
         window.history.pushState('forward', null, './#forward');
 }
 
@@ -75,11 +72,6 @@ user_id = $("div.user_id").text();
 test_id = $("div.test_id").text();
 test_res = $("div.test_res").text();  
 type = $("div.type").text();  
-
-// user_id = parseInt(user_id);
-// test_id = parseInt(test_id);
-// test_res = parseInt(test_res);
-
 
 function save(){         
     $.ajax({
@@ -95,27 +87,6 @@ function save(){
     });      
 }
 
-  
-      
-// $("#form-add-setting").submit(function(e){
-// user_id = $("div.user_id").text();
-// test_id = $("div.test_id").text();
-// test_res = $("div.test_res").text();
-// _token = $('input[name=_token]').val();
-// var dataString = 'user_id'+user_id+'test_id'+test_id+'test_result'+test_res+'_token'+_token;
-//  $.ajax({
-//             type: "POST",
-//             url : "testing1/"+ test_id,
-//             data : dataString,
-//             success : function(data){
-//                   console.log(data);
-//               }
-//     },"json");
-// });
-
-
-
-
 $( "div.user_id" ).hide();
 $( "div.test_id" ).hide();
 $( "div.test_res" ).hide();
@@ -126,22 +97,26 @@ $( "div.type" ).hide();
 var counter_time = 0;
 counter_time = $("div.counter_time").text();
 
+if(counter_time == "0"){
+ //No counter when 0 
+} else {
 //Simple timer
 var timeout = counter_time; // in seconds
-
-var msgContainer = $('<div />').appendTo('div.counter'),
-    msg = $('<h1 />').appendTo(msgContainer),
+var msgContainer = 
+$('<div />', {
+        "class": 'alert alert-warning text-center',
+        "role" : 'alert',
+        })
+.appendTo('div.counter'),
+    msg = $('<h3 />').appendTo(msgContainer),
     dots = $('<span />').appendTo(msgContainer); 
-
 var timeoutInterval = setInterval(function() {
-
    timeout--;
    var minutes = Math.floor(timeout / 60);
    var seconds = timeout - minutes * 60;
    msg.html('Test will finish in ' + minutes + ' minutes ' + ' and ' + seconds);
-
    if (timeout == 0) {
-       strUrl = 'http://example.com';  
+       // strUrl = 'http://example.com';  
       clearInterval(timeoutInterval);
       redirect(strUrl);
    } 
@@ -149,21 +124,17 @@ var timeoutInterval = setInterval(function() {
 }, 1000);
 
 setInterval(function() {
-
   if (dots.html().length == 3) {
       dots.html('');
   }
-
-  dots.html(function(i, oldHtml) { return oldHtml += '.' });
+  // dots.html(function(i, oldHtml) { return oldHtml += '.' });
 }, 500);
- 
+
+}
 
 function redirect(url) {
-    // alert('Redirect to ' + url); 
-    
     $('input.btn.btn-info.updated_answers').slideUp(800).delay( 800 );
     $('input.btn.btn-info.updated_answers').trigger('click');
 }
 
-
-});
+}); // end document.ready jquery

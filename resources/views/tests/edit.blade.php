@@ -22,10 +22,12 @@
 			['placeholder'=>'Type the intro', 'class' => 'field','size' => '30x5']) !!}
 			<?php echo $errors->first('intro', '<p class=" text-danger">:message</p>'); ?>
 		</li>
+
 		<li>
 		{!! Form::label('intro_image', 'Intro image:') !!}
 			@if($test->intro_image === "")
 			X
+			{!! Form::file('intro_image', array('class' => '')) !!}
 			<?php echo $errors->first('intro_image', '<p class=" text-danger">:message</p>'); ?>
 			@else 
 		{!! Html::image("test_uploads/thumbs/$test->intro_image", 
@@ -44,14 +46,13 @@
 			@endif
 		</li>
 	
-		<li>
-		{!! Form::file('intro_image', array('class' => '')) !!}
-		</li>
+		
 		</br>
 		<li>
 		{!! Form::label('conclusion_image', 'Conclusion image:') !!}
 		@if($test->conclusion_image === "")
 		X
+		{!! Form::file('conclusion_image') !!}
 		<?php echo $errors->first('conclusion_image', '<p class=" text-danger">:message</p>'); ?>
 		@else
 		{!! Html::image("test_uploads/thumbs/$test->conclusion_image",
@@ -70,9 +71,7 @@
 				{!! Session::get('conclusion_image_message'); !!}
 			@endif
 		</li>
-		<li>
-		{!! Form::file('conclusion_image') !!}
-		</li>
+		
 		</br>
 		<li>
 			{!! Form::label('conclusion', 'Test conclusion message:') !!}

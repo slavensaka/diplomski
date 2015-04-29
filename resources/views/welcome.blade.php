@@ -1,6 +1,5 @@
 @extends('app')
 @section('content')
-{{-- {!! dd($users_published_public) !!} --}}
 {{-- {!! dd($users_published_tests_private) !!} --}}
 
 @if(Session::has('message'))

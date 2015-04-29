@@ -88,7 +88,7 @@
     use Dipl\Student;
      ?> 
 {!! Html::script('js/jquery-1.11.2.min.js') !!}
-{!! Html::script('js/functions.js') !!}
+{!! Html::script('js/functions.js') !!} 
 {{-- {{ dd($test->intro) }}  --}}
 {{-- {{ dd($questions) }} --}}
 {{-- {{ dd($student_name) }} --}}
@@ -134,13 +134,14 @@
 
 <div class="counter_time">{{ $test->counter_time  }}</div>
 <div class="counter"></div>
+<div class="intro alert alert-success text-center"><h3><b>{!! $test->intro !!}</b></h3></div>
 @if($test->intro_image)
-<div class="intro_image">
+<div class="intro_image row text-center">
 {!! Html::image("test_uploads/$test->intro_image",
-	$test->intro_image, array("class"=>"thumb")) !!}
+	$test->intro_image, array("class"=>"img-thumbnail")) !!}
 </div>
 @endif
-<div class="intro"><h1><b>{!! $test->intro !!}</b></h1></div>
+
 <div id="testing1_form" class="testing1_form">
 <?php 
 
@@ -150,7 +151,7 @@ $answer = $questions->each(function($question) use($test, $student_name){
     //     		echo count($questions);
     //     	}
 		  
-		  echo '<p><b>'.($question["question"]).'</b></p>';
+		  echo '<p><strong>'.($question["question"]).'</strong></p>';
 		if($question["question_image"]){
 		  	echo Html::image("question_uploads/".$question["question_image"] );
 

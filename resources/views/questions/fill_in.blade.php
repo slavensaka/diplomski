@@ -27,6 +27,7 @@
 		{!! Form::label('question_image', 'Question Image:') !!}
 		@if($question->question_image === "")
 		X
+		{!! Form::file('question_image') !!}
 		@else 
 		{!! Html::image("question_uploads/thumbs/$question->question_image", 
 							$question->question_image) !!}
@@ -40,9 +41,7 @@
 				{!! Session::get('question_image_message'); !!}
 			@endif
 		</li>
-	<li>
-		{!! Form::file('question_image') !!}
-	</li>
+	
 	<li>
 		{!! Form::label('shuffle_question', 'shuffle_question') !!}
 		{!! Form::hidden("shuffle_question", 0, false) !!}

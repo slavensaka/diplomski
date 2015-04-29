@@ -282,12 +282,14 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 
 	TODO:
 	
-	- Stavi nešto na student control panel
 	- Student logged in should be able to remove his account and change password
-	- Add text block to question(text to explain a question)
 	- Do the css implementation 
 	- Implement share buttons.
 	- validate questions, answers, register,login forms.
+	- Stavi nešto na student control panel
+	-- Add to question a textarea where text can be added alongside picture. 
+	--- Add text block to question(text to explain a question)
+	- Add option on test where user can grade later.
 
 **/
 

@@ -52,6 +52,14 @@
 	{!! link_to_route('/', 'Go Back', array(), array('class' => 'btn btn-danger')) !!}
 	{!! Form::close() !!}
 	@endif
+	<div>
+		<p>
+			Only students/users who have been given the passcode by a teacher can take this test.
+		</p>
+		<p>
+			Please ask the person giving you the Test for the passcode.
+		</p>
+	</div>
 @if(Session::has('message'))
 {!! Session::get('message'); !!}
 @endif
