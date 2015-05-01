@@ -9,6 +9,7 @@
     <title>Auto Generate</title>
     
     <link href="/css/app.css" rel="stylesheet">
+    <link href="/css/autogenerate.css" rel="stylesheet">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>

@@ -72,7 +72,7 @@ class QuestionController extends Controller {
 	public function store()
 	{
 
-dd(Input::all());
+// dd(Input::all());
 		$validation = Validator::make(Input::all(), Question::$question_image_upload_rules);
 
 		if($validation->fails()){

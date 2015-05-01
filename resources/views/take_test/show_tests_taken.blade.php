@@ -12,7 +12,7 @@
 </p>
 <h1>Your score on this test was: {!! $test_result !!}</h1>
 @if($questions->count())
-	<table class="table table-striped table-bordered">
+	<table class="table table-striped table-bordered table-hover">
 		<thead>
 			<tr>
 				<th>ID</th>
@@ -26,7 +26,7 @@
 		</thead>
 		<tbody>
 		@foreach ($questions as $question)
-			<tr class="success">
+			<tr class="warning">
 				<td>{{ $question->id }}</td>
 				
 				@if($question->question_image === "")

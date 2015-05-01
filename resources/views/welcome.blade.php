@@ -7,11 +7,14 @@
 @endif
     <div class="container">
         <div class="content">
-            <h1> Take public tests: </h1>
+           
+<div class="jumbotron">
+  <h1> Take public tests: </h1>
+  
 
-            <table class="table table-striped table-bordered">
+            <table class="table table-striped table-bordered table-condensed table-responsive">
                 <thead>
-                    <tr>
+                    <tr class="danger">
                         <th>Created By User</th>
 
                         {{-- <th>Intro image</th> --}}
@@ -68,11 +71,15 @@
                     @endforeach
                             </tbody>
             </table>
+</div>
 
-            <h1> Take private tests: </h1>
-            <table class="table table-striped table-bordered">
+<div class="jumbotron">
+ <h1> Take private tests: </h1>
+
+            
+            <table class="table table-striped table-bordered table-condensed table-responsive">
                 <thead>
-                    <tr>
+                    <tr class="danger">
                         <th>Created By User</th>
                         {{-- <th>Intro Image</th> --}}
                         <th>Test name</th>
@@ -120,7 +127,7 @@
                      @endforeach
                             </tbody>
             </table>
-
+</div>
         </div>
     </div>
     @endsection

@@ -21,22 +21,22 @@
 
 @if($questions->count())
 <?php echo $questions->render(); ?>
-<p>
-	{!! link_to_route('tests', 'Go Back To Tests', 
+
+<ul class="list-inline">
+  <li>{!! link_to_route('tests', 'Go Back To Tests', 
 		array(Auth::user()->name), 
-		array('class' => 'btn btn-primary')) !!}
-</p>
-<p>
-	{!! link_to_route('questions.create', 'Add new question', 
+		array('class' => 'btn btn-primary')) !!}</li>
+		<li>{!! link_to_route('questions.create', 'Add new question', 
 		array('test_id' => $test_id), 
-		array('class' => 'btn btn-primary')) !!}
-</p>
+		array('class' => 'btn btn-primary btn-lg ')) !!}</li>
+</ul>
+
 
 
 @if(Session::has('success'))
 {!! Session::get('success'); !!}
 @endif
-	<table class="table table-striped table-bordered">
+	<table class="table table-striped table-bordered table-hover">
 		<thead>
 		@foreach ($questions as $question)
 		
@@ -51,7 +51,9 @@
 			</tr>
 		</thead>
 		<tbody>
+
 			<tr class="success">
+
 				<td>{{ $question->id }}</td>
 				@if($question->question_image === "")
 				<td>X</td>
@@ -150,7 +152,7 @@
 <p>
 	{!! link_to_route('questions.create', 'Add new question', 
 		array('test_id' => $test_id), 
-		array('class' => 'btn btn-primary')) !!}
+		array('class' => 'btn btn-primary btn-lg ')) !!}
 </p>
 
 

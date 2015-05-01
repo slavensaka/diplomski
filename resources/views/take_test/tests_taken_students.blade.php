@@ -12,7 +12,7 @@ echo $taken_tests->render();
 ?>
 
 
-<table class="table table-striped table-bordered">
+<table class="table table-striped table-bordered table-hover">
 	<thead>
 			<tr>
 <th>Test Id/Name</th>
@@ -35,7 +35,7 @@ echo $taken_tests->render();
 		<tbody>
 <?php 		for($i=0;$i<=count($taken_tests)-1; $i++) {
 ?>
-			<tr class="danger">
+			<tr class="warning">
 <td>TEST ID: <b>{{ $taken_tests[$i]->test_id }}</b> |
 {{  $test= DB::table('tests')->where("id", $taken_tests[$i]->test_id)->pluck('test_name') }}
 </td>

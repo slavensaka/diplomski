@@ -12,7 +12,7 @@ echo $taken_tests->render();
 ?>
 
 
-<table class="table table-striped table-bordered">
+<table class="table table-striped table-bordered table-hover">
 	<thead>
 			<tr>
 <th>Test Id/Name</th>
@@ -93,7 +93,7 @@ TEST ID: <b>{{ $taken_tests[$i]->test_id }}</b> |
 
 </tbody>
 		</table>
-<?php echo $taken_tests->render(); ?>
+
 		@else
 <h1>There are no tests taken</h1>
 @endif

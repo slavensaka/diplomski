@@ -1,19 +1,20 @@
 @extends('app')
 @section('content')
-
 {{-- {{ dd($test) }} --}}
 {{-- {{ dd($questions) }} --}}
 {{-- {{ dd($answers) }} --}}
 
+<div class="jumbotron">
+  <h1>Take this private test</h1>
+ 
+  
+<div class="span4">
 
-
-<h1>Take this private test</h1>
 	<table class="table table-striped table-bordered">
 			<thead>
 				<tr>
 					<th>Created By</th>
 					<th>Test name</th>
-				
 				</tr >
 			</thead>
 			<tbody>
@@ -23,7 +24,7 @@
 					
 			</tbody>
 	</table>
-
+</div>
 {!! Form::open(array('route' => array('take_private_test', $test->id),'method' => 'post')) !!}
  	
  	@if(Auth::check() || Session::has('student_name'))
@@ -60,6 +61,9 @@
 			Please ask the person giving you the Test for the passcode.
 		</p>
 	</div>
+
+</div>
+
 @if(Session::has('message'))
 {!! Session::get('message'); !!}
 @endif

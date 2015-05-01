@@ -10,7 +10,7 @@
 	<h1>Users Tests</h1>
 
 	<p>{!! link_to_route('tests.create', 'Create new test', 
-		   array() , array('class' => 'btn btn-primary')) !!}
+		   array() , array('class' => 'btn btn-primary btn-lg ')) !!}
 	</p>
 
 <p>	
@@ -20,7 +20,8 @@
 </p>
 @if ($tests->count())
 {{-- {!! dd($tests) !!} --}}
-	<table class="table table-striped table-bordered">
+	<table class="table table-striped table-bordered table-hover">
+
 			<thead>
 				<tr>
 					<th>TEST ID</th>
@@ -40,7 +41,7 @@
 			</thead>
 			<tbody>
 			@foreach ($tests as $test)
-				<tr>
+				<tr class="warning">
 					<td>{{ $test->id }}</td>
 					<td>{{ $test->test_name }}</td>
 					<td><i>{{ $test->intro }}</i></td>

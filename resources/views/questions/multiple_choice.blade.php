@@ -108,7 +108,7 @@
 </ul>
 @endfor
 	<li>
-		{!! Form::submit('Update This Answers', 
+		{!! Form::submit('Update Answers', 
 			array('class' => 'btn btn-info updated_answers')) !!}
 		{!! link_to_route('answers.show', 'Go Back', $question->id, 
 			array('class' => 'btn btn-danger')) !!}
