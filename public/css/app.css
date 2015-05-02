@@ -3892,6 +3892,10 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   font-size: 18px;
   line-height: 20px;
   height: 50px;
+  width:140px;
+ 
+  background: url(../img/images.jpg) center center; 
+  background-repeat: no-repeat;
 }
 .navbar-brand:hover,
 .navbar-brand:focus {

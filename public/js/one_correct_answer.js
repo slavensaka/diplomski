@@ -38,3 +38,9 @@ function createCallback(myArray) {
         }
     }
 }
+
+
+// TOOLTIP OR POPOVER FOR question CREATE_BLADE.php
+$(function () { 
+    $("[data-toggle='tooltip']").tooltip({'placement': 'right'}); 
+});

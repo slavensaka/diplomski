@@ -10,6 +10,7 @@
     
     <link href="/css/app.css" rel="stylesheet">
     <link href="/css/autogenerate.css" rel="stylesheet">
+    
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
@@ -33,9 +34,13 @@
                     <span class="icon-bar"></span>
                 </button> 
                 @if (Auth::check())
-                <a class="navbar-brand" href="../../homepage">Auto Generate</a>
+                <a class="navbar-brand" href="../../homepage">
+                <span class="texti">Auto Generate</span>
+                </a>
                 @else 
-                <a class="navbar-brand" href="/">Auto Generate</a>
+                <a class="navbar-brand" href="/">
+                <span class="texti">Auto Generate</span>
+                </a>
                 @endif
 
             </div>

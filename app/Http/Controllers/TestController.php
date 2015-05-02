@@ -8,6 +8,7 @@ use Auth;
 use Input;
 use Dipl\User;
 use Dipl\Test;
+use Dipl\Tag;
 use Redirect;
 use Hash;
 use Str;
@@ -61,6 +62,7 @@ class TestController extends Controller {
 
 		$validation = Validator::make(Input::all(), Test::$test_upload_rules);
 		
+
 		
 			
 		
@@ -135,7 +137,15 @@ class TestController extends Controller {
 					$test->save();
 				}
 				
-				 
+				
+				$last_test_id=DB::getPdo()->lastInsertId();
+				$tags = Input::get('tags');
+				$tag = explode(",",$tags);
+				for($i=0;$i < count($tag) ;$i++){
+					$tagging = new Tag(array('tag' => $tag[$i]));
+					Test::find($last_test_id)->tags()->save($tagging);
+				}
+
 				return Redirect::route('tests')
 					->with('message','CREATED NEW TEST');
 			}
@@ -162,10 +172,18 @@ class TestController extends Controller {
 	public function edit($id)
 	{
 		$test = Test::find($id);
+		$tagging = array();
 		if(is_null($test)) {
 			return Redirect::route('tests');
 		}
-		return view('tests.edit',compact('test'));	
+		$tags = Test::find($id)->tags()->select('tag')->get();	
+		foreach ($tags as $key => $tag) {
+			$tagging[]=$tag->tag;
+			
+		}
+		$str = implode (", ", $tagging);
+		
+		return view('tests.edit',compact('test'))->with("tag",$str);	
 	}
 
 	/**
@@ -176,7 +194,7 @@ class TestController extends Controller {
 	 */
 	public function update($id)
 	{	
-		// dd(Input::all());
+		dd(Input::all());
 
 		$counter_time = Input::get("counter_time");
 		if(Input::get("counter_time") == 0){
@@ -238,6 +256,8 @@ class TestController extends Controller {
 						 'shuffle' => Input::get('shuffle'),'passcode' => $passcode,'updated_at' => $updated_at
 						));
 				}
+
+				
 				return Redirect::route('tests.index', $id)
 				->with('message', 'TEST UPDATED');
 			}

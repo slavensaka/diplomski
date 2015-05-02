@@ -284,12 +284,28 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 	
 	- Student logged in should be able to remove his account and change password
 	- Do the css implementation 
+	--Adding statistics after test
+	- Email the student with there score after they finish a test
+	-Implementacija student-teacher chat or just messaging, gjde
+	--student expresses his concerns and problems are praise to the 
+	--teacher for the test
 	- Implement share buttons.
 	- validate questions, answers, register,login forms.
 	- Stavi nešto na student control panel
 	-- Add to question a textarea where text can be added alongside picture. 
 	--- Add text block to question(text to explain a question)
 	- Add option on test where user can grade later.
+	-The best feature of Quizdini is that you can create explanations 
+	--of the correct answer for your students to view immediately after
+	---trying each question in your quiz. Your explanation can include 
+	----text and or links to online resources like videos and images.
+	-Dodat mogućnost kopiranja Slaven test još jednom na control panel 
+	-Flag should the student be saved into the database after he takes the 
+	--test, make tests that are unlimited tries. No saving into database. 
+	-It’s simple to create a wide variety of questions, which can 
+	--then be stored in a question bank and used and reused 
+	-deliver digital completion certificates to learners who score a 
+	--passing grade on your assessments.
 
 **/
 
@@ -302,7 +318,7 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 				$new_user->test_id = Input::get('test_id');
 				$new_user->test_result = Input::get('test_res');
 				$new_user->save();
-				$data = Input::all();
+				$data = Input::all(); // Netreba
       			print_r($data);die;
 			} else {
 				$user_id =(int) Input::get("user_id");
@@ -314,7 +330,7 @@ $answer=DB::table('anwsers')->where('question_id', '=', $value)->lists('correct'
 				$student->test_id = $test_id;
 				$student->test_result = $test_res;
 				$student->save();
-				$data = Input::all();
+				$data = Input::all(); //Netreba
       			print_r($data);die;
 			}
 		

@@ -10,21 +10,22 @@
   
 <div class="span4">
 
-	<table class="table table-striped table-bordered">
+	<table class="table table-bordered">
 			<thead>
-				<tr>
-					<th>Created By</th>
-					<th>Test name</th>
+				<tr class="danger">
+					<th>Created By & Tests Name</th>
+					
 				</tr >
 			</thead>
 			<tbody>
-			<tr class="success">
-					<td>{{ $created_by }}</td>
-					<td>{{ $test->test_name }}</td>
+			<tr>
+					<td>{{ $created_by }} | {{ $test->test_name }}</td>
+					
 					
 			</tbody>
 	</table>
-</div>
+
+
 {!! Form::open(array('route' => array('take_private_test', $test->id),'method' => 'post')) !!}
  	
  	@if(Auth::check() || Session::has('student_name'))
@@ -32,7 +33,7 @@
 	{!! Form::text('passcode', NULL, array(
 		'placeholder' => 'Password')) !!}
 	<br>
-	{!! Form::submit('Enter Test', array('class' => 'btn btn-primary')) !!}
+	{!! Form::submit('Enter Test', array('class' => 'btn btn-lg btn-primary')) !!}
 	{!! link_to_route('/', 'Go Back', array(), array('class' => 'btn btn-danger')) !!}
 	{!! Form::close() !!}
 	
@@ -49,7 +50,7 @@
 	<br>
 	
 	
-	{!! Form::submit('Enter Test', array('class' => 'btn btn-primary')) !!}
+	{!! Form::submit('Enter Test', array('class' => 'btn btn-large btn-primary')) !!}
 	{!! link_to_route('/', 'Go Back', array(), array('class' => 'btn btn-danger')) !!}
 	{!! Form::close() !!}
 	@endif

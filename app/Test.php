@@ -19,7 +19,8 @@ class Test extends Model {
 		'passcode' => 'min:6',
 		'counter_time' => 'integer',
 		'intro_image'=> 'image',
-		'conclusion_image'=> 'image'
+		'conclusion_image'=> 'image',
+		'tags' => 'min:3|max:80'
 	);
 	
 	public function user()
@@ -42,6 +43,10 @@ class Test extends Model {
         return $this->belongsToMany('Dipl\Student');
     }
 
+    public function tags() 
+    {
+    	return $this->belongsToMany('Dipl\Tag');
+    }
 
 /**
  * Many to many testing
