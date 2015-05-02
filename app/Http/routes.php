@@ -94,6 +94,8 @@ Route::get('intro_image_delete', ['as' => 'intro_image_delete', 'uses' => 'TestC
 
 Route::get('conclusion_image_delete', ['as' => 'conclusion_image_delete', 'uses' => 'TestController@conclusion_image_delete']);
 
+Route::get('delete_tags', ['as' => 'delete_tags', 'uses' => 'TestController@delete_tags']);
+
 Route::get('question_image_delete', ['as' => 'question_image_delete', 'uses' => 'QuestionController@question_image_delete']);
 
 Route::post('preferences/{name?}', ['as' => 'preferences', 'uses' => 'UserController@preferences']);

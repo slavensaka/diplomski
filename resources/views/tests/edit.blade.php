@@ -120,10 +120,35 @@
 			Input::old('passcode')) !!}
 			<?php echo $errors->first('passcode', '<p class=" text-danger">:message</p>'); ?>
 		</li>
+
+		
+		@if($tag === "")
 		<li>
-			{!! Form::label('tags', 'Tags:',["class"=>"lead"]) !!}
+			{!! Form::label('tags', 'Add Tags:',["class"=>"lead"]) !!}
 	{!! Form::text('tags', $tag ,array('size' => '35x5',"data-original-title"=>"Adding tags makes the test easier to find by students.","data-toggle"=>"tooltip" ,'placeholder' => 'Separate by commas')) !!}
 	<?php echo $errors->first('tags', '<p class="text-danger">:message</p>'); ?>
+		</li>
+
+		@else
+		<li>
+		
+		<p class="lead">
+		<?php  echo "Added tags: "; ?>
+		
+		<?php foreach($tagging as $key => $tags){ ?>	
+			{!! Form::label("$tag[$key]", $tags,["class"=>"lead"]) !!}
+		<?php } ?>	
+		{!! link_to_route('delete_tags', 'DELETE ALL TAGS', 
+				array('test_id'=>$test->id), 
+				array('class' => 'btn btn-success')) !!}
+		</p>
+		</li>
+		@endif
+		
+		<li>
+			@if(Session::has('tags_message'))
+				{!! Session::get('tags_message'); !!}
+			@endif
 		</li>
 		<li><p>To remove the passcode entirely, consider making the test 
 				PUBLIC on your <a href="{{ URL::previous() }}">control panel</a>

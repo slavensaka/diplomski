@@ -22,3 +22,8 @@ div.panel-heading {
 span.texti {
 	 display:none;
 }
+
+ul
+{
+    list-style-type: none;
+}

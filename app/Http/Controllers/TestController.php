@@ -181,9 +181,12 @@ class TestController extends Controller {
 			$tagging[]=$tag->tag;
 			
 		}
+		// dd($tagging);
 		$str = implode (", ", $tagging);
 		
-		return view('tests.edit',compact('test'))->with("tag",$str);	
+		return view('tests.edit',compact('test'))
+		->with("tag",$str)
+		->with("tagging",$tagging);	
 	}
 
 	/**
@@ -194,7 +197,7 @@ class TestController extends Controller {
 	 */
 	public function update($id)
 	{	
-		dd(Input::all());
+		// dd(Input::all());
 
 		$counter_time = Input::get("counter_time");
 		if(Input::get("counter_time") == 0){
@@ -224,9 +227,9 @@ class TestController extends Controller {
  					DB::table('tests')->where('id', $id)->update(array(
 						'test_name' => Input::get('test_name'), 'intro' => Input::get('intro'),
 						'conclusion' => Input::get('conclusion'), 'counter_time' => $counter_time,
-						 'shuffle' => Input::get('shuffle'),'passcode' => $passcode,
-						 'updated_at' => $updated_at, 'conclusion_image'=> $conclusion_fullname,
-						 'intro_image' => $intro_fullname
+						'shuffle' => Input::get('shuffle'),'passcode' => $passcode,
+						'updated_at' => $updated_at, 'conclusion_image'=> $conclusion_fullname,
+						'intro_image' => $intro_fullname
 						));
 					
 				} elseif(Input::file('conclusion_image')){
@@ -235,8 +238,8 @@ class TestController extends Controller {
 					DB::table('tests')->where('id', $id)->update(array(
 						'test_name' => Input::get('test_name'), 'intro' => Input::get('intro'),
 						'conclusion' => Input::get('conclusion'), 'counter_time' => $counter_time,
-						 'shuffle' => Input::get('shuffle'),'passcode' => $passcode,
-						 'updated_at' => $updated_at, 'conclusion_image'=> $conclusion_fullname
+						'shuffle' => Input::get('shuffle'),'passcode' => $passcode,
+						'updated_at' => $updated_at, 'conclusion_image'=> $conclusion_fullname
 						));
  				} else if( Input::file('intro_image')){
  					$intro_fullname = HelperFunctions::update_slug_upload_make_image(
@@ -245,16 +248,23 @@ class TestController extends Controller {
 					DB::table('tests')->where('id', $id)->update(array(
 						'test_name' => Input::get('test_name'), 'intro' => Input::get('intro'),
 						'conclusion' => Input::get('conclusion'), 'counter_time' => $counter_time,
-						 'shuffle' => Input::get('shuffle'),'passcode' => $passcode, 
-						 'updated_at' => $updated_at, 'intro_image' => $intro_fullname
+						'shuffle' => Input::get('shuffle'),'passcode' => $passcode, 
+						'updated_at' => $updated_at, 'intro_image' => $intro_fullname
 						));
 					
  				} else {
 					DB::table('tests')->where('id', $id)->update(array(
 						'test_name' => Input::get('test_name'), 'intro' => Input::get('intro'),
 						'conclusion' => Input::get('conclusion'), 'counter_time' => $counter_time,
-						 'shuffle' => Input::get('shuffle'),'passcode' => $passcode,'updated_at' => $updated_at
+						'shuffle' => Input::get('shuffle'),'passcode' => $passcode,'updated_at' => $updated_at
 						));
+				}
+
+				$tags = Input::get('tags');
+				$tag = explode(",",$tags);
+				for($i=0;$i < count($tag) ;$i++){
+					$tagging = new Tag(array('tag' => $tag[$i]));
+					Test::find(Input::get('test_id'))->tags()->save($tagging);
 				}
 
 				
@@ -297,7 +307,11 @@ class TestController extends Controller {
 		return Redirect::back()->with("conclusion_image_message","Conclusion Image Succesfully deleted");
 	}
 
-
+	public function delete_tags() {
+		$test_id = Input::get("test_id");
+		$affe = Test::find($test_id)->tags()->delete();
+		return Redirect::back()->with("tags_message","Tags successfully deleted");
+	}
 
 	// public function getNameAttribute($value)
 	// {
