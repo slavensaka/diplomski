@@ -134,13 +134,20 @@
 		
 		<p class="lead">
 		<?php  echo "Added tags: "; ?>
-		
-		<?php foreach($tagging as $key => $tags){ ?>	
-			{!! Form::label("$tag[$key]", $tags,["class"=>"lead"]) !!}
-		<?php } ?>	
 		{!! link_to_route('delete_tags', 'DELETE ALL TAGS', 
 				array('test_id'=>$test->id), 
 				array('class' => 'btn btn-success')) !!}
+		<?php foreach($tagging as $key => $tags){ ?>
+			<br/>
+			<?php
+			echo $key+1;
+			echo ".";
+
+		?>
+		
+			{!! Form::label("$tag[$key]", $tags,["class"=>"lead"]) !!}
+		<?php } ?>	
+		
 		</p>
 		</li>
 		@endif
