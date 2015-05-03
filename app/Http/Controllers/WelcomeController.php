@@ -35,7 +35,8 @@ class WelcomeController extends Controller {
 	 */
 	public function index()
 	{
-			
+		
+	
 			$users_published_tests_public =DB::table('users')
             	->join('tests', 'users.id', '=', 'tests.user_id')
             	->where('tests.is_published','=', 1)

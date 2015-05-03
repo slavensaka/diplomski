@@ -23,10 +23,15 @@ class CreateTestsTable extends Migration {
 			// $table->unsignedInteger('student_id');
 			$table->timestamps();
 		});
+		DB::statement('ALTER TABLE tests ADD FULLTEXT search(test_name)');
+
 	}
 
 	public function down()
 	{
+		Schema::table('tests', function($table) {
+            $table->dropIndex('search');
+        });
 		Schema::drop('tests');
 	}
 }

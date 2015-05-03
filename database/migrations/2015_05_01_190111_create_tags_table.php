@@ -17,6 +17,8 @@ class CreateTagsTable extends Migration {
 			$table->string('tag');
 			$table->timestamps();
 		});
+		DB::statement('ALTER TABLE tags ADD FULLTEXT search(tag)');
+
 	}
 
 	/**
@@ -26,6 +28,9 @@ class CreateTagsTable extends Migration {
 	 */
 	public function down()
 	{
+		Schema::table('tags', function($table) {
+            $table->dropIndex('search');
+        });
 		Schema::drop('tags');
 	}
 

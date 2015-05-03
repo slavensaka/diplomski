@@ -102,6 +102,9 @@ Route::post('preferences/{name?}', ['as' => 'preferences', 'uses' => 'UserContro
 
 Route::post('delete_user', ['as' => 'delete_user', 'uses' => 'UserController@delete_user']);
 
+Route::post('search', array('as' => 'search', 'uses' => 'StudentController@postSearch'));
+
+Route::post('search_tag', array('as' => 'search_tag', 'uses' => 'StudentController@postSearchTag'));
 
 
 

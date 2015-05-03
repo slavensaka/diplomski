@@ -6,10 +6,13 @@ use Session;
 use Input;
 use Hash;
 use DB;
+use Dipl\Tag;
 use View;
 use Validator;
 use Dipl\Student;
 use Redirect;
+use Request;
+use Dipl\Test;
 use Dipl\Support\HelperFunctions;
 use Illuminate\Http\Response;
 
@@ -17,9 +20,18 @@ class StudentController extends Controller {
 
 	
 	public function student_login() {
+		$tags = [];
+		foreach (Tag::all() as $tag)
+		{
+    	$tags[] = $tag->tag;
+    	
+		}
+		$tag_unique = array_unique($tags);
+
 		if(Session::has("logged_in")){
 			return redirect()->route('control_panel',
-						['redirect_name' => Session::get('student_name')]);
+						['redirect_name' => Session::get('student_name')])
+			->with('tag_unique',$tag_unique);
 		} else {
 		return view('students.student_login')
 			->with('student_name',Session::get('student_name'));
@@ -28,7 +40,13 @@ class StudentController extends Controller {
 
 	public function student_login_verify() {
 		// dd(Input::all());
-
+$tags = [];
+		foreach (Tag::all() as $tag)
+		{
+    	$tags[] = $tag->tag;
+    	
+		}
+		$tag_unique = array_unique($tags);	
 		$validation = Validator::make(Input::all(), Student::$student_rules);
 		if($validation->fails()){
 				return Redirect::back()->withInput()->withErrors($validation);
@@ -57,7 +75,8 @@ class StudentController extends Controller {
 				 // return Redirect::route('control_panel')
 					// ->with('student_name',$student_name);
 					return redirect()->route('control_panel',
-						['redirect_name' => $student_name ]);
+						['redirect_name' => $student_name ])
+					->with('tag_unique',$tag_unique);
 
 				} else {
 				return view('students.verify')
@@ -73,10 +92,19 @@ class StudentController extends Controller {
 	public function control_panel() {
 		// dd(Input::all());
 		Session::put("logged_in",1);
+		$tags = [];
+		foreach (Tag::all() as $tag)
+		{
+    	$tags[] = $tag->tag;
+    	
+		}
+		$tag_unique = array_unique($tags);
+
 
 		if(!Input::all()){
 			return view('students.control_panel')
-					->with('student_name',Session::get("student_name")) ;
+					->with('student_name',Session::get("student_name"))
+					->with('tag_unique',$tag_unique) ;
 		}
 		if(!Input::get("redirect_name")){
 		$affected = Student::where('student_name', '=', Input::get('student_name'))
@@ -85,7 +113,8 @@ class StudentController extends Controller {
 			Session::put("changed", 1);
 		if($affected){
 			return view('students.control_panel')
-					->with('student_name',Input::get('student_name'));
+					->with('student_name',Input::get('student_name'))
+					->with('tag_unique',$tag_unique) ;
 		} else {
 			Redirect::back()->with("message","Password not save, Try again");
 		}
@@ -94,7 +123,8 @@ class StudentController extends Controller {
 	  	// return "Lorem";
 
 	  	return view('students.control_panel')
-					->with('student_name',Input::get('student_name'));
+					->with('student_name',Input::get('student_name'))
+					->with('tag_unique',$tag_unique) ;
 	  }
 	}
 
@@ -130,5 +160,26 @@ class StudentController extends Controller {
         Session::forget("changed"); 
         Session::forget("logged_in");
         return Redirect::route('/');
+	}
+
+	public function postSearch(){
+		
+		if(Request::ajax()) {
+			$q = Input::get('query');
+			$posts = Test::whereRaw("MATCH(test_name) AGAINST(? IN BOOLEAN MODE)", array($q))->get();
+        dd($posts);
+    	// return $posts;	
+		}   
+	}
+
+	public function postSearchTag(){
+		if(Request::ajax()) {
+			$q = Input::get('query_tag');
+			
+			$tags = Test::whereHas('tags',function($query) use ($q){
+				$query->where("tag",$q);
+			})->get();
+			dd($tags);
+		}   
 	}
 }

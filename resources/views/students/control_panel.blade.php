@@ -1,6 +1,41 @@
 @extends('app')
-
 @section('content')
+{!! Html::script('js/jquery-1.11.2.min.js') !!}
+{!! Html::script('js/search.js') !!}
+{!! Html::script('js/search/jquery-ui.min.js') !!}
+{!! Html::script('js/search/jquery.select-to-autocomplete.js') !!}
+{!! HTML::style('js/search/jquery-ui.css'); !!}
+<style>
+	  body {
+	    font-family: Arial, Verdana, sans-serif;
+	    font-size: 13px;
+	  }
+    .ui-autocomplete {
+      padding: 0;
+      list-style: none;
+      background-color: #fff;
+      width: 218px;
+      border: 1px solid #B0BECA;
+      max-height: 350px;
+      overflow-x: hidden;
+    }
+    .ui-autocomplete .ui-menu-item {
+      border-top: 1px solid #B0BECA;
+      display: block;
+      padding: 4px 6px;
+      color: #353D44;
+      cursor: pointer;
+    }
+    .ui-autocomplete .ui-menu-item:first-child {
+      border-top: none;
+    }
+    .ui-autocomplete .ui-menu-item.ui-state-focus {
+      background-color: #D5E5F4;
+      color: #161A1C;
+    }
+	</style>
+
+
 
 					@if (count($errors) > 0)
 						<div class="alert alert-danger">
@@ -14,7 +49,52 @@
 					@endif
 
 
-						<div>Groups you have subscrubed to:</div>
+	<div>Search for tests by there name:</div>
+	<div class="search">
+	{!! Form::open(array('url' => url('search'), 'class'=>'form', 'id'=>'searchform')) !!}
+    {!! Form::text('query', null, array("id"=>"query", "class"=>"query",'placeholder' => 'Search query...' )) !!}
+    {!! Form::submit('Search') !!}
+    {!! Form::close() !!}
+	</div>
+
+	<div class="result"></div>
+
+<?php $the= ["lorem","bolem","dolem","golem"]; ?>
+
+
+<script>
+	  (function($){
+	    $(function(){
+	      $('select.query_tag').selectToAutocomplete();
+	      $('form').submit(function(e){
+	      	e.preventDefault();
+	         $.ajax({
+      			url: "../"+"search_tag",
+      			type: "post",
+      			data: {'query_tag':$("input.query_tag").val(), '_token': $('input[name=_token]').val()},
+      			success: function(data){
+        		$("div.result_tag").append(data);
+        
+      		}
+    			},"html");  
+	      });
+	    });
+	  })(jQuery);
+	</script>
+
+<br/><br/>
+
+
+	<div>Search for tests by there tag:</div>
+	<div class="search_tag">
+	{!! Form::open(array('url' => url('search_tag'), 'class'=>'form_tag', 'id'=>'searchform_tag')) !!}
+    
+    {!! Form::select('query_tag', [null=>'Please Select'] +$tag_unique, null, array( "class"=>"query_tag",'placeholder' => 'Search query...' )) !!}
+    {!! Form::submit('Search') !!}
+    {!! Form::close() !!}
+	</div>
+
+	<div class="result_tag"></div>
 
 	
 @endsection

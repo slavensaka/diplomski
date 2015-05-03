@@ -313,6 +313,9 @@ class TestController extends Controller {
 		return Redirect::back()->with("tags_message","Tags successfully deleted");
 	}
 
+	
+
+
 	// public function getNameAttribute($value)
 	// {
  //    return Crypt::decrypt($value);
