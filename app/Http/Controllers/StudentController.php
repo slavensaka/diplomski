@@ -14,7 +14,7 @@ use Redirect;
 use Request;
 use Dipl\Test;
 use Dipl\Support\HelperFunctions;
-use Illuminate\Http\Response;
+use Response;
 
 class StudentController extends Controller {
 
@@ -167,8 +167,13 @@ $tags = [];
 		if(Request::ajax()) {
 			$q = Input::get('query');
 			$posts = Test::whereRaw("MATCH(test_name) AGAINST(? IN BOOLEAN MODE)", array($q))->get();
-        dd($posts);
-    	// return $posts;	
+
+			$new =$posts->filter(function($post){
+				if($post->is_published == 1){
+					return true;
+				}
+			});
+			 return json_encode($new);	
 		}   
 	}
 
@@ -179,7 +184,14 @@ $tags = [];
 			$tags = Test::whereHas('tags',function($query) use ($q){
 				$query->where("tag",$q);
 			})->get();
-			dd($tags);
+
+			$new =$tags->filter(function($post){
+				if($post->is_published == 1){
+					return true;
+				}
+			});
+
+			return json_encode($new);
 		}   
 	}
 }

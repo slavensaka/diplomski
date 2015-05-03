@@ -49,7 +49,7 @@
 					@endif
 
 
-	<div>Search for tests by there name:</div>
+	<div>Search for tests by test name:</div>
 	<div class="search">
 	{!! Form::open(array('url' => url('search'), 'class'=>'form', 'id'=>'searchform')) !!}
     {!! Form::text('query', null, array("id"=>"query", "class"=>"query",'placeholder' => 'Search query...' )) !!}
@@ -58,10 +58,11 @@
 	</div>
 
 	<div class="result"></div>
+{{-- 
+{!! link_to_route('take_test', 'Take This Test', 
+array($id), array('class' => 'btn btn-success')) !!}
 
-<?php $the= ["lorem","bolem","dolem","golem"]; ?>
-
-
+ --}}
 <script>
 	  (function($){
 	    $(function(){
@@ -73,10 +74,17 @@
       			type: "post",
       			data: {'query_tag':$("input.query_tag").val(), '_token': $('input[name=_token]').val()},
       			success: function(data){
-        		$("div.result_tag").append(data);
-        
+        		// $("div.result_tag").append(data);
+        		var get = JSON.parse(data);
+        		$('div.result_tag').empty();
+         		  if($.isEmptyObject(get)){
+           		  $("div.result_tag").html("No test found");
+     			 }
+     			jQuery.each( get, function( i, val ) {
+          			$("<a href="+"take"+"/"+val.id+">"+val.test_name+"</a><br>").appendTo("div.result_tag");
+        		});
       		}
-    			},"html");  
+    			});  
 	      });
 	    });
 	  })(jQuery);

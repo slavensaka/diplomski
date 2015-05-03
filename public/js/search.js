@@ -9,11 +9,25 @@ function save(){
     $.ajax({
       url: "../"+"search",
       type: "post",
+      
       data: {'query':$("input#query").val(), '_token': $('input[name=_token]').val()},
       success: function(data){
-        $("div.result").append(data);
+        var get = JSON.parse(data);
+      
+        $('div.result').empty();
+          if($.isEmptyObject(get)){
+        $("div.result").html("No test found");
+      }
+        jQuery.each( get, function( i, val ) {
+          $("<a href="+"take"+"/"+val.id+">"+val.test_name+"</a><br>").appendTo("div.result");
+        });
         
       }
-    },"html");      
+    });      
 }
 }); // end document.ready jquery
+
+// "Favorite beverage: " + data["favorite_beverage"] + "<br />Favorite 
+// restaurant: " + data["favorite_restaurant"] 
+// + "<br />Gender: " + data["gender"] + "<br />JSON: " + data["json"]
+//popularnim
