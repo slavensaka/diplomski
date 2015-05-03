@@ -66,7 +66,7 @@
 	  (function($){
 	    $(function(){
 	      $('select.query_tag').selectToAutocomplete();
-	      $('form').submit(function(e){
+	      $('form.form_tag').submit(function(e){
 	      	e.preventDefault();
 	         $.ajax({
       			url: "../"+"search_tag",
