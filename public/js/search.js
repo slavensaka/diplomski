@@ -19,12 +19,16 @@ function save(){
         $("div.result").html("No test found");
       }
         jQuery.each( get, function( i, val ) {
-          $("<a href="+"take"+"/"+val.id+">"+val.test_name+"</a><br>").appendTo("div.result");
+          $("<a href="+"take"+"/"+val.id+">"+val.test_name+"</a><br>").appendTo("div.result")
+          .on('click', function(){
+            if(!confirm('Are you sure you want to take this test?')) return false;
+          });
         });
         
       }
     });      
 }
+ 
 }); // end document.ready jquery
 
 // "Favorite beverage: " + data["favorite_beverage"] + "<br />Favorite 

@@ -81,7 +81,10 @@ array($id), array('class' => 'btn btn-success')) !!}
            		  $("div.result_tag").html("No test found");
      			 }
      			jQuery.each( get, function( i, val ) {
-          			$("<a href="+"take"+"/"+val.id+">"+val.test_name+"</a><br>").appendTo("div.result_tag");
+          			$("<a href="+"take"+"/"+val.id+">"+val.test_name+"</a><br>").appendTo("div.result_tag")
+                 .on('click', function(){
+                  if(!confirm('Are you sure you want to take this test?')) return false;
+                });
         		});
       		}
     			});  
