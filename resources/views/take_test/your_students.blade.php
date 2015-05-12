@@ -8,7 +8,7 @@
 <h4>This are your students who took your tests</h4>
 
 
-<table class="table table-striped table-bordered table-hover">
+<table class="table table-striped table-bordered table-hover manji">
 	<thead>
 		<tr class="active">
 			<th>Test Name</th>	

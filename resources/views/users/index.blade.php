@@ -7,7 +7,7 @@
 @if (Auth::guest())
 	<h1>Your not logged in</h1>
 @else
-	<h1><?php echo Auth::user()->name;  ?> Tests</h1>
+	<h1 style="text-align:center"><?php echo Auth::user()->name;  ?> Tests</h1>
 
 	<p>{!! link_to_route('tests.create', 'Create new test', 
 		   array() , array('class' => 'btn btn-primary btn-lg ')) !!}
@@ -20,7 +20,7 @@
 </p>
 @if ($tests->count())
 {{-- {!! dd($tests) !!} --}}
-	<table class="table table-striped table-bordered table-hover">
+	<table class="table table-striped table-bordered table-hover manji">
 
 			<thead>
 				<tr>
@@ -72,24 +72,7 @@
 						array($test->id), array('class' => 'btn btn-info')) !!}
 					</td>
 					<td>
-		<div id="myModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Confirmation</h4>
-            </div>
-            <div class="modal-body">
-                <p>Do you want to save changes you made to document before closing?</p>
-                <p class="text-warning"><small>If you don't save, your changes will be lost.</small></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 						{!! Form::open(array('method'=> 'DELETE', 
 						'route' => array('tests.destroy', $test->id))) !!}
 						{!! Form::submit('Delete Test', 

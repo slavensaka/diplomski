@@ -12,7 +12,7 @@ echo $taken_tests->render();
 ?>
 
 
-<table class="table table-striped table-bordered table-hover">
+<table class="table table-striped table-bordered table-hover manji">
 	<thead>
 			<tr>
 <th>Test Id/Name</th>
