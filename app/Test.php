@@ -1,6 +1,4 @@
-<?php
-
-namespace Dipl;
+<?php namespace Dipl;
 
 use Illuminate\Database\Eloquent\Model;
 

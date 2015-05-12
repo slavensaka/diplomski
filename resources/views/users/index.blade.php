@@ -7,7 +7,7 @@
 @if (Auth::guest())
 	<h1>Your not logged in</h1>
 @else
-	<h1>Users Tests</h1>
+	<h1><?php echo Auth::user()->name;  ?> Tests</h1>
 
 	<p>{!! link_to_route('tests.create', 'Create new test', 
 		   array() , array('class' => 'btn btn-primary btn-lg ')) !!}
