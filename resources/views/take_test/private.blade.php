@@ -10,7 +10,7 @@
   
 <div class="span4">
 
-	<table class="table table-bordered">
+	<table class="table table-bordered jos_manji">
 			<thead>
 				<tr class="danger">
 					<th>Created By & Tests Name</th>
@@ -26,7 +26,7 @@
 	</table>
 
 
-{!! Form::open(array('route' => array('take_private_test', $test->id),'method' => 'post')) !!}
+{!! Form::open(array('route' => array('take_private_test', $test->id),'method' => 'post' )) !!}
  	
  	@if(Auth::check() || Session::has('student_name'))
 	{!! Form::label('passcode', 'Passcode') !!}

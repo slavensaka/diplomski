@@ -157,7 +157,8 @@
 				{!! Session::get('tags_message'); !!}
 			@endif
 		</li>
-		<li><p>To remove the passcode entirely, consider making the test 
+		<li><p>To remove the passcode entirely, consider making <br/>
+		the test 
 				PUBLIC on your <a href="{{ URL::previous() }}">control panel</a>
 			</p></li>
 		<li>
