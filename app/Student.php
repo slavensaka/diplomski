@@ -10,7 +10,7 @@ class Student extends Model {
 	protected $hidden = ['pass'];
 
 	public static $student_rules = array(
-		'student_name'=> 'required|alpha|min:3|max:80',
+		'student_name'=> 'required|min:3|max:80',
 		'pass' => 'min:6'
 	);
 

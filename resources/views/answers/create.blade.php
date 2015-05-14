@@ -11,7 +11,7 @@
 	<h1>Create a New Answer for Question</h1>
 
 {{-- @if($type === 'multiple_choice')  --}}
-<table class="table table-striped table-bordered">
+<table class="table table-striped table-bordered jos_manji">
 <thead>
             <tr>
                 <th>Question_Id</th>

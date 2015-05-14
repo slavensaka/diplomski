@@ -116,9 +116,8 @@ var timeoutInterval = setInterval(function() {
    var seconds = timeout - minutes * 60;
    msg.html('Test will finish in ' + minutes + ' minutes ' + ' and ' + seconds);
    if (timeout == 0) {
-       // strUrl = 'http://example.com';  
       clearInterval(timeoutInterval);
-      redirect(strUrl);
+      redirect();
    } 
 
 }, 1000);
@@ -132,7 +131,7 @@ setInterval(function() {
 
 }
 
-function redirect(url) {
+function redirect() {
     $('input.btn.btn-info.updated_answers').slideUp(800).delay( 800 );
     $('input.btn.btn-info.updated_answers').trigger('click');
 }
