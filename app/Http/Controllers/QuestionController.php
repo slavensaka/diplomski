@@ -68,19 +68,14 @@ class QuestionController extends Controller {
 	 * @return Response
 	 */
 	
-	
 	public function store()
 	{
-
-// dd(Input::all());
+		// dd(Input::all());
 		$validation = Validator::make(Input::all(), Question::$question_image_upload_rules);
 
 		if($validation->fails()){
 			return Redirect::back()->withInput()->withErrors($validation);
 		} else {
-
-
-
 			if(Input::file('question_image')){
 				$question_fullname = HelperFunctions::question_get_slug_upload_make_image(
 					Input::file('question_image'));
@@ -161,13 +156,10 @@ class QuestionController extends Controller {
 	 */
 	public function update($id)
 	{
-		
-
 		$validation = Validator::make(Input::all(), Question::$question_image_upload_rules);
 		if($validation->fails()){
 			return Redirect::back()->withInput()->withErrors($validation);
 		} else {
-
 			if(Input::file('question_image')){
 				$question_fullname = HelperFunctions::update_question_upload_make_image(
 					Input::file('question_image'),$id);

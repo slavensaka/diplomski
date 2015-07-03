@@ -1,17 +1,13 @@
-{{-- {{ dd($question) }} --}}
-{{-- {{ dd($answers) }} --}}
+{{-- {{ dd($question,$answers) }} --}}
 @extends('app')
 @section('content')
-
 {!! link_to_route('answers.show', 'Go Back', $question->id , 
 	array('class' => 'btn btn-warning')) !!}
-<h1>Edit The Question</h1>
 
+<h1>Edit The Question</h1>
 @if(Session::has('message'))
 {!! Session::get('message'); !!}
 @endif
-
-
 {!! Form::model($question, array('method' => 'PATCH', 
 'route' =>array('questions.update', $question->id), 'files'=> true), function(){ }) !!}
 <ul>
@@ -41,7 +37,6 @@
 				{!! Session::get('question_image_message'); !!}
 			@endif
 		</li>
-	
 	<li>
 		{!! Form::label('shuffle_question', 'shuffle_question') !!}
 		{!! Form::hidden("shuffle_question", 0, false) !!}
@@ -55,18 +50,11 @@
 	</ul>
 		{!! Form::close() !!}
 
-
-
-
-
-
 <h1>Edit The Answer For Question</h1>
  <?php 
  $answer =  $answers->toArray() ;
  ?>
-
 @for ($i=1; $i <= count($answers); $i++)
-
 {{-- {!! dd($answer[$i-1]['id']); !!} --}}{{-- 
 					{!! Form::open(array('method'=> 'DELETE', 
 						'route' => array('answers.destroy', $answer[$i-1]['id']))) !!}
@@ -74,7 +62,6 @@
 					{!! Form::submit('Delete', array('class' => 'btn btn-danger')) !!}
 					{!! Form::close() !!}
  --}}
-
 	{!! Form::model($answers, array('method' => 'PATCH', 'route' =>array('answers.update',$question->id)), function(){ }) !!}
 <ul>
 	<li>
@@ -94,8 +81,6 @@
 	    {!! Form::hidden( 'question_test_id' , $question->test_id, false ) !!}
 	    {!! Form::hidden( 'type' , $question->type, false ) !!}
 	 </li>
-
-
 </ul>
 @endfor
 	<li>
@@ -105,7 +90,4 @@
 			array('class' => 'btn btn-danger')) !!}
 	</li>	
 		{!! Form::close() !!}
-				
-
-
 @endsection		

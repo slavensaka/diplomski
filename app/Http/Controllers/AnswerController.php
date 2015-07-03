@@ -15,8 +15,8 @@ use Illuminate\Http\Request;
 use Dipl\Support\HelperFunctions;
 use Illuminate\Support\Collection;
 use Dipl\Http\Controllers\Controller;
-class AnswerController extends Controller {
 
+class AnswerController extends Controller {
 
     public function __construct()
     {
@@ -66,39 +66,26 @@ class AnswerController extends Controller {
         $new_answer = Input::get("correct");
         $answers += (int)$new_answer;
         
-        //Check that one true_false if correct, that both are not 0.
-        if($question->type === 'true_false' && Input::get("correct") === "0"){
+    //Check that one true_false if correct, that both are not 0.
+    if($question->type === 'true_false' && Input::get("correct") === "0"){
             $count_of_true_false = DB::table('anwsers')
             ->where('question_id',Input::get('quest_id'))
             ->where('correct', '=', 0)->get();
-            
-
             if(Input::get("correct" === '1')){
                 
-            }
          }
-
-         //Check that one multiple_choice if correct, that both are not 0.
-         /**
-         
-             TODO:
-             - On question.show warn user is multiple_choice doesnt have one correct answer
-             --and should fix that till prociding UNCOMMENT THIS
-         
-         **/
-            
+     }
+         //Check that one multiple_choice if correct, that both are not 0.            
          // if($question->type === 'multiple_choice') {
          //    $count_of_multiple_choice = DB::table('anwsers')
          //    ->where('question_id',Input::get('quest_id'))
          //    ->where('correct', '=', 0)->get();
-
          //    // dd(count($count_of_multiple_choice));
          //    if(count($count_of_multiple_choice) >= 1){
          //        Session::put('warning', 'One must be an correct answer');
          //        Session::put('question_id', Input::get('quest_id'));
          //    }
          // }
-
          // Check that more than one is correct in a multiple_response
         if(!($question->type === 'multiple_response')){    
         if($answers > 1) {
@@ -107,27 +94,21 @@ class AnswerController extends Controller {
             return Redirect::back()
             ->with('message','Error, more than one is correct.')
             ->with('answer',$new_answer);
-
         }
        }
-
             $answer = new Answer;
             $answer->answer = Input::get('answer');
             $answer->correct = Input::get('correct');
             $question_id = Input::get('quest_id');
             $answer->question_id = $question_id;
             $answer->save();
-
             $answers = DB::table('anwsers')->where('correct','=', 1)//NE TREBA?
             ->where('question_id','=', $answer->question_id)->get();
-
             $test_id = Question::find($question_id)->test;
-            return Redirect::action('QuestionController@show', array($test_id));
-       
+            return Redirect::action('QuestionController@show', array($test_id));    
             // DB::table('anwsers')->where('id', Input::get("answer_id_form.$i"))
             //     ->update(array('answer' => current(Input::get("answer_form")[$i]) ,
             //     'correct' => current(Input::get("correct_form")[$i]) ));
-
     }
 
     /**
@@ -162,35 +143,22 @@ class AnswerController extends Controller {
     public function update($id) // id questiona
     {    
         // dd(Input::all());
- 
-
-        if(Input::get('route') === "questions/{questions}/edit") {
-              
+        if(Input::get('route') === "questions/{questions}/edit") {    
             $question_test_id = Input::get('question_test_id');
-
             if(!(Input::get("type") === "multiple_response")){
-
                 $items = array_flatten(Input::get("correct_form"));
                 $selected = HelperFunctions::CheckOnlyOneSelected($items);
-
             if(!('Success' === $selected)){
             	return Redirect::back()->with('message',$selected);
            // return Redirect::action('QuestionController@show', 
            //          array($question_test_id))->with('message',$selected);
-            
-
            	} else {
-
             $count = count(Input::get('answer_id_form'));
             for($i=1; $i <= $count; $i++)
             {
-
                 DB::table('anwsers')->where('id', Input::get("answer_id_form.$i"))
                 ->update(array('answer' => current(Input::get("answer_form")[$i]),
-                'correct' => current(Input::get("correct_form")[$i]) ));
-
-
-                
+                'correct' => current(Input::get("correct_form")[$i]) ));                
             } 
             return Redirect::action('QuestionController@show', 
             array($question_test_id))->with('success','UPDATED ANSWERS');
@@ -198,8 +166,7 @@ class AnswerController extends Controller {
         } else { // Is_correct UPDATE SA questions.show
        		 $question = Answer::find($id)->question;
        		 $answers_count = DB::table('anwsers')->where('question_id','=', $question->id)
-        	->where('correct','=', 1)->get();
-        
+        	->where('correct','=', 1)->get();       
             // if (count($answers_count) === 0 ) 
             // {    
             //     $input = Input::all();
@@ -219,8 +186,7 @@ class AnswerController extends Controller {
             //         array($question->test_id))->with('message','Nesmije više od jedan bit točan');
             // } else 
             // {
-                $input = Input::all();
-                
+                $input = Input::all();             
                 $question = Answer::find($id)->question;
                 $answer = Answer::find($id);
                 $answer->update($input);
@@ -247,16 +213,8 @@ class AnswerController extends Controller {
         //     Answer::find($id)->delete();;
                 
         //     return redirect()->back();
-        // }
-        
+        // }    
         Answer::find($id)->delete();
         return redirect()->back();
     }
-
-/**
- * 
- */
-
-   
-
 }

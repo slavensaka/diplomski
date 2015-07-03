@@ -1,27 +1,15 @@
 @extends('app')
 @section('content')
-{{-- {!! dd($test_id) !!} --}}
-{{-- {!! Html::script('js/jquery-1.11.2.min.js') !!} --}}
-{{-- {!! Html::script('js/functions.js') !!} --}}
-
+{{-- {!! dd($test_id,$answers) !!} --}}
 @if (Auth::guest())
 	<h1>Your not logged in</h1>
 @else
 	<h1>Users Tests Questions</h1>
-{{-- {!! dd($answers) !!} --}}
-
-
-
-
-
-
 @if(Session::has('message'))
 {!! Session::get('message'); !!}
 @endif
-
 @if($questions->count())
 <?php echo $questions->render(); ?>
-
 <ul class="list-inline">
   <li>{!! link_to_route('tests', 'Go Back To Tests', 
 		array(Auth::user()->name), 
@@ -30,16 +18,12 @@
 		array('test_id' => $test_id), 
 		array('class' => 'btn btn-primary btn-lg ')) !!}</li>
 </ul>
-
-
-
 @if(Session::has('success'))
 {!! Session::get('success'); !!}
 @endif
 	<table class="table table-striped table-bordered table-hover">
 		<thead>
 		@foreach ($questions as $question)
-		
 			<tr>
 				<th>ID</th>
 				<th>Question Image</th>
@@ -51,9 +35,7 @@
 			</tr>
 		</thead>
 		<tbody>
-
 			<tr class="success">
-
 				<td>{{ $question->id }}</td>
 				@if($question->question_image === "")
 				<td>X</td>
@@ -87,16 +69,9 @@
 					{!! Form::close() !!}
 				</td>
 			</tr>
-{{-- 
-@if(Session::has('warning') && $question->type === 'multiple_choice' && $question->id == Session::has('question_id'))
-<tr class="warning_session">
-<td>
-{!! Session::pull('warning'); !!}		
-
-</td>
-</tr>
-@endif
- --}}
+{{-- @if(Session::has('warning') && $question->type === 'multiple_choice' && $question->id == Session::has('question_id'))
+<tr class="warning_session"><td>{!! Session::pull('warning'); !!}
+</td></tr>@endif--}}
 			<tr>
 				<th>ID</th>
 				<th>Answer</th>
@@ -104,8 +79,6 @@
 				<th>Question ID </th>
 				<th>Delete Answer</th>
 				{{-- <th>Is_Correct</th> --}}
-				
-				
 			</tr>
 @foreach ($answers as $tests_answer)
 @if($question->id === $tests_answer->question_id)
@@ -116,9 +89,7 @@
 				<td>{{ $tests_answer->correct }}</td>
 				{{-- <td> --}}
 					{{-- {!! Form::hidden('answers',$answers) !!} --}}
-
 					{{-- {!! Form::hidden('questions',$questions) !!} --}}
-
 				{{-- 	{!! Form::open(array('method'=> 'PATCH', 
 						'route' => array('answers.update', $tests_answer->id))) !!} 
 					{!! Form::hidden('correct', 0, false) !!}
@@ -126,27 +97,21 @@
 					{!! Form::submit('Update', 
 						array('class' => 'btn btn-danger')) !!}
 					{!! Form::close() !!} --}}
-					
 	    		{{-- </td> --}}
-	    		
 				<td>{{ $tests_answer->question_id }}</td>
-
 				<td>
 					{!! Form::open(array('method'=> 'DELETE', 
 						'route' => array('answers.destroy', $tests_answer->id))) !!}
 					{!! Form::submit('Delete Answer', array('class' => 'btn btn-danger')) !!}
 					{!! Form::close() !!}
 				</td>
-				
 @endif
 @endforeach
 				</tr>
 @endforeach
-
 		</tbody>
 		</table>
 <?php echo $questions->render(); ?>
-
 @else
 <h2>There are no questions for this test. Create:</h2>
 <p>
@@ -154,11 +119,6 @@
 		array('test_id' => $test_id), 
 		array('class' => 'btn btn-primary btn-lg ')) !!}
 </p>
-
-
-
-
-
 @endif
 @stop
 @endif

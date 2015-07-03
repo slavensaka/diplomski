@@ -1,9 +1,9 @@
 <?php namespace Dipl\Http\Controllers;
 
 use DB;
+use Dipl\Tag;
 use Dipl\Test;
 use Dipl\User;
-use Dipl\Tag;
 
 class WelcomeController extends Controller {
 
@@ -34,9 +34,7 @@ class WelcomeController extends Controller {
 	 * @return Response
 	 */
 	public function index()
-	{
-		
-	
+	{		
 			$users_published_tests_public =DB::table('users')
             	->join('tests', 'users.id', '=', 'tests.user_id')
             	->where('tests.is_published','=', 1)
@@ -60,7 +58,4 @@ class WelcomeController extends Controller {
 		->with('users_published_tests_public', $users_published_tests_public)
 		->with('users_published_tests_private',$users_published_tests_private);
 	}
-
-	
-
 }

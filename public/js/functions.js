@@ -1,60 +1,48 @@
 $(document).ready(function() {
   /**
-  
     TODO:
     - Get the question_id from php code in testing1.blade.php into js
-    - For must be question_id and loop instead on fix 23
-  
+    - For must be question_id and loop instead on fix 23  
   **/
   
   // for(i=0;i<=23; i++){ // Take the question_id and loop in 23
   //  $("select[name=" + i + "]").not(':last').remove();
-
-
   // $('button.btn btn-info').click(function(){
-    // if($('tr').hasClass('warning_session')) {
-    //  location.reload(true);    
-    // }
+  // if($('tr').hasClass('warning_session')) {
+  //  location.reload(true);    
+  // }
   // });
-// $(window).on('hashchange', function() {
-//   alert("Lorem");
-// });
-
-
+  // $(window).on('hashchange', function() {
+  //   alert("Lorem");
+  // });
 window.onbeforeunload = function (e) {
             var e = e || window.event;
             var msg = "Do you really want to cancel test?"
-
             // For IE and Firefox
-            if (e) {
-              
+            if (e) {    
                 e.returnValue = msg;
                 return save();
             }
-
             // For Safari / chrome
-            return save();
-            
+            return save();   
          };
 
 // window.onbeforeunload = function () {
 //   return dwad;
 // }
-
 // Eliminate the default onbeforeunload on test_form button,
 //So user can submit the test
+
 document.getElementById("test_form").onsubmit = function(e) {
       window.onbeforeunload = null;
       return true;
     };
 
 if (window.history && window.history.pushState ) {
-
         $(window).on('popstate', function() {
           var hashLocation = location.hash;
           var hashSplit = hashLocation.split("#!/");
           var hashName = hashSplit[1];
-
           if (hashName !== '') {
             var hash = window.location.hash;
             if (hash === '') {
@@ -67,7 +55,6 @@ if (window.history && window.history.pushState ) {
         });
         window.history.pushState('forward', null, './#forward');
 }
-
 user_id = $("div.user_id").text();
 test_id = $("div.test_id").text();
 test_res = $("div.test_res").text();  
@@ -119,7 +106,6 @@ var timeoutInterval = setInterval(function() {
       clearInterval(timeoutInterval);
       redirect();
    } 
-
 }, 1000);
 
 setInterval(function() {
@@ -128,12 +114,10 @@ setInterval(function() {
   }
   // dots.html(function(i, oldHtml) { return oldHtml += '.' });
 }, 500);
-
 }
 
 function redirect() {
     $('input.btn.btn-info.updated_answers').slideUp(800).delay( 800 );
     $('input.btn.btn-info.updated_answers').trigger('click');
 }
-
 }); // end document.ready jquery

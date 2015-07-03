@@ -1,5 +1,4 @@
 @extends('app')
-
 @section('content')
 <div class="container-fluid">
 	<div class="row">
@@ -17,8 +16,6 @@
 							</ul>
 						</div>
 					@endif
-
-
 <h3>Student Register Form</h3>
 {!! Form::open(array('route' => array('student_register_form'),'method' => 'post','class'=>'form-horizontal')) !!}
 <div class="form-group">
@@ -29,10 +26,7 @@
 	@if(Session::has('name_message'))
 		{!! Session::get('name_message'); !!}
 	@endif
-	</div>
-	</div>
-	</div>
-
+	</div></div></div>
 <div class="form-group">
 {!! Form::label('pass', 'Password', array('class' => 'col-md-4 control-label')) !!}
 	<div class="col-md-6">	
@@ -41,17 +35,11 @@
 		@if(Session::has('pass_message'))
 		{!! Session::get('name_message'); !!}
 		@endif
-	</div>
-	</div>
-	</div>
+	</div></div></div>
 	<div class="form-group">
 	<div class="col-md-6 col-md-offset-4">
 {!! Form::submit('Student Register',array('class' => 'btn btn-primary')) !!}
 {!! Form::close() !!}
-
-
-
-
 				</div>
 			</div>
 		</div>

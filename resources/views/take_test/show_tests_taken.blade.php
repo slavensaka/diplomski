@@ -1,7 +1,5 @@
 @extends('app')
 @section('content')
-
-
 @if(Session::has('message'))
 {!! Session::get('message'); !!}
 @endif
@@ -27,11 +25,9 @@
 		<tbody>
 		@foreach ($questions as $question)
 			<tr class="warning">
-				<td>{{ $question->id }}</td>
-				
+				<td>{{ $question->id }}</td>			
 				@if($question->question_image === "")
-				<td>
-				
+				<td>	
 				</td>
 				@else 
 					<td>{!!  Html::image("question_uploads/thumbs/".$question->question_image, 
@@ -47,8 +43,7 @@
 				<th>ID</th>
 				<th>Answer</th>
 				<th>Correct</th>
-				<th>Question ID </th>
-				
+				<th>Question ID </th>	
 				{{-- <th>Is_Correct</th> --}}
 			</tr>
 			@foreach ($answers as $tests_answer)
@@ -61,11 +56,8 @@
 				<td>{{ $tests_answer->question_id }}</td>
 </tr>
 @endif
+@endforeach		
 @endforeach
-			
-@endforeach
-
-
 @else
 <h2>There are no questions questions for this test</h2>
 <p>
@@ -73,11 +65,6 @@
 		array(Auth::user()->name), 
 		array('class' => 'btn btn-primary')) !!}
 </p>
-
-
 @endif
-
 @stop
-
-
 @endsection

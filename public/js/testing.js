@@ -1,12 +1,10 @@
 $(document).ready(function() {
-
     var myArray = [];
     $('input:checkbox').each(function() {
         myArray.push($(this).attr('name'));
         myArray = jQuery.unique(myArray);
     });
-
-    $('input.btn btn-danger').click(createCallback(myArray));
+$('input.btn btn-danger').click(createCallback(myArray));
 });
 
 function createCallback(myArray) {

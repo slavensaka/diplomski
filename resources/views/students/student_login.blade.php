@@ -1,7 +1,4 @@
-
-
 @extends('app')
-
 @section('content')
 <div class="container-fluid">
 	<div class="row">
@@ -18,8 +15,7 @@
 								@endforeach
 							</ul>
 						</div>
-					@endif
-	
+					@endif	
 <h3>Student Login Form</h3>
  {!! Form::open(array('url' => url('student_login_verify'), 
  'class'=>'form-horizontal')) !!}
@@ -32,18 +28,13 @@
 	@if(Session::has('name'))
 		{!! Session::get('name'); !!}
 	@endif
-	</div>
-	</div>
-	</div>
+	</div></div></div>
 <div class="form-group">
 	{!! Form::label('pass', 'Password', array('class' => 'col-md-4 control-label')) !!}
 	<div class="col-md-6">	
-
 @if(Session::has("changed") && Session::has("student_name"))
 {!! Form::password('pass',
 			array('placeholder' => 'Type Password','required' => "required")) !!}
-
-
 @elseif(Session::has("student_name"))
 {!! Form::input('pass', 'pass', Session::get("pass")) !!}
 <h4>We already made you an account</h4>
@@ -52,25 +43,17 @@
 {!! Form::password('pass',
 			array('placeholder' => 'Type Password','required' => "required")) !!}
 @endif
-
-
 <div class="pass">
 	@if(Session::has('pass_message'))
 		{!! Session::get('pass_message'); !!}
 	@endif
-	</div>
-	</div>
-	</div>
-
+	</div></div></div>
 	<div class="form-group">
-							<div class="col-md-6 col-md-offset-4">
+	<div class="col-md-6 col-md-offset-4">
 	{!! Form::submit('Login',array('class' => 'btn btn-primary')) !!}
 	{!! Form::close() !!}
-
-	</div></div>				
-
-				
-								
+									</div>
+								</div>				
 							</div>
 						</div>
 					</form>

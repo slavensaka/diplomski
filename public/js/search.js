@@ -1,5 +1,4 @@
 $(document).ready(function() {
-
 $("#searchform").submit(function(e){
   e.preventDefault();
   // alert("Lorem");
@@ -8,8 +7,7 @@ $("#searchform").submit(function(e){
 function save(){         
     $.ajax({
       url: "../"+"search",
-      type: "post",
-      
+      type: "post",  
       data: {'query':$("input#query").val(), '_token': $('input[name=_token]').val()},
       success: function(data){
         var get = JSON.parse(data);
@@ -23,14 +21,11 @@ function save(){
           .on('click', function(){
             if(!confirm('Are you sure you want to take this test?')) return false;
           });
-        });
-        
+        });      
       }
     });      
 }
- 
 }); // end document.ready jquery
-
 // "Favorite beverage: " + data["favorite_beverage"] + "<br />Favorite 
 // restaurant: " + data["favorite_restaurant"] 
 // + "<br />Gender: " + data["gender"] + "<br />JSON: " + data["json"]

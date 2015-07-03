@@ -55,10 +55,7 @@ class HelperFunctions {
         ->save(Config::get( 'test_images.thumb_folder').'/'.$intro_fullname);
         return $intro_fullname;
         } 
-
-
-
-
+        
     public static function update_slug_upload_make_image($type,$inputed_file = null,$id = null){
         
         $intro_image = $inputed_file;

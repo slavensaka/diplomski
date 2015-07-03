@@ -1,33 +1,29 @@
 <?php namespace Dipl\Http\Controllers;
-
-use Dipl\Http\Requests;
-use Dipl\Http\Controllers\Controller;
-use Session;
-use Input;
-use Hash;
 use DB;
-use Dipl\Tag;
+use Hash;
 use View;
-use Validator;
-use Dipl\Student;
-use Redirect;
+use Input;
+use Session;
 use Request;
-use Dipl\Test;
-use Dipl\Support\HelperFunctions;
+use Redirect;
 use Response;
+use Dipl\Tag;
+use Validator;
+use Dipl\Test;
+use Dipl\Student;
+use Dipl\Http\Requests;
+use Dipl\Support\HelperFunctions;
+use Dipl\Http\Controllers\Controller;
 
 class StudentController extends Controller {
-
 	
 	public function student_login() {
 		$tags = [];
 		foreach (Tag::all() as $tag)
 		{
-    	$tags[] = $tag->tag;
-    	
+    	$tags[] = $tag->tag;	
 		}
 		$tag_unique = array_unique($tags);
-
 		if(Session::has("logged_in")){
 			return redirect()->route('control_panel',
 						['redirect_name' => Session::get('student_name')])
@@ -40,21 +36,18 @@ class StudentController extends Controller {
 
 	public function student_login_verify() {
 		// dd(Input::all());
-$tags = [];
+		$tags = [];
 		foreach (Tag::all() as $tag)
 		{
-    	$tags[] = $tag->tag;
-    	
+    	$tags[] = $tag->tag;  	
 		}
 		$tag_unique = array_unique($tags);	
 		$validation = Validator::make(Input::all(), Student::$student_rules);
 		if($validation->fails()){
 				return Redirect::back()->withInput()->withErrors($validation);
 			} else {
-
 		$student_name = Input::get('student_name');
 		Session::put("student_name",Input::get("student_name"));//TU
-
 		$student = Student::where('student_name', '=', $student_name)->exists();
 
 		if(!$student){
@@ -99,8 +92,6 @@ $tags = [];
     	
 		}
 		$tag_unique = array_unique($tags);
-
-
 		if(!Input::all()){
 			return view('students.control_panel')
 					->with('student_name',Session::get("student_name"))
@@ -118,10 +109,8 @@ $tags = [];
 		} else {
 			Redirect::back()->with("message","Password not save, Try again");
 		}
-	  } else {
-	  	
+	  } else {	  	
 	  	// return "Lorem";
-
 	  	return view('students.control_panel')
 					->with('student_name',Input::get('student_name'))
 					->with('tag_unique',$tag_unique) ;
@@ -162,8 +151,7 @@ $tags = [];
         return Redirect::route('/');
 	}
 
-	public function postSearch(){
-		
+	public function postSearch(){		
 		if(Request::ajax()) {
 			$q = Input::get('query');
 			$posts = Test::whereRaw("MATCH(test_name) AGAINST(? IN BOOLEAN MODE)", array($q))->get();

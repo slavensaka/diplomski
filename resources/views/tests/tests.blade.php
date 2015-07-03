@@ -1,13 +1,9 @@
 @extends('app')
-
 @section('content')
-
-
 @if (Auth::guest())
 	<h1>Your not logged in</h1>
 @else
 	<h1>Create a  Test</h1>
-
 	{!! Form::open(array('route' => 'tests.store')) !!}
  	{!! Form::label('test_name', 'Test_name') !!}
 	{!! Form::text('test_name', Input::old('test_name')) !!}

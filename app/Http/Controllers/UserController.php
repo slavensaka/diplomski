@@ -1,16 +1,14 @@
 <?php namespace Dipl\Http\Controllers;
 
-// use Dipl\Http\Requests;
-use Dipl\Http\Controllers\Controller;
-
-use Illuminate\Http\Request;
+use DB;
 use Auth;
 use Hash;
-use DB;
-use Dipl\User;
-use Collection;
 use Input;
 use Redirect;
+use Dipl\User;
+use Collection;
+use Illuminate\Http\Request;
+use Dipl\Http\Controllers\Controller;
 
 class UserController extends Controller {
 

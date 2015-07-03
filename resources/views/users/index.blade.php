@@ -3,25 +3,21 @@
 {!! Html::script('js/jquery-1.11.2.min.js') !!}
 {!! Html::script('js/remove_publish.js') !!}
 {!! Html::script('js/students_taken_tests.js') !!}
-
 @if (Auth::guest())
 	<h1>Your not logged in</h1>
 @else
 	<h1 style="text-align:center"><?php echo Auth::user()->name;  ?> Tests</h1>
-
 	<p>{!! link_to_route('tests.create', 'Create new test', 
 		   array() , array('class' => 'btn btn-primary btn-lg ')) !!}
 	</p>
-
-<p>	
-@if(Session::has('message'))
-{!! Session::get('message'); !!}
+	<p>	
+		@if(Session::has('message'))
+		{!! Session::get('message'); !!}
 @endif
-</p>
+	</p>
 @if ($tests->count())
 {{-- {!! dd($tests) !!} --}}
 	<table class="table table-striped table-bordered table-hover manji">
-
 			<thead>
 				<tr>
 					<th>TEST ID</th>
@@ -45,7 +41,6 @@
 					<td>{{ $test->id }}</td>
 					<td>{{ $test->test_name }}</td>
 					<td><i>{{ $test->intro }}</i></td>
-					
 					 @if($test->intro_image === "")
 						<td>X</td>
 					@else 
@@ -72,14 +67,12 @@
 						array($test->id), array('class' => 'btn btn-info')) !!}
 					</td>
 					<td>
-
 						{!! Form::open(array('method'=> 'DELETE', 
 						'route' => array('tests.destroy', $test->id))) !!}
 						{!! Form::submit('Delete Test', 
 						array('class' => 'btn btn-danger', 
 						'onclick' =>"if(!confirm('Are you sure?')) return false;")) !!}
 						{!! Form::close() !!}
-
 					</td>
 					{{-- For public --}}
 					@if(!$test->is_public)
@@ -109,7 +102,6 @@
 						array('class' => 'btn btn-success unpublished')) !!}
 					</td> 
 					@endif
-
 				</tr>
 			@endforeach
 			<?php echo $tests->render(); ?>
@@ -120,6 +112,5 @@
 @endif
 @stop
 @endif
- 
 @endsection
 

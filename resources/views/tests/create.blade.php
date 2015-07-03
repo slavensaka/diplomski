@@ -2,9 +2,7 @@
 @section('content')
 {!! Html::script('js/jquery-1.11.2.min.js') !!}
 {!! Html::script('js/one_correct_answer.js') !!}
-
 	<h1>Create a New Test</h1>
-
 <div class="col-xs-6 col-md-4">
 	{!! Form::open(array('route' => 'tests.store', 'files'=> true)) !!}
  	{!! Form::label('test_name', 'Test name:',["class"=>"lead"]) !!}
@@ -19,8 +17,7 @@
 	<div>
 	{!! Form::textarea('intro', Input::old('intro'), 
 		["data-original-title"=>"Displayed message at the start of test","data-toggle"=>"tooltip" ,
-		'placeholder'=>'Type the intro message', 'class' => 'field','size' => '30x5']) !!}
-		
+		'placeholder'=>'Type the intro message', 'class' => 'field','size' => '30x5']) !!}	
 	</div>
 	<div><?php echo $errors->first('intro', '<p class=" text-danger">:message</p>'); ?></div>
 	<div>
@@ -33,8 +30,6 @@
 	<div>
 	{!! Form::label('conclusion_image', 'Conclusion image:',["class"=>"lead"]) !!}
 	{!! Form::file('conclusion_image', array("data-original-title"=>"Displayed image at end of test","data-toggle"=>"tooltip" ,'class' => '')) !!}
-	
-	
 	</div>
 	<div><?php echo $errors->first('conclusion_image', '<p class=" text-danger">:message</p>'); ?></div>
 	{!! Form::label('conclusion', 'Test conclusion message:',["class"=>"lead"]) !!}
@@ -55,8 +50,7 @@
 										   31,32,33,34,35,36,37,38,39,40,
 										   41,42,43,44,45,46,47,48,49,50,
 										   51,52,53,54,55,56,57,58,59,60 ], 0, 
-		["data-original-title"=>"Counter to test end [in minutes]","data-toggle"=>"tooltip" ,'class' => '']) !!}
-		
+		["data-original-title"=>"Counter to test end [in minutes]","data-toggle"=>"tooltip" ,'class' => '']) !!}		
 	</div>
 	<div>	
 		<?php echo $errors->first('counter_time', '<p class=" text-danger">:message</p>'); ?>
@@ -65,40 +59,25 @@
 	{!! Form::label('shuffle', 'Shuffle test questions:',["class"=>"lead"]) !!}
 	{!! Form::hidden("shuffle", 0, false) !!}
 	{!! Form::checkbox("shuffle", 1, Input::old('shuffle'),["data-original-title"=>"Questions order will be random on creation when student starts taking test","data-toggle"=>"tooltip" ,"class"=>""]) !!}
-	
-	
 	</div>
 	<div>	<?php echo $errors->first('shuffle', '<p class=" text-danger">:message</p>'); ?>
 </div>
 	<div>
 	{!! Form::label('passcode', 'Passcode:',["class"=>"lead"]) !!}
 	{!! Form::text('passcode', NULL ,array("data-original-title"=>"If left blank, passcode field will be empty.","data-toggle"=>"tooltip" ,'placeholder' => 'Enter passcode')) !!}
-	
 	</div>
 	<div>	<?php echo $errors->first('passcode', '<p class=" text-danger">:message</p>'); ?>
    </div>
-
-
-
-
-   
-
-
-
    <div>
 	{!! Form::label('tags', 'Tags:',["class"=>"lead"]) !!}
 	{!! Form::text('tags', NULL ,array('size' => '35x5',"data-original-title"=>"Adding tags makes the test easier to find by students.","data-toggle"=>"tooltip" ,'placeholder' => 'Separate by commas')) !!}
-	
 	</div>
 	<div>	<?php echo $errors->first('tags', '<p class="text-danger">:message</p>'); ?>
    </div>
-
 	<div>
 	{!! Form::label('is_public', 'Is test public:',["class"=>"lead"]) !!}
 	{!! Form::hidden("is_public", 0, false) !!}
 	{!! Form::checkbox("is_public", 1, Input::old('is_public'),["data-original-title"=>"Or it will be private.","data-toggle"=>"tooltip" ,"class"=>""]) !!}	
-	
-	
 	<p class="bg-warning">Public test doesn't need a passcode, but you can still enter it, if later you decide to make the test private.</p>
 	</div>
 	<br/>
@@ -107,10 +86,5 @@
 			array('class' => 'btn btn-primary')) !!}
 	<br/><br/>
 	{!! Form::close() !!}
-
 </div>
-
-
-
-
 @endsection

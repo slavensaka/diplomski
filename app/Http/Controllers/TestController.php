@@ -1,24 +1,23 @@
 <?php namespace Dipl\Http\Controllers;
 
-use Dipl\Http\Requests;
-use Dipl\Http\Controllers\Controller;
-
-use Illuminate\Http\Request;
-use Auth;
-use Input;
-use Dipl\User;
-use Dipl\Test;
-use Dipl\Tag;
-use Redirect;
-use Hash;
-use Str;
 use DB;
+use Str;
+use Auth;
 use File;
+use Hash;
+use Input;
 use Image;
 use Config;
+use Dipl\Tag;
+use Redirect;
+use Dipl\User;
+use Dipl\Test;
 use Validator;
 use Carbon\Carbon;
+use Dipl\Http\Requests;
+use Illuminate\Http\Request;
 use Dipl\Support\HelperFunctions;
+use Dipl\Http\Controllers\Controller;
 
 class TestController extends Controller {
 
@@ -34,10 +33,7 @@ class TestController extends Controller {
 	 */
 	public function index()
 	{
-
-
 		$tests = User::find(Auth::id())->tests()->paginate(10);
-
 		return view('users.index', compact('tests'));
 	}
 
@@ -59,15 +55,8 @@ class TestController extends Controller {
 	public function store()
 	{
 		// dd(Input::all());
-
 		$validation = Validator::make(Input::all(), Test::$test_upload_rules);
-		
-
-		
-			
-		
-			$counter_time = Input::get("counter_time");
-			
+			$counter_time = Input::get("counter_time");	
 			$counter_time *=  60;
 			if($validation->fails()){
 				return Redirect::back()->withInput()->withErrors($validation);
@@ -135,8 +124,7 @@ class TestController extends Controller {
 					$user=(string)$user->id;
 					$test->user_id = $user;
 					$test->save();
-				}
-				
+				}				
 				
 				$last_test_id=DB::getPdo()->lastInsertId();
 				$tags = Input::get('tags');
@@ -145,7 +133,6 @@ class TestController extends Controller {
 					$tagging = new Tag(array('tag' => $tag[$i]));
 					Test::find($last_test_id)->tags()->save($tagging);
 				}
-
 				return Redirect::route('tests')
 					->with('message','CREATED NEW TEST');
 			}
@@ -205,9 +192,7 @@ class TestController extends Controller {
 		} else {
 			$counter_time =$counter_time-1; 
 			$counter_time *=  60;
-
 		}
-
 		$validation = Validator::make(Input::all(), Test::$test_upload_rules);
 
 		if($validation->fails()){
@@ -265,9 +250,7 @@ class TestController extends Controller {
 				for($i=0;$i < count($tag) ;$i++){
 					$tagging = new Tag(array('tag' => $tag[$i]));
 					Test::find(Input::get('test_id'))->tags()->save($tagging);
-				}
-
-				
+				}				
 				return Redirect::route('tests.index', $id)
 				->with('message', 'TEST UPDATED');
 			}
@@ -312,10 +295,6 @@ class TestController extends Controller {
 		$affe = Test::find($test_id)->tags()->delete();
 		return Redirect::back()->with("tags_message","Tags successfully deleted");
 	}
-
-	
-
-
 	// public function getNameAttribute($value)
 	// {
  //    return Crypt::decrypt($value);

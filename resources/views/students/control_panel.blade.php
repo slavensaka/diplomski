@@ -34,9 +34,6 @@
       color: #161A1C;
     }
 	</style>
-
-
-
 					@if (count($errors) > 0)
 						<div class="alert alert-danger">
 							<strong>Whoops!</strong> There were some problems with your input.<br><br>
@@ -47,8 +44,6 @@
 							</ul>
 						</div>
 					@endif
-
-
 	<div>Search for tests by test name:</div>
 	<div class="search">
 	{!! Form::open(array('url' => url('search'), 'class'=>'form', 'id'=>'searchform')) !!}
@@ -56,13 +51,9 @@
     {!! Form::submit('Search') !!}
     {!! Form::close() !!}
 	</div>
-
 	<div class="result"></div>
-{{-- 
-{!! link_to_route('take_test', 'Take This Test', 
-array($id), array('class' => 'btn btn-success')) !!}
-
- --}}
+{{-- {!! link_to_route('take_test', 'Take This Test', 
+array($id), array('class' => 'btn btn-success')) !!}--}}
 <script>
 	  (function($){
 	    $(function(){
@@ -92,20 +83,13 @@ array($id), array('class' => 'btn btn-success')) !!}
 	    });
 	  })(jQuery);
 	</script>
-
 <br/><br/>
-
-
 	<div>Search for tests by there tag:</div>
 	<div class="search_tag">
-	{!! Form::open(array('url' => url('search_tag'), 'class'=>'form_tag', 'id'=>'searchform_tag')) !!}
-    
+	{!! Form::open(array('url' => url('search_tag'), 'class'=>'form_tag', 'id'=>'searchform_tag')) !!}    
     {!! Form::select('query_tag', [null=>'Please Select'] +$tag_unique, null, array( "class"=>"query_tag",'placeholder' => 'Search query...' )) !!}
     {!! Form::submit('Search') !!}
     {!! Form::close() !!}
 	</div>
-
 	<div class="result_tag"></div>
-
-	
 @endsection

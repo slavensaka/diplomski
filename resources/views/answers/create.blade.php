@@ -2,9 +2,8 @@
 @extends('app')
 
 @section('content')
-{{-- {!! dd($quest) !!} --}}
-{{-- {{ dd($type) }} --}}
-{{-- {{ dd($answers) }} --}}
+{{-- {!! dd($quest,$type,$answers) !!} --}}
+
 @if (Auth::guest())
 	<h1>Your not logged in</h1>
 @else
@@ -52,7 +51,6 @@
     </tr>
     </tbody>
 </table>
-{{-- {{ dd(count($answers)) }} --}}
 @foreach($answers as $answer) 
 <?php
 echo "<h4>Answer $answer->id :</h4>";
@@ -89,40 +87,27 @@ echo "Correct:$answer->correct"; echo '<br>';
                 $quest->id, array('class' => 'btn btn-danger')) !!}
 @endif
 
-
-
-
 @if(!($quest->type === 'true_false' && count($answers) >= 2) )
 @if(!($quest->type === 'fill_in'))
 
-	{!! Form::open(array('route' => 'answers.store')) !!}
-	<br>
+	{!! Form::open(array('route' => 'answers.store')) !!}<br>
 	{!! Form::label('answer', 'Answer') !!}
 	{!! Form::text('answer',Input::old('answer'),
         array('required' => "required",'placeholder'=>'Type the answer')) !!}
-	<br>
-	
-        {!! Form::label('correct', 'Correct:') !!}
-        {!! Form::hidden("correct", 0, false) !!}
-        {!! Form::checkbox("correct", 1, Input::old('correct')) !!}
-        {{-- {!! Form::hidden( 'route' , Route::getCurrentRoute()->getPath(), false ) !!} --}}
-        {{-- {!! Form::hidden( 'question_test_id' , $question->test_id, false ) !!} --}}
-    <br>
-	{!! Form::hidden('quest_id', $quest->id, array('id' => 'quest_id')) !!}
-	<br>
-	{!! Form::submit('Send it!', array('class' => 'btn btn-success')) !!}
-	{!! Form::close() !!}
-
-                
-    <br>
-   {!! link_to_route('answers.show', 'Go Back', 
+    <br>  
+    {!! Form::label('correct', 'Correct:') !!}
+    {!! Form::hidden("correct", 0, false) !!}
+    {!! Form::checkbox("correct", 1, Input::old('correct')) !!}
+    {{-- {!! Form::hidden( 'route' , Route::getCurrentRoute()->getPath(), false ) !!} --}}
+    {{-- {!! Form::hidden( 'question_test_id' , $question->test_id, false ) !!} --}}
+    <br>{!! Form::hidden('quest_id', $quest->id, array('id' => 'quest_id')) !!}
+	<br>{!! Form::submit('Send it!', array('class' => 'btn btn-success')) !!}
+	{!! Form::close() !!}        
+    <br>{!! link_to_route('answers.show', 'Go Back', 
                 $quest->id, array('class' => 'btn btn-danger')) !!}
 
-
-
 @endif
-@elseif($quest->type === 'true_false' && count($answers) >= 2) {{ "This type 'true false' answers can only have one answer." }}
-<br>
+@elseif($quest->type === 'true_false' && count($answers) >= 2) {{ "This type 'true false' answers can only have one answer." }}<br>
 {!! link_to_route('answers.show', 'Go Back', 
                 $quest->id, array('class' => 'btn btn-danger')) !!}
 @endif
