@@ -38,10 +38,26 @@ The diagram show the roles of participants in the web application. The end user 
 Tags can be assigned to more tests, and more tests may be allocated tags. Additional tables called the pivot table that serve as intermediate tables that link the two models defined by the relation many to many are shown. 
 
 ## Type of questions 
-+ True-false 
-+ Multiple response 
-+ Multiple choice 
-+ Fill-in
+#### True-false 
 
+ ![truefalse](http://s12.postimg.org/mjpbmvq9p/true.png "truefalse")
+#### Multiple response 
 
+![response](http://s12.postimg.org/jztoss2pp/response.png "response")
+#### Multiple choice 
 
+![choice](http://s12.postimg.org/ecxbvb071/choice.png "choice")
+#### Fill-in
+
+![fill](http://s12.postimg.org/en4uenet9/fill.png "fill")
+
+## Form for creating a new test
+
+![crete](http://s12.postimg.org/ble24p1od/create.png "create")
+
+## Form for updating the test
+
+![test](http://s12.postimg.org/gy2witpkt/editt.png "test")
+## Form for updating Q & A
+
+![question](http://s12.postimg.org/5zrn0n0zh/editq.png "question")
