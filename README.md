@@ -7,6 +7,9 @@ Title of this graduation work was "Creation of a web interface for a self-adapti
 2. Theoretical basis of technologies used
 3. Description of created Internet application
 
+## Written Thesis can be found here
+[PDF](https://www.scribd.com/doc/272701930/Diplomski-rad-graduation-thesis-Web-interface-for-a-self-adaptive-online-test-generator "PDF")
+
 ## The application is available online
 [AutoGenerateMe](http://autogenerate.me "Autogenerate Me")
 
