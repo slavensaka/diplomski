@@ -10,9 +10,6 @@ Title of this graduation work was "Creation of a web interface for a self-adapti
 ## Written Thesis can be found here
 [PDF](https://www.scribd.com/doc/272701930/Diplomski-rad-graduation-thesis-Web-interface-for-a-self-adaptive-online-test-generator "PDF")
 
-## The application is available online
-[AutoGenerateMe](http://autogenerate.me "Autogenerate Me")
-
 ## Goal  
 To create a platform with the possibility of user authentication with the creation and implementation of less formal examinations of knowledge so-called mini-tests, tests for the more formal needs for assessment of students, and creating quizzes and polls.
 
