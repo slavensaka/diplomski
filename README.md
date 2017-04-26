@@ -1,11 +1,41 @@
 # My master thesis work
 
+
 ## Subject 
 Title of this graduation work was "Creation of a web interface for a self-adaptive online test generator"
 ## Content
 1. Theoretical bases of conducting tests
 2. Theoretical basis of technologies used
 3. Description of created Internet application
+
+## Install
+
+Download zip file or git pull the project then
+
+``` bash
+$ composer install
+```
+Then create .env in root folder add something similar
+```
+APP_ENV=local
+APP_DEBUG=true
+APP_KEY=SomeRandomString
+
+DB_HOST=localhost
+DB_DATABASE=homestead
+DB_USERNAME=homestead
+DB_PASSWORD=secret
+
+CACHE_DRIVER=file
+SESSION_DRIVER=file
+
+```
+Then
+``` bash
+$ php artisan server
+```
+Or use Laravel homestead pre-packed box instead 
+Or other means of serving laravel.
 
 ## Written Thesis can be found here
 [PDF](https://www.scribd.com/doc/272701930/Diplomski-rad-graduation-thesis-Web-interface-for-a-self-adaptive-online-test-generator "PDF")
